@@ -90,7 +90,7 @@ function cassSVG(m,uidk,side,lite){
   const d0=side?m.durB:m.dur,dur=d0?fmt(d0):'--:--';
   const mn='ui-monospace,Menlo,monospace';
   const bolt=(x,y)=>`<circle cx="${x}" cy="${y}" r="5.2" fill="#0c0b0a" opacity=".55"/><circle cx="${x}" cy="${y}" r="4.3" fill="url(#bl${uidk})" stroke="#000" stroke-opacity=".6" stroke-width=".6"/><path d="M${x-3} ${y} H${x+3} M${x} ${y-3} V${y+3}" stroke="#000a" stroke-width=".9" transform="rotate(${(x*7+y*3)%80} ${x} ${y})"/>`;
-  let rules='';for(let y=56;y<=80;y+=12)rules+=`<line x1="34" x2="286" y1="${y}" y2="${y}" stroke="#2a3a5a" stroke-opacity=".22"/>`;
+  let rules='';for(let y=46;y<=68;y+=11)rules+=`<line x1="34" x2="286" y1="${y}" y2="${y}" stroke="#2a3a5a" stroke-opacity=".22"/>`;
   const tape60=Math.max(10,Math.round(((d0||2400)/60)/5)*5);
   return `<svg viewBox="0 0 320 204" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -108,20 +108,22 @@ function cassSVG(m,uidk,side,lite){
   <path d="M3 94 H317" stroke="#000" stroke-opacity=".14"/><path d="M3 95.2 H317" stroke="#fff" stroke-opacity=".1"/>
   <rect x="56" y="1.5" width="18" height="4.5" rx="1" fill="#000" opacity=".5"/><rect x="246" y="1.5" width="18" height="4.5" rx="1" fill="#000" opacity=".5"/>
   ${bolt(13,13)}${bolt(307,13)}${bolt(13,191)}${bolt(307,191)}${bolt(160,191)}
-  <rect x="22" y="13" width="276" height="76" rx="5" fill="#000" opacity=".28" transform="translate(0 1.5)"/>
-  <rect x="22" y="12" width="276" height="76" rx="5" fill="${m.paper}"/>
-  ${lite?'':'<rect x="22" y="12" width="276" height="76" rx="5" fill="url(#nzG)" opacity=".5"/>'}
-  <rect x="22" y="12" width="276" height="76" rx="5" fill="url(#lg${uidk})"/>
+  <rect x="22" y="13" width="276" height="68" rx="5" fill="#000" opacity=".28" transform="translate(0 1.5)"/>
+  <rect x="22" y="12" width="276" height="68" rx="5" fill="${m.paper}"/>
+  ${lite?'':'<rect x="22" y="12" width="276" height="68" rx="5" fill="url(#nzG)" opacity=".5"/>'}
+  <rect x="22" y="12" width="276" height="68" rx="5" fill="url(#lg${uidk})"/>
   <path d="M22 17a5 5 0 0 1 5-5h266a5 5 0 0 1 5 5v9H22z" fill="${m.stripe}"/>
   <path d="M22 26H298" stroke="#000" stroke-opacity=".18"/>
-  <rect class="tint" x="22" y="12" width="276" height="76" rx="5" fill="#a8741f" opacity="0"/>
+  <rect class="tint" x="22" y="12" width="276" height="68" rx="5" fill="#a8741f" opacity="0"/>
+  <rect x="22.5" y="12.5" width="275" height="67" rx="4.6" fill="none" stroke="#fff" stroke-opacity=".28"/>
+  <path d="M24 79.4 H296" stroke="#000" stroke-opacity=".16"/>
   <text x="30" y="22.5" font-family="${mn}" font-size="8" font-weight="700" letter-spacing="2" fill="${m.paper}">SIDE ${side?'B':'A'}</text>
   <text x="160" y="22.5" text-anchor="middle" font-family="${mn}" font-size="6" font-weight="700" letter-spacing="2.4" fill="${m.paper}" opacity=".85">C-${tape60}</text>
   <text class="du" x="290" y="22.5" text-anchor="end" font-family="${mn}" font-size="8" font-weight="700" letter-spacing="2" fill="${m.paper}">${dur}</text>
   ${rules}
-  <text class="nm" x="160" y="53" text-anchor="middle"${tl} font-size="${fs}" fill="${m.pen}" font-family="${hd?HAND_FF:printFF()}" font-weight="${hd?400:(PWT[theme]||600)}" letter-spacing="${hd?0:(PS[theme]||2)}" transform="rotate(${hd?m.rot:0} 160 50)">${esc(labTxt(m,name))}</text>
-  <text class="tp" x="30" y="84" font-family="${mn}" font-size="5.4" letter-spacing="1.3" font-weight="700" fill="${m.pen}" opacity=".8">TYPE ${TY[D.type].n} · ${TY[D.type].bias} · ${TY[D.type].eq}</text>
-  <text class="nrt" x="290" y="84" text-anchor="end" font-family="${mn}" font-size="5.4" letter-spacing="1.3" font-weight="700" fill="${m.pen}" opacity=".8">NR ▸ ${NRN[D.nr]}</text>
+  <text class="nm" x="160" y="45" text-anchor="middle"${tl} font-size="${fs}" fill="${m.pen}" font-family="${hd?HAND_FF:printFF()}" font-weight="${hd?400:(PWT[theme]||600)}" letter-spacing="${hd?0:(PS[theme]||2)}" transform="rotate(${hd?m.rot:0} 160 42)">${esc(labTxt(m,name))}</text>
+  <text class="tp" x="30" y="76" font-family="${mn}" font-size="6" letter-spacing="1.2" font-weight="700" fill="${m.pen}" opacity=".8">TYPE ${TY[D.type].n} · ${TY[D.type].bias} · ${TY[D.type].eq}</text>
+  <text class="nrt" x="290" y="76" text-anchor="end" font-family="${mn}" font-size="6" letter-spacing="1.2" font-weight="700" fill="${m.pen}" opacity=".8">NR ▸ ${NRN[D.nr]}</text>
   <rect x="48" y="88" width="224" height="72" rx="36" fill="#000" opacity=".3"/>
   <rect x="52" y="92" width="216" height="64" rx="32" fill="#0b0a09" stroke="#000"/>
   <g clip-path="url(#wc${uidk})">${reelSVG('L',CL,CY,26)}${reelSVG('R',CR,CY,20)}</g>

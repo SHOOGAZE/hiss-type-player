@@ -33,6 +33,7 @@ All skins share one body: a big speaker grille with a level LED on top, the wind
 - **PING-PONG**: bounce tracks into one, with generation loss
 - **Sides A/B**, hand-written cassette labels, **J-card** export to PNG
 - **Tape wear**: every cassette has its own history, and it shows: scratches, tea stains, curled label corners, fading ink, darker sound. Wear is permanent until you press NEW TAPE in the 4TRK sheet
+- **Deck wear**: the machine ages with the hours it has played (about 10 h to full): fine scratches, grime at the edges, worn keys, dust on the grille. DECK → MORE → SERVICE DECK resets it.
 - **LOOP**: a loop that crumbles a bit on every pass
 - **BOUNCE**: save everything you hear to WAV
 - Key and encoder sounds: recorded samples ship in `sounds/` (each deck has its own set of key down/up sounds, picked to match its build); anything missing falls back to a physical-model synth, and you can replace the samples with your own

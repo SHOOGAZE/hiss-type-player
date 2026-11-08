@@ -200,6 +200,14 @@ $('#skinBtn').addEventListener('click',()=>{initAudio();renderSkins();themesEl.c
 $('#skinX').addEventListener('click',closeSkins);
 themesEl.addEventListener('click',e=>{if(e.target===themesEl)closeSkins();});
 
+/* SERVICE DECK: cleaned and polished, the machine is as good as new (tapes keep their own wear) */
+$('#mxClean').addEventListener('click',()=>{
+  const b=$('#mxClean');
+  if(!b.classList.contains('sure')){b.classList.add('sure');b.textContent=_t('REALLY? TAP AGAIN');click('tick');clearTimeout(b._t);b._t=setTimeout(()=>{b.classList.remove('sure');b.textContent=_t('SERVICE DECK');},2500);return;}
+  b.classList.remove('sure');b.textContent=_t('SERVICE DECK');
+  D.hrs=0;saveDeck();paintDeckWear(true);click('latch');say(_t('DECK SERVICED'),1500);
+});
+
 /* NEW TAPE: the cassette is re-taped, wear and loop damage are gone for good */
 $('#mxNew').addEventListener('click',()=>{
   if(!cur)return;const b=$('#mxNew');

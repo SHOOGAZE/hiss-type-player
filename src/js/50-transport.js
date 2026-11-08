@@ -35,12 +35,18 @@ function loopWrap(){
   loopGen++;erode();killSource();S.off=0;S.mode='stop';go('play');
   say(_t('LOOP · PASS ')+loopGen,1200);paintAge();
 }
+/* the deck itself ages with the hours it plays: 0 = new, 1 = about ten hours of use */
+let dwSave=0,dwShown=-1;
+const deckWear=()=>Math.pow(Math.min(1,(D.hrs||0)/36000),.8);
+function paintDeckWear(force){const w=deckWear();if(force||Math.abs(w-dwShown)>=.004){dwShown=w;document.body.style.setProperty('--dw',w.toFixed(3));}}
+paintDeckWear(true);
 function ageTick(dt){
   if(!cur||!ctx)return;
   const m=S.mode;if(m==='play'||m==='rec'||m==='scrub'||m==='ff'||m==='rew'){
     const f=(m==='ff'||m==='rew')?0.3:1;
     cur.meta.wear=Math.min(1.3,(cur.meta.wear||0)+dt/2400*(0.6+tapeAmt)*f);
     wearSave+=dt;if(wearSave>20){wearSave=0;dbPut('meta',cur.meta).catch(()=>{});}
+    D.hrs=(D.hrs||0)+dt*f;dwSave+=dt;paintDeckWear();if(dwSave>30){dwSave=0;saveDeck();}
     paintAge();
   }
 }

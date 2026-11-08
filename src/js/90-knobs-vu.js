@@ -14,21 +14,28 @@ $('#reset').addEventListener('click',()=>{initAudio();cntZero=getPos();lastCnt=-
 let kuid=0;
 const GLINT='<svg class="glint" viewBox="-50 -50 100 100"><path d="M-26 -24A35 35 0 0 1 10 -34" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/><path d="M-30 -14A34 34 0 0 1 -22 -27" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2" stroke-linecap="round"/><path d="M24 30A35 35 0 0 1 -6 37" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="2.4" stroke-linecap="round"/></svg>';
 function capSVG(){
-  const id='kg'+(kuid++);let ribs='';const N=30;
-  for(let i=0;i<N;i++)ribs+=`<rect x="-1.5" y="-49.5" width="3" height="9" rx="1" transform="rotate(${(i*360/N).toFixed(2)})"/>`;
+  const id='kg'+(kuid++);let ribs='',fine='',flu='';const N=44;
+  for(let i=0;i<72;i++)fine+=`<rect x="-.55" y="-49.5" width="1.1" height="8" transform="rotate(${(i*5).toFixed(2)})"/>`;
+  for(let i=0;i<14;i++)flu+=`<rect x="-3.2" y="-49" width="6.4" height="15" rx="3.2" transform="rotate(${(i*360/14).toFixed(2)})"/>`;
+  for(let i=0;i<N;i++)ribs+=`<rect x="-1.05" y="-49.5" width="2.1" height="8.6" rx=".7" transform="rotate(${(i*360/N).toFixed(2)})"/>`;
   return `<svg class="kc" viewBox="-50 -50 100 100">
   <defs>
    <radialGradient id="${id}b" cx=".36" cy=".3" r=".95"><stop offset="0" stop-color="var(--k1)"/><stop offset=".58" stop-color="var(--k2)"/><stop offset="1" stop-color="var(--k3)"/></radialGradient>
    <radialGradient id="${id}d" cx=".62" cy=".68" r=".9"><stop offset="0" stop-color="var(--k1)"/><stop offset=".6" stop-color="var(--k2)"/><stop offset="1" stop-color="var(--k3)"/></radialGradient>
   </defs>
-  <circle r="48" cy="3" fill="#000" opacity=".28"/><circle r="45" cy="1.6" fill="#000" opacity=".28"/>
-  <g class="rib"><circle r="49" fill="var(--kr2)"/><g fill="var(--kr1)">${ribs}</g><circle r="40.5" fill="none" stroke="#000" stroke-opacity=".55" stroke-width="1.6"/></g>
+  <radialGradient id="${id}s" cx=".5" cy=".5" r=".5"><stop offset=".78" stop-color="#000" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  <circle r="56" cx="1.5" cy="4.5" fill="url(#${id}s)"/>
+  <g class="fine"><circle r="49" fill="var(--kr2)"/><g fill="var(--kr1)">${fine}</g><circle r="41" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="1.2"/></g>
+  <g class="flute"><circle r="49" fill="var(--kf2,#1b1a18)"/><g fill="var(--kf1,#000)" opacity=".85">${flu}</g><circle r="49" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width=".8"/></g>
+  <g class="rib"><circle r="49" fill="var(--kr2)"/><g fill="var(--kr1)" opacity=".62">${ribs}</g><circle r="40.5" fill="none" stroke="#000" stroke-opacity=".55" stroke-width="1.6"/></g>
   <circle r="41" fill="url(#${id}b)" stroke="#000" stroke-opacity=".5" stroke-width=".9"/>
   <circle r="40" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width=".7"/>
   <g class="rings" fill="none"><circle r="36" stroke="#000" stroke-opacity=".16" stroke-width=".6"/><circle r="35.4" stroke="#fff" stroke-opacity=".18" stroke-width=".5"/>
    <circle r="31" stroke="#000" stroke-opacity=".14" stroke-width=".6"/><circle r="30.4" stroke="#fff" stroke-opacity=".16" stroke-width=".5"/>
    <circle r="26" stroke="#000" stroke-opacity=".13" stroke-width=".6"/><circle r="25.4" stroke="#fff" stroke-opacity=".14" stroke-width=".5"/>
    <circle r="21" stroke="#000" stroke-opacity=".12" stroke-width=".6"/><circle r="20.4" stroke="#fff" stroke-opacity=".12" stroke-width=".5"/></g>
+  <g class="dome"><ellipse cx="-9" cy="-15" rx="24" ry="14" fill="#fff" opacity=".42" transform="rotate(-24)"/><circle r="40" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.4"/></g>
+  <g class="glass"><circle r="21" fill="#17120a" stroke="#000" stroke-width="1"/><circle r="19" fill="none" stroke="#f4dc9a" stroke-opacity=".5" stroke-width=".9"/><path d="M-13 -9A16 16 0 0 1 4 -16" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2.4" stroke-linecap="round"/></g>
   <g class="dish"><circle r="23" fill="url(#${id}d)" stroke="#000" stroke-opacity=".38" stroke-width=".8"/><circle r="22.2" fill="none" stroke="#fff" stroke-opacity=".34" stroke-width=".6" stroke-dasharray="0"/></g>
   </svg>`;
 }

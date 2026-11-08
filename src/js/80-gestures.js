@@ -14,7 +14,7 @@ bay.addEventListener('pointerdown',e=>{
   if(g)abortGesture();
   initAudio();
   const hit=reelHit(e.clientX,e.clientY);
-  if(hit&&lidP<0.04&&cur&&S.mode!=='rec'&&!armed){try{bay.setPointerCapture(e.pointerId);}catch(_){}startScrub(hit,e);return;}
+  if(hit&&lidP>0.96&&cur&&S.mode!=='rec'&&!armed){try{bay.setPointerCapture(e.pointerId);}catch(_){}startScrub(hit,e);return;}
   /* swipe up on the glass opens the lid, swipe down closes it; the lid follows the finger */
   try{bay.setPointerCapture(e.pointerId);}catch(_){}
   g={type:'lid',id:e.pointerId,t0:performance.now(),y0:e.clientY,p0:lidP,moved:false,ly:e.clientY,lt:performance.now(),v:0};

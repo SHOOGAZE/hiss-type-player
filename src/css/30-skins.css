@@ -22,7 +22,7 @@ body[data-theme="kami"] .knob line{stroke-dasharray:.1 30;stroke-width:3.2}
 body[data-theme="kami"] #keys{height:84px;align-items:start;padding-bottom:0}
 body[data-theme="kami"] .key{width:54px;height:54px;border-radius:50%;justify-self:center;min-width:0;margin-top:2px;gap:0;
   box-shadow:0 5px 0 #cfcbbf,0 9px 14px #8a836f44,inset 0 2px 2px #fff}
-body[data-theme="kami"] .key.down{transform:translateY(4px) scale(.96);background:linear-gradient(#ece9df,#ece9df);box-shadow:0 1px 0 #cfcbbf,inset 0 3px 6px #8a836f55}
+body[data-theme="kami"] .key.down{transform:translateY(4px);background:linear-gradient(#ece9df,#ece9df);box-shadow:0 1px 0 #cfcbbf,inset 0 3px 6px #8a836f55}
 body[data-theme="kami"] .key span{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);white-space:nowrap;color:var(--dim)}
 
 /* ---------- NASHVILLE: chrome bezels, backlit needles, chrome cone knobs, chunky deep keys ---------- */
@@ -60,7 +60,7 @@ body[data-theme] #ctl{display:block;position:relative;height:100%;max-height:non
 body[data-theme] .cnt{display:none}
 body[data-theme] #grille{height:100%;min-height:84px;max-height:262px}
 body[data-theme] .duo{display:grid;position:static;transform:none;margin:0;grid-column:3;grid-row:2;justify-self:end;grid-template-columns:repeat(4,38px);gap:4px;z-index:3}
-body[data-theme] .duo{padding:5px;gap:4px;border-radius:12px;grid-template-columns:repeat(4,38px);background:color-mix(in srgb,var(--body,var(--meta)) 70%,#000);box-shadow:inset 0 2px 5px #0006,inset 0 -1px 0 #ffffff30,0 1px 0 #ffffff40}
+body[data-theme] .duo{padding:5px 5px 9px;gap:4px;border-radius:12px;grid-template-columns:repeat(4,38px);background:color-mix(in srgb,var(--body,var(--meta)) 70%,#000);box-shadow:inset 0 2px 5px #0006,inset 0 -1px 0 #ffffff30,0 1px 0 #ffffff40}
 body[data-theme] .duo .sm{height:40px;width:38px;padding:0;font-size:6.5px;position:relative}
 body[data-theme] .duo .sm.on{color:var(--key-lab)}
 body[data-theme] .duo .sm::before{content:"";position:absolute;inset:-3px -2px}
@@ -278,19 +278,31 @@ body.libo #grille{min-height:0}
 #plate::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:var(--sheen,1);
   background:linear-gradient(112deg,transparent 18%,#ffffff14 30%,#ffffff40 38%,#ffffff12 46%,transparent 56%),linear-gradient(112deg,transparent 64%,#ffffff0e 72%,transparent 80%),linear-gradient(180deg,#ffffff30,transparent 14px)}
 
-/* ---- inside of the lid (visible once it folds past edge-on): dark matte plastic on every skin ---- */
-#lid.bk .frame,body[data-theme] #lid.bk .frame{background:linear-gradient(180deg,#2b2d31,#17181b 60%,#121316)!important;border-color:#1d1e21!important}
-body.lidc #lid.bk .frame::before{background:linear-gradient(180deg,#2d2f33,#1a1b1e 55%,#131417);box-shadow:inset 0 0 0 1px #ffffff14,inset 0 2px 0 #ffffff22,inset 0 -3px 0 #0006}
-body.lidc #lid.bk .frame::after{opacity:.25}
-#lid.bk .glare{opacity:.25!important}
-body.lidc #lid.bk::before{opacity:.12;background:var(--lid-tex-in,repeating-linear-gradient(0deg,#fff 0 1px,#000 1px 3px));}
+/* ---- inside of the lid (visible once it folds past edge-on) ---- */
+/* closed-type lid: dark matte moulded plastic with a rib frame, screw bosses and a raised lip round the window */
+body.lidc #lid.bk .frame{background:none!important;border-color:transparent!important}
+body.lidc #lid.bk .frame::before{background:
+  radial-gradient(ellipse 90% 70% at 50% 40%,#ffffff0d,#0000 70%),
+  repeating-linear-gradient(90deg,#ffffff06 0 1px,#0000 1px 3px),
+  linear-gradient(180deg,#303236,#1b1c1f 52%,#121316);box-shadow:inset 0 0 0 1px #ffffff12,inset 0 2px 0 #ffffff26,inset 0 -3px 0 #0007,inset 0 0 22px #0008}
+body.lidc #lid.bk .frame::after{background:var(--lid-in) 0 0/100% 100% no-repeat,var(--lid-rim) 0 0/100% 100% no-repeat;opacity:1}
+body.lidc #lid.bk .glare{opacity:.18!important}
+#lid.bk .prt,#lid.bk .hint{display:none!important}
+body.lidc #lid.bk::before{opacity:.1;background:var(--lid-tex-in,repeating-linear-gradient(0deg,#fff 0 1px,#000 1px 3px));}
+/* transparent lid: stays clear glass when opened, in a dark plastic frame, with a lighter sheen on the back */
+body:not(.lidc) #lid.bk .frame{border-color:#17181b!important;box-shadow:inset 0 0 0 1px #0009,inset 0 1px 0 #ffffff33,0 8px 16px #000a,inset 0 0 18px #ffffff10!important;
+  background:linear-gradient(205deg,#ffffff26 0%,#ffffff08 30%,#0000 46%,#ffffff12 70%,#ffffff05 100%),var(--glass)!important}
+body:not(.lidc) #lid.bk .glare{opacity:.8!important;transform:scaleX(-1)}
 #lid.bk::after,#lid.bk .grip{opacity:.5}
 
 /* key captions printed on the body: they stay put while the key sinks */
 body[data-theme="nashville"] .key.down span{transform:translateY(-9px)}
-body[data-theme="kami"] .key.down span{transform:translateX(-50%) translateY(-4px) scale(1.042)}
+body[data-theme="kami"] .key.down span{transform:translateX(-50%) translateY(-4px)}
 
 /* KAMIYA encoders: orange pointer and lit ticks, darker unlit ticks, cream captions and read-outs (teal on teal and orange on teal were hard to read) */
 body[data-theme="kami"]{--ind:#ff8a2a;--tick-on:#ff8a2a;--tick-off:#0c5a4c}
 body[data-theme="kami"] .kn label{color:#fdf3d8;font-weight:600;opacity:.95}
 body[data-theme="kami"] .kn output{color:#fff1cf;text-shadow:0 1px 0 #06453b}
+
+/* pressed key on the dark skins: black on black lost its outline and the row looked uneven, so give the sunk key a thin lit rim and a clear inner shade */
+body[data-theme="sonic"] .key.down:not([data-k=rec]),body[data-theme="kiiro"] .key.down:not([data-k=rec]){box-shadow:0 1px 0 var(--key-edge),inset 0 0 0 1px #ffffff2e,inset 0 3px 7px #000c}

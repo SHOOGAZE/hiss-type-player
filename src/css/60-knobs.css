@@ -22,3 +22,54 @@ body[data-theme="sonic"] .cap{--k2:#c9ccd2;--k3:#8a8e97}
 .cap:active{transform:scale(.97);box-shadow:0 0 0 3px #0000002e,0 0 0 4px #ffffff1f,2px 3px 4px #0000005c,1px 1px 1px #000000a0}
 body[data-theme="kami"] .cap{box-shadow:0 0 0 3px #7a735e22,0 0 0 4px #ffffffb0,3px 7px 9px #5a523c40,1px 2px 2px #5a523c55}
 .cap b{box-shadow:0 0 5px color-mix(in srgb,var(--ind) 60%,transparent),0 0 10px color-mix(in srgb,var(--ind) 28%,transparent)}
+
+/* ---- encoder variety: each skin gets its own shape, material and pointer ---- */
+.cap .fine,.cap .flute,.cap .dome,.cap .glass{display:none}
+.cap b{transition:none}
+
+/* SORAKO: milled aluminium, fine concentric grooves, short orange pointer */
+body[data-theme="sonic"] .cap b{width:2.5px;height:9px;margin-left:-1.25px;top:4px;border-radius:1px}
+
+/* KAMIYA: one soft cream drop with a shallow dimple; the pointer is a dot */
+body[data-theme="kami"] .cap{--k1:#fffaea;--k2:#f4e9cb;--k3:#d1bf92}
+body[data-theme="kami"] .cap::after{content:"";position:absolute;inset:6%;border-radius:50%;pointer-events:none;background:radial-gradient(ellipse 60% 42% at 34% 26%,#ffffffa0,#ffffff00 72%),radial-gradient(circle at 60% 78%,#b9a56e33,#0000 55%)}
+body[data-theme="kami"] .cap .dish{display:none}
+body[data-theme="kami"] .cap .glint{opacity:.55}
+body[data-theme="kami"] .cap b{width:8px;height:8px;margin-left:-4px;top:6px;border-radius:50%}
+
+/* HARLAN: bakelite-era metal knob with coarse knurl and a long red line over a porcelain centre */
+body[data-theme="nashville"] .cap b{width:3.5px;height:15px;margin-left:-1.75px;top:2px;border-radius:1px;background:#c0392b;box-shadow:none}
+
+/* KIIRO: fat fluted rubber, pointer is a short bright block */
+body[data-theme="kiiro"] .cap{--k1:#4a4944;--k2:#262521;--k3:#0d0d0c;--kf1:#050505;--kf2:#5a5851}
+body[data-theme="kiiro"] .cap .rib,body[data-theme="kiiro"] .cap .rings{display:none}
+body[data-theme="kiiro"] .cap .flute{display:block}
+body[data-theme="kiiro"] .cap b{width:6px;height:12px;margin-left:-3px;top:5px;border-radius:2px}
+
+/* KURO: matte flat rubber, no gloss, a red line sunk into the face */
+body[data-theme="kuro"] .cap{--k1:#303136;--k2:#232428;--k3:#18191c;--kr1:#0c0c0d;--kr2:#26272b}
+body[data-theme="kuro"] .cap .rib,body[data-theme="kuro"] .cap .rings{display:none}
+body[data-theme="kuro"] .cap .glint{display:none}
+body[data-theme="kuro"] .cap .dish{display:block}
+body[data-theme="kuro"] .cap b{width:3px;height:16px;margin-left:-1.5px;top:5px;border-radius:0;background:#ff5040;box-shadow:inset 0 1px 1px #0008,0 0 5px #ff504066}
+
+/* the small buttons beside the encoders follow the same character */
+body[data-theme="kami"] .duo .sm{border-radius:14px}
+body[data-theme="kiiro"] .duo .sm{border-radius:9px}
+body[data-theme="akane"] .duo .sm{border-radius:16px}
+body[data-theme="kuro"] .duo .sm{border-radius:3px}
+body[data-theme="nashville"] .duo .sm{border-radius:3px}
+
+/* ---- natural lighting: one fixed light source over every cap (the lighting does not rotate with the knob) ---- */
+.cap::before{content:"";position:absolute;inset:-9%;border-radius:50%;pointer-events:none;z-index:1;opacity:0}
+body[data-theme="sonic"] .cap::before,body[data-theme="nashville"] .cap::before{opacity:.9;mix-blend-mode:soft-light;
+  background:conic-gradient(from 20deg,#fff0 0,#fffe 9%,#fff0 22%,#0007 42%,#fff0 55%,#fffc 74%,#fff0 90%,#fff0 100%)}
+body[data-theme="akane"] .cap::before,body[data-theme="kiiro"] .cap::before,body[data-theme="kuro"] .cap::before{opacity:.55;mix-blend-mode:soft-light;
+  background:conic-gradient(from 20deg,#fff0 0,#fffa 10%,#fff0 24%,#0006 46%,#fff0 58%,#fff8 76%,#fff0 92%,#fff0 100%)}
+/* HARLAN: fine chrome-plated knurl instead of black/white piano stripes */
+body[data-theme="nashville"] .cap{--kr1:#6b6a63;--kr2:#e4e2da}
+/* SORAKO: the soft shadow replaces the heavy dark crescent */
+body[data-theme="sonic"] .cap .spin{filter:drop-shadow(0 0 .6px #3f434a)}
+/* KIIRO: shallower, quieter grooves in matte rubber */
+body[data-theme="kiiro"] .cap{--kf1:#0a0a09;--kf2:#3c3b37}
+body[data-theme="kiiro"] .cap .flute g{opacity:.55}

@@ -4,6 +4,7 @@ const TOUR_ICO={
  '＋':'<path d="M12 5v14M5 12h14"/>',
  '◎':'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6"/><path d="M12 4v2.5M12 17.5V20M4 12h2.5M17.5 12H20" opacity=".0"/>',
  '4':'<path d="M4 6h16M4 10.7h16M4 15.3h16M4 20h16" opacity=".4"/><path d="M4 6h7M4 10.7h12M4 15.3h5M4 20h10"/>',
+ '⇄':'<path d="M4 8h13M13 4l4 4-4 4M20 16H7M11 12l-4 4 4 4"/>',
  '⚙':'<path d="M5 7h5M14 7h5M5 17h9M18 17h1M5 12h1M10 12h9"/><circle cx="12" cy="7" r="2"/><circle cx="16" cy="17" r="2"/><circle cx="8" cy="12" r="2"/>',
  '⟳':'<rect x="3" y="11" width="13" height="8" rx="2"/><path d="M8 6.5a7 7 0 0 1 11 2.5"/><path d="M20 4.5V9h-4.5"/>'
 };
@@ -11,8 +12,9 @@ const TOUR=[
  ['▲','Swipe the lid up','Swipe up on the glass lid to open the deck. Swipe down to close it again.'],
  ['＋','Load your music','Tap the slot (or ＋ on the shelf) and pick audio from your device. Every file becomes a cassette.'],
  ['◎','Play it like tape','REW, PLAY, FF, STOP and PAUSE work like the real thing. Spin the reels with a finger to scrub. The knobs stop at their limits.'],
- ['4','Four tracks','4TRK layers four tracks, bounces between them (ping-pong) and flips the cassette to side B. NR switches Dolby on and off.'],
- ['⚙','Shape the sound','DECK holds tape type, speed, tone, volume and a sleep timer. TAPE and PITCH bend the sound, LOOP wears the tape out.'],
+ ['4','Record on top','Tap 4TRK, press ARM on a track, close the mixer, then press REC and PLAY. Your new sound lands on that track while the others keep playing.'],
+ ['⇄','Ping-pong','Out of tracks? In 4TRK, PING-PONG mixes all the other tracks into the armed one and frees them up. Every pass wears the sound a little.'],
+ ['⚙','Shape the sound','DECK holds tape type, speed, tone, volume, sleep timer and NR (Dolby). TAPE and PITCH bend the sound, LOOP wears the tape out.'],
  ['⟳','Rotate your phone','Landscape shows the cassette full screen with glass controls. Long-press a cassette on the shelf to delete it. BOUNCE saves what you hear as a WAV.']
 ];
 const tourEl=$('#intro');let tourI=0;
@@ -97,7 +99,7 @@ function renderMixer(){
 }
 function openMixer(){
   initAudio();if(!cur){say(_t('INSERT A CASSETTE FIRST'),1800);click('tick');return;}
-  mixEl.classList.add('on');click('down');renderMixer();requestAnimationFrame(renderMixer);
+  mixEl.classList.add('on');click('down');renderMixer();try{if(!localStorage.getItem('tape4.mx1')){localStorage.setItem('tape4.mx1','1');say(_t('ARM A TRACK · THEN REC + PLAY'),3200);}}catch(e){}requestAnimationFrame(renderMixer);
 }
 $('#mixBtn').addEventListener('click',openMixer);
 /* ---------- deck sheet ---------- */
@@ -185,7 +187,20 @@ function lidMask(){
     +"<path d='"+d+"' fill='none' stroke='#000' stroke-opacity='.4' stroke-width='9'/>"
     +"<path d='"+d+"' fill='none' stroke='url(#b)' stroke-width='5'/>"
     +"<path d='"+d+"' fill='none' stroke='#000' stroke-opacity='.55' stroke-width='1'/>"
-    +"<rect clip-path='url(#c)' x='"+gx+"' y='"+gy+"' width='"+gw+"' height='"+(gh*.42).toFixed(1)+"' fill='url(#r)'/></g>");
+    +"<rect clip-path='url(#c)' x='"+gx+"' y='"+gy+"' width='"+gw+"' height='"+(gh*.42).toFixed(1)+"' fill='url(#r)'/>"
+    +"<g clip-path='url(#c)'><path d='"+d+"' fill='#bfe0ff' fill-opacity='.07'/>"
+    +"<path d='M"+(gx+gw*.12)+" "+(gy+gh)+"L"+(gx+gw*.34)+" "+gy+"H"+(gx+gw*.46)+"L"+(gx+gw*.24)+" "+(gy+gh)+"Z' fill='#fff' fill-opacity='"+(.16*sh).toFixed(2)+"'/>"
+    +"<path d='M"+(gx+gw*.5)+" "+(gy+gh)+"L"+(gx+gw*.68)+" "+gy+"H"+(gx+gw*.73)+"L"+(gx+gw*.55)+" "+(gy+gh)+"Z' fill='#fff' fill-opacity='"+(.1*sh).toFixed(2)+"'/></g></g>");
+  /* inside of the moulded lid: stiffening rib frame, screw bosses and a raised lip round the window */
+  const R=(x,y)=>"<circle cx='"+x+"' cy='"+y+"' r='6' fill='url(#bo)'/><circle cx='"+x+"' cy='"+y+"' r='2.2' fill='#000' fill-opacity='.55'/>";
+  const inn=g("<defs><radialGradient id='bo' cx='.35' cy='.3' r='.8'><stop offset='0' stop-color='#fff' stop-opacity='.22'/><stop offset='1' stop-color='#000' stop-opacity='.55'/></radialGradient>"
+    +"<linearGradient id='vg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#000' stop-opacity='.35'/><stop offset='.25' stop-color='#000' stop-opacity='0'/><stop offset='.8' stop-color='#000' stop-opacity='0'/><stop offset='1' stop-color='#000' stop-opacity='.4'/></linearGradient></defs>"
+    +"<rect width='"+W.toFixed(1)+"' height='"+H.toFixed(1)+"' fill='url(#vg)'/>"
+    +"<rect x='13' y='13' width='"+(W-26).toFixed(1)+"' height='"+(H-39).toFixed(1)+"' rx='12' fill='none' stroke='#000' stroke-opacity='.55' stroke-width='3'/>"
+    +"<rect x='13' y='13' width='"+(W-26).toFixed(1)+"' height='"+(H-39).toFixed(1)+"' rx='12' fill='none' stroke='#fff' stroke-opacity='.09' stroke-width='1' transform='translate(0 2)'/>"
+    +"<g "+T+"><path d='"+d+"' fill='none' stroke='#000' stroke-opacity='.5' stroke-width='11' stroke-linejoin='round'/><path d='"+d+"' fill='none' stroke='#fff' stroke-opacity='.1' stroke-width='6' stroke-linejoin='round'/><path d='"+d+"' fill='none' stroke='#000' stroke-opacity='.6' stroke-width='1.2'/></g>"
+    +R(24,24)+R(W-24,24)+R(24,H-30)+R(W-24,H-30));
+  document.body.style.setProperty('--lid-in',inn);
   document.body.style.setProperty('--lid-mask',mask);document.body.style.setProperty('--lid-rim',rim);
 }
 function applyLid(){document.body.classList.toggle('lidc',!!D.lidc);prtK='';lidMask();updatePrint();}
