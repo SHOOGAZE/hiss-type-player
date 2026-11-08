@@ -137,5 +137,4 @@ function lidFit(){
     lidA=+clamp(90+(gap-14)/(58-14)*10,90,100).toFixed(1);
   }catch(e){lidA=100;}
 }
-window.addEventListener('resize',()=>setTimeout(lidFit,150));
 setTimeout(lidFit,300);

@@ -158,12 +158,15 @@ function winBox(d){  /* bounding box of a window path, measured once */
 /* landscape variant: same reel centres, smaller radius (shrinking the whole shape would pull the circles off their reels) */
 const LID_WIN_T={kami:'M72 155A58 58 0 1 0 188 155A58 58 0 1 0 72 155ZM201 155A58 58 0 1 0 317 155A58 58 0 1 0 201 155Z'};   /* tablets: bigger windows */
 const LID_WIN_L={kami:'M86 155A44 44 0 1 0 174 155A44 44 0 1 0 86 155ZM215 155A44 44 0 1 0 303 155A44 44 0 1 0 215 155Z'};
+let lidKey='';
 function lidMask(){
   const lid=$('#lid'),sl=$('#slot')||$('#empty');if(!lid||!sl)return;
   const bx=e=>({left:e.offsetLeft,top:e.offsetTop,width:e.offsetWidth,height:e.offsetHeight});  /* layout boxes: unaffected by the lid's swipe transform */
   const a=bx(lid);let b=bx(sl);
   if(!b.width){const e=$('#empty');if(e)b=bx(e);}
   if(!a.width||!b.width)return;
+  const th0=document.body.dataset.theme,ky=[a.width,a.height,b.left-a.left,b.top-a.top,b.width,th0,innerWidth,getComputedStyle(document.body).getPropertyValue('--sheen')].join('|');
+  if(ky===lidKey)return;lidKey=ky;   /* same geometry as last time: skip rebuilding the SVG masks (the costly repaint behind the rotation stutter) */
   const W=a.width,H=a.height,k=b.width/344,m=0.9385*k;           /* 344 = cassette width in the portrait bay, 0.9385 = lid px per viewBox unit */
   const tx=(b.left-a.left)-11*k,ty=(b.top-a.top)-13*k;
   const th=document.body.dataset.theme,tab=W>H&&innerWidth>=900,dl=tab?LID_WIN_T[th]:(W>H&&LID_WIN_L[th]);
@@ -186,8 +189,9 @@ function lidMask(){
   document.body.style.setProperty('--lid-mask',mask);document.body.style.setProperty('--lid-rim',rim);
 }
 function applyLid(){document.body.classList.toggle('lidc',!!D.lidc);prtK='';lidMask();updatePrint();}
-{let mk=0;const mq=()=>{clearTimeout(mk);mk=setTimeout(lidMask,60);};
- window.addEventListener('resize',mq);window.addEventListener('orientationchange',()=>setTimeout(lidMask,250));}
+/* rotation: fix the lid in the very next frame, then once more after iOS has finished resizing (a no-op when nothing changed) */
+{let raf=0,mk=0;const sync=()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;try{lidMask();lidFit();}catch(e){}});clearTimeout(mk);mk=setTimeout(()=>{try{lidMask();lidFit();}catch(e){}},180);};
+ window.addEventListener('resize',sync);window.addEventListener('orientationchange',sync);}
 function dkSet(k,v,quiet){
   D[k]=v;saveDeck();if(k==='speed')retune();if(k==='lidc')applyLid();if(k==='libc'){libO=false;applyLib();}
   initAudio();applyDeck();dkPaint();if(!quiet)click('tick');

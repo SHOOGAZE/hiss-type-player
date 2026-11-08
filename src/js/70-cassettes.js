@@ -34,11 +34,12 @@ function reelSVG(k,cx,cy,r){
 const COND="'Avenir Next Condensed','DIN Condensed','Helvetica Neue','Arial Narrow','Roboto Condensed',sans-serif";
 const PFF={kuro:COND,sonic:"'Helvetica Neue',Helvetica,Arial,sans-serif",kami:"'Arial Rounded MT Bold','Avenir Next Rounded','Avenir Next',sans-serif",
   kiiro:"Menlo,'Courier New',ui-monospace,monospace",akane:"'DIN Condensed','Avenir Next Condensed','Arial Narrow',sans-serif",nashville:"'American Typewriter','Courier New',Courier,serif"};
-const PW={kuro:.46,sonic:.62,kami:.62,kiiro:.62,akane:.46,nashville:.68},PS={kuro:2.4,sonic:1.6,kami:1.2,kiiro:.8,akane:2.6,nashville:1.2},PWT={kuro:600,sonic:500,kami:400,kiiro:500,akane:600,nashville:700};
+const PW={kuro:.46,sonic:.62,kami:.62,kiiro:.62,akane:.46,nashville:.68},PS={kuro:2.4,sonic:1.6,kami:1.2,kiiro:.8,akane:2.6,nashville:1.2},PWT={kuro:600,sonic:500,kami:400,kiiro:500,akane:600,nashville:600};
 const printFF=()=>PFF[theme]||COND;
 const HAND_FF="'Bradley Hand','Noteworthy','Marker Felt','Segoe Print',cursive";
 const isHand=m=>m.font==='hand';
-function labFs(n,print){return print?clamp(Math.floor(236/(Math.max(1,n.length)*((PW[theme]||.5)+(PS[theme]||2)/22))),11,26):(n.length>22?14:n.length>15?17:20);}
+/* print caps top out at 19 (they used to reach 26 and shouted); handwriting has a small x-height, so it gets a larger size to match */
+function labFs(n,print){return print?clamp(Math.floor(236/(Math.max(1,n.length)*((PW[theme]||.5)+(PS[theme]||2)/22))),11,19):(n.length>22?16:n.length>15?20:25);}
 function labTxt(m,t){return isHand(m)?t:t.toUpperCase();}
 /* paper grain: one pre-rendered noise tile shared by every cassette (no per-frame SVG filter) */
 (function(){

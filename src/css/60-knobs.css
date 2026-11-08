@@ -8,7 +8,7 @@
 .cap .rings{display:block;opacity:.7}.cap .dish{display:block}
 body[data-theme="sonic"] .cap{--k1:#fbfbfc;--k2:#d3d6db;--k3:#9a9ea6}
 body[data-theme="sonic"] .cap .rib{display:none}body[data-theme="sonic"] .cap .rings{opacity:1}body[data-theme="sonic"] .cap .dish{display:none}
-body[data-theme="kami"] .cap{--k1:#ffffff;--k2:#efece3;--k3:#cdc8b9}
+body[data-theme="kami"] .cap{--k1:#fff7e0;--k2:#f1e5c6;--k3:#c9b88e}
 body[data-theme="kami"] .cap .rib,body[data-theme="kami"] .cap .rings{display:none}
 body[data-theme="nashville"] .cap{--k1:#fbfaf6;--k2:#b6b3aa;--k3:#76736a;--kr1:#35332e;--kr2:#cfccc3}
 body[data-theme="nashville"] .cap .rings{display:none}

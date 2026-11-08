@@ -289,3 +289,8 @@ body.lidc #lid.bk::before{opacity:.12;background:var(--lid-tex-in,repeating-line
 /* key captions printed on the body: they stay put while the key sinks */
 body[data-theme="nashville"] .key.down span{transform:translateY(-9px)}
 body[data-theme="kami"] .key.down span{transform:translateX(-50%) translateY(-4px) scale(1.042)}
+
+/* KAMIYA encoders: orange pointer and lit ticks, darker unlit ticks, cream captions and read-outs (teal on teal and orange on teal were hard to read) */
+body[data-theme="kami"]{--ind:#ff8a2a;--tick-on:#ff8a2a;--tick-off:#0c5a4c}
+body[data-theme="kami"] .kn label{color:#fdf3d8;font-weight:600;opacity:.95}
+body[data-theme="kami"] .kn output{color:#fff1cf;text-shadow:0 1px 0 #06453b}
