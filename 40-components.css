@@ -1,0 +1,84 @@
+/* intro / tour */
+#intro{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(8,7,6,.86);font-family:ui-monospace,"SF Mono",Menlo,monospace;touch-action:none}
+#intro.on{display:flex;animation:fadeIn .4s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+#intro .card{position:relative;width:min(88vw,360px);color:#3a352c;background:#f7f4ec;border-radius:18px;padding:22px 20px 16px;box-shadow:0 20px 60px #000c,inset 0 0 0 1px #fff;text-align:center}
+#intro .lang{position:absolute;right:12px;top:12px;display:flex;gap:4px}
+#intro .lang button{border:0;border-radius:6px;padding:5px 8px;background:#e6e1d3;color:#7a705c;font:700 9px ui-monospace,Menlo,monospace;letter-spacing:.1em}
+#intro .lang button.on{background:#ffb84a;color:#241a08}
+#intro .ico{width:64px;height:64px;margin:6px auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:#e08a00;
+  background:radial-gradient(circle at 35% 30%,#fff,#e9e3d3);box-shadow:inset 0 0 0 1px #d6cfba,0 6px 14px #0003}
+#intro b{display:block;letter-spacing:.2em;font-size:13px;color:#b86a00;margin-bottom:10px}
+#intro p{margin:0 0 16px;font-size:12px;line-height:1.55;letter-spacing:.02em;min-height:7.8em}
+#intro .dots{display:flex;gap:6px;justify-content:center;margin-bottom:14px}
+#intro .dots i{width:6px;height:6px;border-radius:50%;background:#d9d3c2}#intro .dots i.on{background:#e08a00}
+#intro .nav{display:flex;gap:8px}
+#intro .nav button{flex:1;height:38px;border:0;border-radius:8px;background:#e6e1d3;color:#5d5544;font:700 10px ui-monospace,Menlo,monospace;letter-spacing:.14em}
+#intro .nav #tNext{background:#ffb84a;color:#241a08}
+/* mixer sheet */
+#mixer{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;background:rgba(0,0,0,.55);touch-action:none;font-family:ui-monospace,"SF Mono",Menlo,monospace}
+#mixer.on{display:flex}
+#mixer .sheet{width:100%;max-width:520px;margin:0 auto;background:var(--meta);border-radius:18px 18px 0 0;padding:14px 12px calc(env(safe-area-inset-bottom) + 14px);
+  color:var(--ink);box-shadow:0 -10px 30px #0008,inset 0 1px 0 #ffffff22;animation:sheetUp .25s ease-out}
+#mixer .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:10px;letter-spacing:.22em;color:var(--dim)}
+#mxX,#skinX{width:44px;height:36px;border:0;border-radius:8px;background:linear-gradient(var(--key-a),var(--key-b));box-shadow:0 2px 0 var(--key-edge),inset 0 1px 0 var(--key-hi);color:var(--key-ink);font-size:18px}
+#strips{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.st{background:color-mix(in srgb,var(--ink) 8%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent);border-radius:10px;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:7px;border:2px solid transparent}
+.st.arm{border-color:#c0392b}
+.st .tl{font-size:10px;letter-spacing:.18em;color:var(--dim)}
+.fw{display:flex;gap:5px;align-items:stretch}
+.lv{display:flex;flex-direction:column-reverse;gap:2px;width:6px;padding:6px 0}
+.lv i{flex:1;border-radius:1px;background:var(--seg-off,#26282c)}
+.lv i.on{background:var(--seg1,#8ee27a)}.lv i.on:nth-child(n+7){background:var(--seg2,#ffb84a)}.lv i.on:nth-child(n+10){background:var(--seg3,#ff4a3d)}
+.st.empty .fw,.st.empty .mu-b{opacity:.38}
+#mxMore{display:block;width:100%;height:30px;margin-bottom:8px;border:0;border-radius:8px;background:transparent;color:var(--dim);font:700 9px ui-monospace,Menlo,monospace;letter-spacing:.16em;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 18%,transparent)}
+#mxRare{display:none}#mxRare.on{display:flex}
+.fd{position:relative;width:34px;height:96px;touch-action:none;cursor:pointer}
+.fd::before{content:"";position:absolute;left:50%;top:6px;bottom:6px;width:4px;margin-left:-2px;border-radius:2px;background:var(--key-edge);box-shadow:inset 0 1px 2px #000a,0 0 0 1px color-mix(in srgb,var(--ink) 18%,transparent)}
+.fd .th{position:absolute;left:1px;right:1px;height:22px;border-radius:4px;background:linear-gradient(var(--key-a),var(--key-b));box-shadow:0 3px 5px #0006,0 0 0 1px var(--key-edge),inset 0 1px 0 var(--key-hi)}
+.fd .th::after{content:"";position:absolute;left:3px;right:3px;top:10px;height:2px;background:var(--key-edge)}
+.st button{width:100%;height:30px;border:0;border-radius:6px;background:linear-gradient(var(--key-a),var(--key-b));box-shadow:0 2px 0 var(--key-edge),inset 0 1px 0 var(--key-hi);color:var(--key-lab);font:700 10px ui-monospace,Menlo,monospace;letter-spacing:.1em}
+.st .arm-b.on{background:#c0392b;color:#fff;box-shadow:0 0 10px #c0392b88,inset 0 1px 0 #ffffff40}
+.st .mu-b.on{background:#ffb84a;color:#241a08;box-shadow:0 0 8px #ffb84a77,inset 0 1px 0 #ffffff60}
+.st .cl-b{height:24px;font-size:9px}
+.st .cl-b.sure{background:#7a2a22;color:#fff}
+.st .ln{font-size:9px;color:var(--dim);letter-spacing:.06em}
+.namerow{display:flex;gap:8px;margin-bottom:8px}
+#fontBtn{width:84px;flex:none;height:38px;border:0;border-radius:8px;background:linear-gradient(var(--key-a),var(--key-b));box-shadow:0 2px 0 var(--key-edge),inset 0 1px 0 var(--key-hi);color:var(--key-ink);font:700 9px ui-monospace,Menlo,monospace;letter-spacing:.12em}
+#nameIn{flex:1;min-width:0;box-sizing:border-box;height:38px;border:0;border-radius:8px;background:color-mix(in srgb,var(--meta) 90%,#000);color:var(--ink);padding:0 12px;
+  font:16px "Bradley Hand","Noteworthy","Marker Felt","Segoe Print",cursive;outline:0;box-shadow:inset 0 1px 3px #000a,0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
+.mxrow{display:flex;gap:8px;margin-bottom:8px}
+.mxrow button{flex:1;height:42px;border:0;border-radius:8px;background:linear-gradient(var(--key-a),var(--key-b));box-shadow:0 3px 0 var(--key-edge),inset 0 1px 0 var(--key-hi);color:var(--key-ink);font:700 10px ui-monospace,Menlo,monospace;letter-spacing:.1em}
+.mxrow button:active{transform:translateY(2px);box-shadow:0 1px 0 var(--key-edge),inset 0 2px 5px #0006}
+#mxDel{color:#b3382b}
+#mxDel.sure{background:#7a2a22;color:#fff}
+#mxAge{font-size:9px;letter-spacing:.14em;color:var(--dim);text-align:center;padding-top:2px}
+/* skin picker */
+#themes{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;background:rgba(0,0,0,.55);touch-action:none;font-family:ui-monospace,"SF Mono",Menlo,monospace}
+#themes.on{display:flex}
+#themes .sheet{width:100%;max-width:520px;margin:0 auto;background:var(--meta);border-radius:18px 18px 0 0;padding:14px 12px calc(env(safe-area-inset-bottom) + 14px);
+  color:var(--ink);box-shadow:0 -10px 30px #0008,inset 0 1px 0 #ffffff22;animation:sheetUp .25s ease-out}
+@keyframes sheetUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+#themes .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:10px;letter-spacing:.22em;color:var(--dim)}
+#skinGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border-radius:12px;padding:8px;background:color-mix(in srgb,var(--ink) 8%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent);border:2px solid transparent;min-height:88px;display:flex;flex-direction:column;gap:5px}
+.tile.sel{border-color:var(--accent)}
+.tile .sw{height:40px;border-radius:8px;position:relative;display:flex;align-items:center;gap:5px;padding:0 8px;box-shadow:inset 0 0 0 1px #0003}
+.tile .sw i{flex:1;height:22px;border-radius:4px;display:block;box-shadow:0 2px 0 #0004}
+.tile .sw s{width:9px;height:9px;border-radius:50%;display:block}
+.tile b{font-size:11px;letter-spacing:.14em}
+.tile small{font-size:8px;color:var(--dim);letter-spacing:.04em}
+
+@media (max-height:720px){
+  #keys{height:62px}
+  .knob{width:52px;height:52px}
+}
+
+/* HARLAN: sheets are the deck's chrome plate (the wood stays on the body sides only) */
+body[data-theme="nashville"] :is(#mixer,#themes,#dk) .sheet{background:var(--plate),#bdbab1;box-shadow:0 -10px 30px #0008,inset 0 1px 0 #fff9,inset 0 2px 0 #8d8a82}
+body[data-theme="nashville"] #nameIn{background:#a9a69d;box-shadow:inset 0 1px 3px #0007,0 0 0 1px #8d8a82}
+
+/* tablets: the scaled deck sits on the skin background like a unit on a desk; sheets keep a phone-ish width */
+html.tab #deck{box-shadow:0 0 0 1px #0006,0 0 80px #000b;border-radius:18px;overflow:hidden}
+html.tab body{background:var(--bg) var(--meta)}
+@media (min-width:700px){#mixer .sheet,#dk .sheet,#themes .sheet{max-width:560px;margin:0 auto}}

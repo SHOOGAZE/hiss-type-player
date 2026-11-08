@@ -1,0 +1,24 @@
+{
+  "name": "HISS",
+  "short_name": "HISS",
+  "description": "HISS — cassette deck in your pocket",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4b90a",
+  "theme_color": "#f4b90a",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
