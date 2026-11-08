@@ -6,6 +6,17 @@ Load your own audio, swipe the lid open, spin the reels with your finger, record
 
 ![Six skins](screenshots/skins.gif)
 
+<details>
+<summary><b>All six skins, full size</b></summary>
+
+| | |
+|---|---|
+| ![SORAKO](screenshots/01-sorako.png) | ![KAMIYA](screenshots/02-kamiya.png) |
+| ![HARLAN](screenshots/03-harlan.png) | ![KIIRO](screenshots/04-kiiro.png) |
+| ![AKANE](screenshots/05-akane.png) | ![KURO](screenshots/06-kuro.png) |
+
+</details>
+
 Landscape visual mode (the cassette sits in a lid set into the plastic body, in the skin's colour):
 
 ![Landscape](screenshots/land-kiiro.png)
