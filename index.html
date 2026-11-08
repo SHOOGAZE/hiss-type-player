@@ -2560,6 +2560,7 @@ try{localStorage.setItem('tape4.theme',theme);}catch(e){}
 if(ctx){A.clk.gain.value=TC().lv;A.clkEq.gain.value=TC().bd;applyTape();loadSamples();}
 renderSkins();
 try{lidMask();lidFit();}catch(e){}
+try{updatePrint();}catch(e){}
 }
 function closeSkins(){themesEl.classList.remove('on');click('toggle');}
 $('#skinBtn').addEventListener('click',()=>{initAudio();renderSkins();themesEl.classList.add('on');click('toggle');});

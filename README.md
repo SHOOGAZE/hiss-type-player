@@ -4,15 +4,7 @@ A cassette deck in your pocket. One HTML file, works on iPhone in Safari and off
 
 Load your own audio, swipe the lid open, spin the reels with your finger, record on 4 tracks and bounce them down with generation loss. The tape ages: the more you play it, the darker and noisier it gets. A short intro tour runs on first launch (replay it any time from DECK → HOW TO USE).
 
-| | |
-|---|---|
-| ![Load a cassette and play](screenshots/insert-play.gif) | ![Six skins](screenshots/skins.gif) |
-
-| | |
-|---|---|
-| ![SORAKO](screenshots/01-sorako.png) | ![KAMIYA](screenshots/02-kamiya.png) |
-| ![HARLAN](screenshots/03-harlan.png) | ![KIIRO](screenshots/04-kiiro.png) |
-| ![AKANE](screenshots/05-akane.png) | ![KURO](screenshots/06-kuro.png) |
+![Six skins](screenshots/skins.gif)
 
 Landscape visual mode (the cassette sits in a lid set into the plastic body, in the skin's colour):
 

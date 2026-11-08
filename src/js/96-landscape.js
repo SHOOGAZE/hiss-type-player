@@ -226,6 +226,7 @@ function applyTheme(id,silent){
   if(ctx){A.clk.gain.value=TC().lv;A.clkEq.gain.value=TC().bd;applyTape();loadSamples();}
   renderSkins();
   try{lidMask();lidFit();}catch(e){}
+  try{updatePrint();}catch(e){}   /* lid print follows the skin at once, not on the next 500 ms tick */
 }
 function closeSkins(){themesEl.classList.remove('on');click('toggle');}
 $('#skinBtn').addEventListener('click',()=>{initAudio();renderSkins();themesEl.classList.add('on');click('toggle');});
