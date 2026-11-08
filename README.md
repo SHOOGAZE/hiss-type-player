@@ -6,6 +6,10 @@ Load your own audio, swipe the lid open, spin the reels with your finger, record
 
 | | |
 |---|---|
+| ![Load a cassette and play](screenshots/insert-play.gif) | ![Six skins](screenshots/skins.gif) |
+
+| | |
+|---|---|
 | ![SORAKO](screenshots/01-sorako.png) | ![KAMIYA](screenshots/02-kamiya.png) |
 | ![HARLAN](screenshots/03-harlan.png) | ![KIIRO](screenshots/04-kiiro.png) |
 | ![AKANE](screenshots/05-akane.png) | ![KURO](screenshots/06-kuro.png) |
