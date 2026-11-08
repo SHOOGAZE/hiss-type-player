@@ -18,7 +18,7 @@ function press(id){
       else if(armed&&!rec){say(_t('WAITING FOR MIC…'),1200);}
       else if(S.mode!=='play')go('play');
       break;
-    case 'stop':stopTransport();break;
+    case 'stop':stopTransport(true);break;
     case 'rew':if(S.mode==='rec'||armed)say(_t('PRESS STOP FIRST'),1200);else windGo('rew');break;
     case 'ff':if(S.mode==='rec'||armed)say(_t('PRESS STOP FIRST'),1200);else windGo('ff');break;
     case 'pause':if(S.mode==='rec')say(_t('NO PAUSE WHILE RECORDING'),1200);else pauseTape();break;

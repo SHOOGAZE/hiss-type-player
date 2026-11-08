@@ -53,15 +53,20 @@ body[data-theme] #grille{display:block;order:-1;flex:1 1 100%;height:clamp(110px
 /* POCKET v2 (Philips-style body): big speaker on top, window below, keys at the bottom; counter and small buttons are tucked behind MENU */
 body[data-theme] #top{order:0}
 body[data-theme] #panel{order:1;padding:0 0 50px;grid-template-rows:minmax(0,1fr)}
+/* breathing room in the lower half: more space between speaker, window, shelf bar and keys on taller phones (none on small ones) */
+body{--air:clamp(0px,calc((100dvh - 680px)*.12),14px)}
+body[data-theme] #panel{margin-bottom:var(--air)}
+body[data-theme] #keys{margin-top:calc(var(--air)*.9);margin-bottom:var(--air)}
+body.libc #libC{margin-top:calc(8px + var(--air)*.3)}
 body[data-theme] #bay{order:2}
 body[data-theme] #tray{order:3}
 body[data-theme] #keys{order:4}
 body[data-theme] #ctl{display:block;position:relative;height:100%;max-height:none;padding:0}
 body[data-theme] .cnt{display:none}
 body[data-theme] #grille{height:100%;min-height:84px;max-height:262px}
-body[data-theme] .duo{display:grid;position:static;transform:none;margin:0;grid-column:3;grid-row:2;justify-self:end;grid-template-columns:repeat(4,38px);gap:4px;z-index:3}
-body[data-theme] .duo{padding:5px 5px 9px;gap:4px;border-radius:12px;grid-template-columns:repeat(4,38px);background:color-mix(in srgb,var(--body,var(--meta)) 70%,#000);box-shadow:inset 0 2px 5px #0006,inset 0 -1px 0 #ffffff30,0 1px 0 #ffffff40}
-body[data-theme] .duo .sm{height:40px;width:38px;padding:0;font-size:6.5px;position:relative}
+body[data-theme] .duo{display:grid;position:static;transform:none;margin:0;grid-column:3;grid-row:2;justify-self:end;grid-template-columns:repeat(4,44px);gap:4px;z-index:3}
+body[data-theme] .duo{padding:5px 5px 9px;gap:4px;border-radius:12px;grid-template-columns:repeat(4,44px);background:color-mix(in srgb,var(--body,var(--meta)) 70%,#000);box-shadow:inset 0 2px 5px #0006,inset 0 -1px 0 #ffffff30,0 1px 0 #ffffff40}
+body[data-theme] .duo .sm{height:44px;width:44px;padding:0;font-size:7px;position:relative}
 body[data-theme] .duo .sm.on{color:var(--key-lab)}
 body[data-theme] .duo .sm::before{content:"";position:absolute;inset:-3px -2px}
 body[data-theme] .duo .sm.on i{background:var(--led-on,#7ee0a0);box-shadow:0 0 7px var(--led-on,#7ee0a0),0 0 14px color-mix(in srgb,var(--led-on,#7ee0a0) 55%,transparent)}
@@ -89,7 +94,7 @@ body[data-theme="sonic"] #grille{background:radial-gradient(circle,#00000066 0 1
 body[data-theme="kami"]{--body:#2db79b;--meta:#0b5c50;--bg:linear-gradient(180deg,#0a4d44,#06352f);
   --plate:radial-gradient(rgba(255,255,255,.07) .8px,transparent 1.1px) 0 0/3px 3px,linear-gradient(165deg,rgba(255,255,255,.30) 0,transparent 24%),linear-gradient(180deg,#52d4b8,#2db79b 55%,#1a917c);
   --plate-sh:inset 0 1px 0 #ffffff77,inset 0 -3px 10px #00000055,inset 0 0 0 1px #ffffff2a,0 6px 20px #0008,0 0 0 1px #07463d;
-  --ink:#effaf6;--dim:#c4eadf;--accent:#ff8a2a;--lcd-bg:#0b2a25;--lcd-ink:#8affd8;--lcd-glow:0 0 6px #4effc088;--lcd-sh:inset 0 1px 3px #000a;
+  --ink:#effaf6;--dim:#c4eadf;--accent:#ff8a2a;--lcd-bg:#efe9d0;--lcd-ink:#0d4a3d;--lcd-glow:0 1px 0 #ffffff99;--lcd-sh:inset 0 2px 4px #7a6a3a55;
   --key-a:#fbf3dd;--key-b:#e8dcc0;--key-edge:#a89a78;--key-ink:#4a3f2a;--key-lab:#5a4e36;--key-hi:#fff;--ic-play:#d96a12;--ic-stop:#4a3f2a;
   --tray-a:#0a4a40;--tray-b:#0d5a4e;--add-bg:#14806f;--seg-off:#0f5a4e;--seg1:#8affd8;--seg2:#ffd27a;--seg3:#ff8a2a;--led-on:#ffb066}
 body[data-theme="kami"] .key{background:linear-gradient(var(--key-a),var(--key-b));box-shadow:0 5px 0 #a89a78,0 9px 14px #00000044,inset 0 2px 2px #fff}
@@ -98,7 +103,7 @@ body[data-theme="kami"] .key.down{background:linear-gradient(#dccfae,#dccfae);bo
 body[data-theme="kami"] #well{box-shadow:inset 0 6px 16px #0008,0 0 0 5px #3bc9ad,0 0 0 6px #0a5f52,0 8px 18px #0006}
 body[data-theme="kami"] #tray{box-shadow:inset 0 3px 8px #0007,0 1px 0 #ffffff44}
 body[data-theme="kami"] #grille{background:radial-gradient(circle,#053a32 0 1.9px,transparent 2.3px) 0 0/9px 9px,linear-gradient(#5adcc0,#35bea3)}
-body[data-theme="kami"] #lcd{box-shadow:inset 0 1px 3px #000a,0 0 0 2px #0b5f52}
+body[data-theme="kami"] #lcd{box-shadow:inset 0 2px 4px #7a6a3a66,0 0 0 2px #2f9d87,0 0 0 3px #ffffff45}
 /* HARLAN: cream deck with printed key labels above the keys */
 body[data-theme="nashville"]{--plate:repeating-linear-gradient(90deg,rgba(255,255,255,.3) 0 1px,rgba(0,0,0,.03) 1px 2px),linear-gradient(180deg,#efebdd,#dcd7c4 52%,#cbc6b1)}
 body[data-theme="nashville"] #keys{height:112px;padding-top:20px}
@@ -135,6 +140,7 @@ body[data-theme="kuro"] #lid .frame{border-width:8px;border-bottom-width:22px;bo
 body[data-theme="kuro"] #lid .hg{display:none}
 body[data-theme="kuro"] #lid::after{content:"SCHOOL RECORDER · SR-1";color:#c9cad0}
 body[data-theme="kuro"] #lcd{border-radius:3px}
+body[data-theme="kuro"] #lName,body[data-theme="kuro"] #lMode{opacity:1}
 body[data-theme="kuro"] #grille{background:radial-gradient(circle,#ffffff30 0 1.6px,transparent 2px) 0 0/9px 9px,linear-gradient(#232427,#0d0d0f)}
 body[data-theme="kuro"] .key{background:linear-gradient(#46474c 0,#1b1c1f 46%,#0b0b0d 100%)}
 body[data-theme="kuro"] .key[data-k=rec]{background:linear-gradient(#f2493c,#a3180e)}
@@ -160,7 +166,7 @@ body[data-theme="kami"] #ctl,body[data-theme="kiiro"] #ctl,body[data-theme="kuro
 
 /* KAMIYA: the plate is inset and rounded, so the header sits a little further in from its edges */
 @media not ((orientation:landscape) and ((max-height:600px) or ((min-width:900px) and (pointer:coarse)))){
-  body[data-theme="kami"] #top{width:calc(var(--bw) - 34px)}
+  body[data-theme="kami"] #top{width:calc(var(--bw) - 44px);margin-top:10px}
 }
 
 
@@ -269,7 +275,7 @@ body[data-theme="kami"]{--sheen:1.35;--grain:.05}
 body[data-theme="nashville"]{--sheen:.25;--grain:.3}
 body[data-theme="kiiro"]{--sheen:1.2;--grain:.08}
 body[data-theme="akane"]{--sheen:1.25;--grain:.08}
-body[data-theme="kuro"]{--sheen:1.5;--grain:.05}
+body[data-theme="kuro"]{--sheen:.85;--grain:.05}
 
 /* short screens with the library open: the speaker grille gives way instead of the controls running over it */
 body.libo #grille{min-height:0}
@@ -306,3 +312,10 @@ body[data-theme="kami"] .kn output{color:#fff1cf;text-shadow:0 1px 0 #06453b}
 
 /* pressed key on the dark skins: black on black lost its outline and the row looked uneven, so give the sunk key a thin lit rim and a clear inner shade */
 body[data-theme="sonic"] .key.down:not([data-k=rec]),body[data-theme="kiiro"] .key.down:not([data-k=rec]){box-shadow:0 1px 0 var(--key-edge),inset 0 0 0 1px #ffffff2e,inset 0 3px 7px #000c}
+
+/* the encoder + MENU row must fit the plate: otherwise the grid overflows to the right and drags the speaker off-centre */
+body[data-theme] #ctl{padding:0 2px;column-gap:8px}
+body[data-theme] #ctl .kn{zoom:.86}
+body[data-theme] .duo{gap:2px;padding:5px 4px 9px}
+@media (min-width:441px){body[data-theme] #ctl{padding:0 6px;column-gap:14px}body[data-theme] #ctl .kn{zoom:1}body[data-theme] .duo{gap:4px;padding:5px 5px 9px}}
+@media (max-width:385px){body[data-theme] #ctl .kn{zoom:.78}}

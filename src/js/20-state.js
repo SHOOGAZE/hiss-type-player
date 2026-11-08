@@ -21,7 +21,7 @@ const TY=[{n:'I',bias:'NORMAL BIAS',eq:'120µs',lp:1,hiss:1,sat:1,lo:2.5,hi:-1.5
           {n:'II',bias:'HIGH BIAS',eq:'70µs',lp:1.25,hiss:1.12,sat:.85,lo:0,hi:2.2},
           {n:'IV',bias:'METAL BIAS',eq:'70µs',lp:1.5,hiss:.8,sat:.6,lo:-.5,hi:.6}];
 const NRN=['OFF','DOLBY B','DOLBY C'],NRH=[1,.45,.2],NRS=[0,-1.2,-2.8];
-const D={type:0,nr:0,speed:1,tone:0,rec:1,vol:1,bal:0,auto:0,mem:0,cue:1,lidc:1,libc:1,hrs:0};
+const D={type:0,nr:0,speed:1,tone:0,rec:1,vol:1,bal:0,auto:0,mem:0,cue:1,lidc:1,libc:1,hrs:0,tstop:1};
 try{Object.assign(D,JSON.parse(localStorage.getItem('tape4.deck')||'{}'));}catch(e){}
 const saveDeck=()=>{try{localStorage.setItem('tape4.deck',JSON.stringify(D));}catch(e){}};
 const baseRate=()=>(1+pitch)*D.speed;

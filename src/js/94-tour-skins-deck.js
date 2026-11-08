@@ -189,8 +189,8 @@ function lidMask(){
     +"<path d='"+d+"' fill='none' stroke='#000' stroke-opacity='.55' stroke-width='1'/>"
     +"<rect clip-path='url(#c)' x='"+gx+"' y='"+gy+"' width='"+gw+"' height='"+(gh*.42).toFixed(1)+"' fill='url(#r)'/>"
     +"<g clip-path='url(#c)'><path d='"+d+"' fill='#bfe0ff' fill-opacity='.07'/>"
-    +"<path d='M"+(gx+gw*.12)+" "+(gy+gh)+"L"+(gx+gw*.34)+" "+gy+"H"+(gx+gw*.46)+"L"+(gx+gw*.24)+" "+(gy+gh)+"Z' fill='#fff' fill-opacity='"+(.16*sh).toFixed(2)+"'/>"
-    +"<path d='M"+(gx+gw*.5)+" "+(gy+gh)+"L"+(gx+gw*.68)+" "+gy+"H"+(gx+gw*.73)+"L"+(gx+gw*.55)+" "+(gy+gh)+"Z' fill='#fff' fill-opacity='"+(.1*sh).toFixed(2)+"'/></g></g>");
+    +"<path d='M"+(gx+gw*.12)+" "+(gy+gh)+"L"+(gx+gw*.34)+" "+gy+"H"+(gx+gw*.46)+"L"+(gx+gw*.24)+" "+(gy+gh)+"Z' fill='#fff' fill-opacity='"+(.09*sh).toFixed(2)+"'/>"
+    +"<path d='M"+(gx+gw*.5)+" "+(gy+gh)+"L"+(gx+gw*.68)+" "+gy+"H"+(gx+gw*.73)+"L"+(gx+gw*.55)+" "+(gy+gh)+"Z' fill='#fff' fill-opacity='"+(.05*sh).toFixed(2)+"'/></g></g>");
   /* inside of the moulded lid: stiffening rib frame, screw bosses and a raised lip round the window */
   const R=(x,y)=>"<circle cx='"+x+"' cy='"+y+"' r='6' fill='url(#bo)'/><circle cx='"+x+"' cy='"+y+"' r='2.2' fill='#000' fill-opacity='.55'/>";
   const inn=g("<defs><radialGradient id='bo' cx='.35' cy='.3' r='.8'><stop offset='0' stop-color='#fff' stop-opacity='.22'/><stop offset='1' stop-color='#000' stop-opacity='.55'/></radialGradient>"

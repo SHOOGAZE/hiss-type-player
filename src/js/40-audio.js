@@ -85,15 +85,20 @@ function applyTape(){
   A.flG.gain.setTargetAtTime((0.0003+t*0.0045)*C.wow*(1+ag),n,0.05);
   updateMotor();
 }
+/* motor coast: after STOP (tape stop or wind-down) the motor spins down for a moment instead of cutting out; coastU = AudioContext time the coast ends */
+let coastU=0,coastD=0;
 function updateMotor(){
   if(!ctx)return; const n=ctx.currentTime,m=S.mode,run=isRun(m)||m==='scrub',t=tapeAmt;
+  const co=coastU>n;                      /* spinning down after STOP */
+  const mot=run||m==='pause'||co;         /* PAUSE: the capstan motor keeps turning, only the pinch roller lets go of the tape */
   const hiss=m==='play'?1:(m==='ff'||m==='rew')?0.35:m==='scrub'?0.6:0;
-  const hum=(m==='play'||m==='rec')?1:(m==='ff'||m==='rew')?1.6:m==='scrub'?0.5:0;
-  const C=TC();A.hissG.gain.setTargetAtTime(hiss*C.hiss*TY[D.type].hiss*NRH[D.nr]*(1+age()*2.2)*(0.0012+Math.pow(t,1.6)*0.035),n,0.05);
-  A.humG.gain.setTargetAtTime(run?0.004*hum*C.hum:0,n,0.08);
-  A.rumG.gain.setTargetAtTime(run?0.012*hum*C.hum:0,n,0.1);
-  A.whirG.gain.setTargetAtTime(run?0.004*hum:0,n,0.1);
-  A.hum.frequency.setTargetAtTime((m==='ff'||m==='rew')?170:52,n,0.15);
+  const hum=(m==='play'||m==='rec')?1:(m==='ff'||m==='rew')?1.6:m==='scrub'?0.5:m==='pause'?0.8:co?1:0;
+  const C=TC();A.hissG.gain.setTargetAtTime(hiss*C.hiss*TY[D.type].hiss*NRH[D.nr]*(1+age()*2.2)*(0.0012+Math.pow(t,1.6)*0.035),n,co&&!hiss?coastD*0.3:0.05);
+  const tc=co&&!run&&m!=='pause'?coastD*0.4:null;
+  A.humG.gain.setTargetAtTime(mot&&!tc?0.004*hum*C.hum:0,n,tc||0.08);
+  A.rumG.gain.setTargetAtTime(mot&&!tc?0.012*hum*C.hum:0,n,tc||0.1);
+  A.whirG.gain.setTargetAtTime(mot&&!tc?0.004*hum:0,n,tc||0.1);
+  A.hum.frequency.setTargetAtTime((m==='ff'||m==='rew')?170:tc?22:52,n,tc?coastD*0.5:0.15);
   const wind=(m==='ff'||m==='rew');
   A.trG.gain.setTargetAtTime(wind?(D.cue?0.36:0.07):1,n,0.12);
   A.windHp.frequency.setTargetAtTime(wind?420:20,n,0.1);

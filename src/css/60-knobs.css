@@ -20,6 +20,9 @@ body[data-theme="sonic"] .cap{--k2:#c9ccd2;--k3:#8a8e97}
 /* depth pass (static shadows only, no filters): one light from the top-left on every control */
 .cap{box-shadow:0 0 0 3px #0000002e,0 0 0 4px #ffffff1f,3px 6px 7px #0000005c,1px 2px 2px #000000a0}
 .cap:active{transform:scale(.97);box-shadow:0 0 0 3px #0000002e,0 0 0 4px #ffffff1f,2px 3px 4px #0000005c,1px 1px 1px #000000a0}
+body[data-theme="sonic"] .cap{box-shadow:0 0 0 2px #5a606a1c,0 0 0 3px #ffffffa0,2px 4px 5px #3a3f4a30,1px 2px 2px #3a3f4a45}
+body[data-theme="sonic"] .cap:active{box-shadow:0 0 0 2px #5a606a1c,0 0 0 3px #ffffffa0,1px 2px 3px #3a3f4a30}
+body[data-theme="nashville"] .cap{box-shadow:0 0 0 2px #2a29251c,0 0 0 3px #ffffff80,2px 5px 6px #2a292538,1px 2px 2px #2a292550}
 body[data-theme="kami"] .cap{box-shadow:0 0 0 3px #7a735e22,0 0 0 4px #ffffffb0,3px 7px 9px #5a523c40,1px 2px 2px #5a523c55}
 .cap b{box-shadow:0 0 5px color-mix(in srgb,var(--ind) 60%,transparent),0 0 10px color-mix(in srgb,var(--ind) 28%,transparent)}
 
@@ -73,3 +76,7 @@ body[data-theme="sonic"] .cap .spin{filter:drop-shadow(0 0 .6px #3f434a)}
 /* KIIRO: shallower, quieter grooves in matte rubber */
 body[data-theme="kiiro"] .cap{--kf1:#0a0a09;--kf2:#3c3b37}
 body[data-theme="kiiro"] .cap .flute g{opacity:.55}
+/* SORAKO: pale body, so a light knurl and a faint drop shadow instead of the black crescent */
+body[data-theme="sonic"] .cap{--kr1:#7b808a;--kr2:#dfe2e7}
+body[data-theme="sonic"] .cap .kc>circle[r="56"]{opacity:.3}
+body[data-theme="nashville"] .cap .kc>circle[r="56"]{opacity:.55}

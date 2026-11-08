@@ -1,0 +1,16 @@
+/* ---- real-looking display windows (SORAKO's LCD is the reference): a lit panel with uneven glow, a fine pixel structure and a glass pane in front ---- */
+:is(body[data-theme="kami"],body[data-theme="nashville"],body[data-theme="kiiro"],body[data-theme="akane"],body[data-theme="kuro"]) #lcd{position:relative;overflow:hidden;isolation:isolate}
+:is(body[data-theme="kami"],body[data-theme="nashville"],body[data-theme="kiiro"],body[data-theme="akane"],body[data-theme="kuro"]) #lcd::before,
+:is(body[data-theme="kami"],body[data-theme="nashville"],body[data-theme="kiiro"],body[data-theme="akane"],body[data-theme="kuro"]) #lcd::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit}
+/* glass pane: a soft reflection across the upper half and a faint edge light */
+:is(body[data-theme="kami"],body[data-theme="nashville"],body[data-theme="kiiro"],body[data-theme="akane"],body[data-theme="kuro"]) #lcd::after{
+  background:linear-gradient(172deg,#ffffff26 0,#ffffff0d 38%,#0000 39%),linear-gradient(0deg,#ffffff0a,#0000 28%);box-shadow:inset 0 0 0 1px #ffffff10}
+/* panel structure per technology */
+body[data-theme="kami"] #lcd::before{background:radial-gradient(ellipse 100% 140% at 30% 0,#ffffffb0,#0000 70%),repeating-linear-gradient(0deg,#0000 0 2px,#8a7a4a16 2px 3px)}   /* cream backlit LCD, matches the cream keys */
+body[data-theme="nashville"] #lcd::before{background:repeating-linear-gradient(90deg,#00000030 0 1px,#0000 1px 3px),radial-gradient(ellipse 90% 110% at 50% 40%,#52ffb61c,#0000 70%)}       /* VFD: the anode mesh and a green haze */
+body[data-theme="kiiro"] #lcd::before{background:radial-gradient(ellipse 100% 140% at 50% 0,#e9fff1a0,#0000 70%),repeating-linear-gradient(0deg,#0000 0 2px,#00583a1c 2px 3px)}   /* electroluminescent mint LCD (sport-watch style) */
+body[data-theme="akane"] #lcd::before{background:radial-gradient(circle,#0000 .6px,#00000060 .85px) 0 0/3px 3px,radial-gradient(ellipse 100% 140% at 25% 0,#ffa03a30,#0000 70%)}   /* LED dot matrix */
+body[data-theme="kuro"] #lcd::before{background:radial-gradient(ellipse 100% 150% at 20% 0,#ffe6ab66,#0000 65%),repeating-linear-gradient(0deg,#0000 0 2px,#7a3a0022 2px 3px)}   /* backlit orange LCD, black segments */
+
+/* the pixel structure sits behind the digits, the glass in front of them */
+:is(body[data-theme="kami"],body[data-theme="nashville"],body[data-theme="kiiro"],body[data-theme="akane"],body[data-theme="kuro"]) #lcd::before{z-index:-1}

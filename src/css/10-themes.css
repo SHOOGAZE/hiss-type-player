@@ -66,7 +66,7 @@ body[data-theme="nashville"]{
   --grain:.22;--grain-blend:overlay;
   --ui:"Futura","Avenir Next",Helvetica,Arial,sans-serif;
   --ink:#2a2723;--dim:#48443b;--accent:#c0392b;--accent-glow:none;
-  --lcd-bg:#1c1007;--lcd-ink:#ffb24a;--lcd-glow:0 0 6px #ff9a1f88;--lcd-sh:inset 0 2px 5px #000,0 1px 0 #fff8;
+  --lcd-bg:#04120d;--lcd-ink:#7dffc4;--lcd-glow:0 0 6px #35ffa088;--lcd-sh:inset 0 2px 5px #000,0 1px 0 #fff8;
   --well-a:#0f0d0b;--well-b:#1e1b17;--well-ring:#6e6a60;
   --frame:#b5b2a9;--glass:rgba(80,90,100,.2);
   --key-a:#efede8;--key-b:#a8a59c;--key-edge:#55524a;--key-ink:#2a2723;--key-r:4px;--key-d:8px;--key-hi:#fff;--key-lab:#4a463e;--key-t:.09s;
@@ -85,8 +85,8 @@ body[data-theme="kuro"]{
   --plate-sh:inset 0 0 0 1px #3d3f45,inset 0 2px 0 #ffffff1c,inset 0 -3px 8px #000,0 0 0 1px #000,0 0 18px #000c;
   --grain:.14;--grain-blend:overlay;
   --ui:"Helvetica Neue",Helvetica,Arial,sans-serif;
-  --ink:#e6e7ea;--dim:#9a9ca4;--accent:#ff5040;--accent-glow:0 0 6px #ff504066;
-  --lcd-bg:#0a0a0b;--lcd-ink:#ff5a48;--lcd-glow:0 0 7px #ff3b2a88;--lcd-sh:inset 0 1px 4px #000,0 0 0 1px #34363b;
+  --ink:#e6e7ea;--dim:#b3b5bc;--accent:#ff5040;--accent-glow:0 0 6px #ff504066;
+  --lcd-bg:#ff9a1f;--lcd-ink:#1c0d00;--lcd-glow:0 1px 0 #ffcf8a66;--lcd-sh:inset 0 2px 5px #7a3a00cc,0 0 0 1px #34363b;
   --well-a:#050506;--well-b:#101113;--well-ring:#050506;
   --frame:#0d0d0f;--glass:rgba(60,66,78,.2);
   --key-a:#3f4044;--key-b:#131416;--key-edge:#000;--key-ink:#eeeff1;--key-r:6px;--key-d:6px;--key-hi:#ffffff30;--key-lab:#c9cad0;--key-t:.05s;
@@ -121,7 +121,7 @@ body[data-theme="kiiro"]{
   --grain:.08;--grain-blend:multiply;
   --ui:"Helvetica Neue",Helvetica,Arial,sans-serif;
   --ink:#1b1a17;--dim:#4d4528;--accent:#8a5200;--accent-glow:none;
-  --lcd-bg:#17181b;--lcd-ink:#ffd62e;--lcd-glow:0 0 6px #ffc40088;--lcd-sh:inset 0 1px 4px #000,0 0 0 2px #121213;
+  --lcd-bg:#a6edc2;--lcd-ink:#08331f;--lcd-glow:0 1px 0 #ffffff66;--lcd-sh:inset 0 2px 5px #00583a99,0 0 0 2px #121213;
   --well-a:#050505;--well-b:#161617;--well-ring:#121213;
   --frame:#121213;--glass:rgba(40,60,50,.18);
   --key-a:#323235;--key-b:#131315;--key-edge:#000;--key-ink:#f2f2f2;--key-r:7px;--key-d:5px;--key-hi:#ffffff26;--key-lab:#ededed;--key-t:.05s;
@@ -141,7 +141,7 @@ body[data-theme="akane"]{
   --grain:.14;--grain-blend:overlay;
   --ui:"Helvetica Neue",Helvetica,Arial,sans-serif;
   --ink:#fff1ec;--dim:#ffc7bd;--accent:#ffb347;--accent-glow:0 0 6px #ffb34777;
-  --lcd-bg:#1a0806;--lcd-ink:#ff9d66;--lcd-glow:0 0 7px #ff7a3a88;--lcd-sh:inset 0 1px 4px #000,0 0 0 1px #7a1a12;
+  --lcd-bg:#2a0a08;--lcd-ink:#ffb04a;--lcd-glow:0 0 7px #ff8a2a99;--lcd-sh:inset 0 2px 6px #000a,0 0 0 1px #8a2018;
   --well-a:#140605;--well-b:#2a0e0b;--well-ring:#7a1a12;
   --frame:#8a1a12;--glass:rgba(255,200,190,.1);
   --key-a:#f6f2ea;--key-b:#d2c9bb;--key-edge:#6b1510;--key-ink:#3b2a26;--key-r:14px;--key-d:5px;--key-hi:#fff;--key-lab:#5a423c;--key-t:.06s;
