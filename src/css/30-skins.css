@@ -102,7 +102,7 @@ body[data-theme="kami"] #lcd{box-shadow:inset 0 1px 3px #000a,0 0 0 2px #0b5f52}
 /* HARLAN: cream deck with printed key labels above the keys */
 body[data-theme="nashville"]{--plate:repeating-linear-gradient(90deg,rgba(255,255,255,.3) 0 1px,rgba(0,0,0,.03) 1px 2px),linear-gradient(180deg,#efebdd,#dcd7c4 52%,#cbc6b1)}
 body[data-theme="nashville"] #keys{height:112px;padding-top:20px}
-body[data-theme="nashville"] .key span{position:absolute;top:-17px;left:0;right:0;text-align:center;font:700 8px var(--print);letter-spacing:.12em;color:#4a463c}
+body[data-theme="nashville"] .key span{position:absolute;top:-17px;left:0;right:0;text-align:center;font:700 7.5px var(--mono);letter-spacing:.2em;color:#6b6356}
 body[data-theme="nashville"] .key[data-k=rec]::before{background:#d9531e;border:0;height:3px;top:9px}
 body[data-theme="nashville"] #grille{background:radial-gradient(circle,#00000040 0 1.5px,transparent 1.9px) 0 0/9px 9px,linear-gradient(#f1ecdc,#ddd6c0)!important}
 /* KIIRO: black rubber keys, yellow label, green-lined window */
@@ -285,3 +285,7 @@ body.lidc #lid.bk .frame::after{opacity:.25}
 #lid.bk .glare{opacity:.25!important}
 body.lidc #lid.bk::before{opacity:.12;background:var(--lid-tex-in,repeating-linear-gradient(0deg,#fff 0 1px,#000 1px 3px));}
 #lid.bk::after,#lid.bk .grip{opacity:.5}
+
+/* key captions printed on the body: they stay put while the key sinks */
+body[data-theme="nashville"] .key.down span{transform:translateY(-9px)}
+body[data-theme="kami"] .key.down span{transform:translateX(-50%) translateY(-4px) scale(1.042)}
