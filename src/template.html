@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="HISS">
+<meta name="theme-color" content="#14120f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<title>HISS — cassette deck</title>
+<style>
+/*@css*/
+</style>
+</head>
+<body>
+<div id="deck">
+  <div id="plate"></div>
+
+  <header id="top">
+    <div class="brand"><b id="brandB">HISS</b><small id="brandS">CASSETTE DECK</small></div>
+    <div id="lcd">
+      <div class="r1"><span id="lMode">STOP</span><span id="lTime">00:00 / 00:00</span></div>
+      <div class="r2"><span id="lName">TAP SLOT TO LOAD AUDIO</span><span class="rl"><i class="led" id="recLed"></i>REC</span></div>
+    </div>
+    <button id="bncBtn" type="button" aria-label="Save recording"><i class="bdot"></i>BOUNCE</button>
+    <button id="skinBtn" type="button" aria-label="Skins"><span class="dots"><i></i><i></i><i></i></span>SKIN</button>
+  </header>
+
+  <section id="bay">
+    <div id="well">
+      <svg id="empty" viewBox="0 0 320 204" aria-hidden="true">
+        <rect x="3" y="3" width="314" height="198" rx="12" fill="none" stroke="#ffffff1a" stroke-width="1.5" stroke-dasharray="6 6"/>
+        <g id="spinds"></g>
+        <rect x="132" y="178" width="56" height="14" rx="2" fill="#6d685e"/><rect x="146" y="170" width="28" height="10" rx="2" fill="#9a9487"/>
+        <circle cx="60" cy="186" r="6" fill="#8d877b"/><circle cx="260" cy="186" r="6" fill="#8d877b"/>
+        <text data-i x="160" y="62" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="10" letter-spacing="3" fill="#b9ac94" opacity=".8">TAP — LOAD AUDIO</text>
+        <text x="160" y="78" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="7" letter-spacing="2" fill="#8c826f" opacity=".8">LOAD  ·  INSERT  ·  PLAY</text>
+      </svg>
+      <div id="slot"></div>
+      <div id="shade"></div>
+    </div>
+    <div id="lid">
+      <div class="frame"><div class="glare"></div></div>
+      <div class="hint" data-i>▲ SWIPE UP</div>
+      <div class="prt"><b></b><small></small><i></i><em></em></div>
+      <div class="grip"></div><i class="hg l"></i><i class="hg r"></i>
+    </div>
+  </section>
+
+  <div id="libC"><i class="la">▼</i><b>LIBRARY</b><i class="ln"></i></div>
+  <section id="tray"></section>
+
+  <section id="panel">
+    <div id="ctl">
+      <div class="cnt">
+        <div id="counter"></div>
+        <div class="row"><label>COUNTER</label><button id="reset">RESET</button></div>
+      </div>
+      <div id="grille"><div class="gl"></div><i id="gLed"></i></div>
+      <div class="kn" id="knPitch"><div class="knob" id="kPitch"></div><label>PITCH</label><output id="oPitch">0.0%</output></div>
+      <div class="kn" id="knTape"><div class="knob" id="kTape"></div><label>TAPE</label><output id="oTape">25</output></div>
+      <div class="duo"><button id="loopBtn" type="button" class="sm"><i></i>LOOP</button><button id="mixBtn" type="button" class="sm"><i></i>4TRK</button><button id="nrBtn" type="button" class="sm"><i></i>NR</button><button id="dkBtn" type="button" class="sm"><i></i>DECK</button></div>
+    </div>
+  </section>
+
+  <section id="keys">
+    <div class="key" data-k="rec"><i class="dot"></i><span>REC</span></div>
+    <div class="key" data-k="rew"><svg viewBox="0 0 24 24"><path d="M11 5v14L2 12zM22 5v14l-9-7z"/></svg><span>REW</span></div>
+    <div class="key" data-k="play"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg><span>PLAY</span></div>
+    <div class="key" data-k="ff"><svg viewBox="0 0 24 24"><path d="M13 5v14l9-7zM2 5v14l9-7z"/></svg><span>FF</span></div>
+    <div class="key" data-k="stop"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/></svg><span>STOP</span></div>
+    <div class="key" data-k="pause"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg><span>PAUSE</span></div>
+  </section>
+</div>
+<div id="themes"><div class="sheet"><div class="hd"><span data-i>SKINS</span><button id="skinX" type="button">×</button></div><div id="skinGrid"></div></div></div>
+<div id="intro"><div class="card">
+  <div class="lang"><button data-l="en" type="button">EN</button><button data-l="ru" type="button">RU</button></div>
+  <div class="ico" id="tIco"></div><b id="tTit"></b><p id="tTxt"></p>
+  <div class="dots" id="tDots"></div>
+  <div class="nav"><button id="tSkip" type="button"></button><button id="tNext" type="button"></button></div>
+</div></div>
+<div id="mixer"><div class="sheet">
+  <div class="hd"><span id="mxTitle">4-TRACK</span><button id="mxX" type="button">×</button></div>
+  <div id="strips"></div>
+  <div class="namerow"><input id="nameIn" maxlength="30" placeholder="cassette name" autocomplete="off" autocapitalize="off" spellcheck="false"><button id="fontBtn" type="button">PRINT</button></div>
+  <div class="mxrow"><button id="mxLoad" type="button">＋ LOAD INTO T1</button><button id="mxPP" type="button">PING-PONG → T1</button></div>
+  <div class="mxrow"><button id="mxFlip" type="button" data-i>⟲ FLIP SIDE A/B</button><button id="mxCard" type="button" data-i>J-CARD ↓</button></div>
+  <button id="mxMore" type="button" data-i>MORE · TAPE OPTIONS</button>
+  <div class="mxrow" id="mxRare"><button id="mxNew" type="button" data-i>NEW TAPE</button><button id="mxDel" type="button" data-i>DELETE CASSETTE</button></div>
+  <div id="mxAge"></div>
+</div></div>
+<div id="dk"><div class="sheet">
+  <div class="hd"><span data-i>DECK</span><button id="dkX" type="button">×</button></div>
+  <div class="sec" style="margin-top:0" data-i>TAPE</div>
+  <div class="r"><label data-i>TYPE</label><div class="seg" data-k="type"><button data-v="0">I · FERRO</button><button data-v="1">II · CHROME</button><button data-v="2">IV · METAL</button></div></div>
+  <div class="r"><label>NR</label><div class="seg" data-k="nr"><button data-v="0">OFF</button><button data-v="1">DOLBY B</button><button data-v="2">DOLBY C</button></div></div>
+  <div class="r"><label data-i>SPEED</label><div class="seg" data-k="speed"><button data-v="0.5">½</button><button data-v="1">1×</button><button data-v="2">2×</button></div></div>
+  <div class="r"><label data-i>LID</label><div class="seg" data-k="lidc"><button data-v="0" data-i>WINDOW</button><button data-v="1" data-i>CLOSED</button></div></div>
+  <div class="r"><label data-i>LIBRARY</label><div class="seg" data-k="libc"><button data-v="0" data-i>OPEN</button><button data-v="1" data-i>COVER</button></div></div>
+  <div class="r"><label data-i>PITCH</label><input type="range" id="sPitch" min="-12" max="12" step="0.5"><output id="oSPitch">0.0%</output></div>
+  <div class="sec" data-i>SOUND</div>
+  <div class="r"><label data-i>TONE</label><input type="range" id="sTone" min="-100" max="100" step="1"><output id="oTone">0</output></div>
+  <div class="r"><label data-i>REC LEVEL</label><input type="range" id="sRec" min="0" max="150" step="1"><output id="oRec">100</output></div>
+  <div class="r"><label data-i>VOLUME</label><input type="range" id="sVol" min="0" max="120" step="1"><output id="oVol">100</output></div>
+  <div class="r"><label data-i>BALANCE</label><input type="range" id="sBal" min="-100" max="100" step="1"><output id="oBal">C</output></div>
+  <div class="sec" data-i>TRANSPORT</div>
+  <div class="tg" id="dkTg"><button data-t="auto" data-i>AUTO REV</button><button data-t="mem" data-i>MEMORY</button><button data-t="cue" data-i>CUE</button></div>
+  <div class="r"><label data-i>SLEEP</label><div class="seg" data-k="sleep"><button data-v="0" data-i>OFF</button><button data-v="15">15</button><button data-v="30">30</button><button data-v="60">60</button></div></div>
+  <div class="sec" data-i>GENERAL</div>
+  <div class="r"><label data-i>LANGUAGE</label><div class="seg" data-k="lang"><button data-v="en">ENGLISH</button><button data-v="ru">РУССКИЙ</button></div></div>
+  <div class="tg"><button id="dkTour" type="button" data-i>HOW TO USE</button></div>
+  <div class="note" id="dkNote"></div>
+</div></div>
+<div id="l4"></div>
+<input type="file" id="file" multiple>
+
+<script>
+/*@js*/
+</script>
+</body>
+</html>

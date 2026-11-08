@@ -1,0 +1,24 @@
+/* encoder caps: vector-drawn, per-skin material */
+.cap .spin{position:absolute;inset:0;border-radius:50%;display:block;transition:transform .06s cubic-bezier(.3,1.6,.5,1)}
+.cap .kc{position:absolute;left:-10%;top:-10%;width:120%;height:120%;overflow:visible;display:block}
+.cap .glint{position:absolute;left:-10%;top:-10%;width:120%;height:120%;pointer-events:none;display:block}
+.cap .spin b{z-index:2}
+.cap{--k1:#55524c;--k2:#2c2b28;--k3:#121110;--kr1:#0b0a09;--kr2:#3b3935}
+.cap .rings,.cap .dish{display:none}
+.cap .rings{display:block;opacity:.7}.cap .dish{display:block}
+body[data-theme="sonic"] .cap{--k1:#fbfbfc;--k2:#d3d6db;--k3:#9a9ea6}
+body[data-theme="sonic"] .cap .rib{display:none}body[data-theme="sonic"] .cap .rings{opacity:1}body[data-theme="sonic"] .cap .dish{display:none}
+body[data-theme="kami"] .cap{--k1:#ffffff;--k2:#efece3;--k3:#cdc8b9}
+body[data-theme="kami"] .cap .rib,body[data-theme="kami"] .cap .rings{display:none}
+body[data-theme="nashville"] .cap{--k1:#fbfaf6;--k2:#b6b3aa;--k3:#76736a;--kr1:#35332e;--kr2:#cfccc3}
+body[data-theme="nashville"] .cap .rings{display:none}
+body[data-theme="nashville"] .cap .kc,body[data-theme="nashville"] .cap .glint{left:-6%;top:-6%;width:112%;height:112%}
+
+body[data-theme="sonic"] .cap .spin{filter:drop-shadow(0 0 .7px #3f434a) drop-shadow(0 2px 2px #0005)}
+body[data-theme="sonic"] .cap{--k2:#c9ccd2;--k3:#8a8e97}
+
+/* depth pass (static shadows only, no filters): one light from the top-left on every control */
+.cap{box-shadow:0 0 0 3px #0000002e,0 0 0 4px #ffffff1f,3px 6px 7px #0000005c,1px 2px 2px #000000a0}
+.cap:active{transform:scale(.97);box-shadow:0 0 0 3px #0000002e,0 0 0 4px #ffffff1f,2px 3px 4px #0000005c,1px 1px 1px #000000a0}
+body[data-theme="kami"] .cap{box-shadow:0 0 0 3px #7a735e22,0 0 0 4px #ffffffb0,3px 7px 9px #5a523c40,1px 2px 2px #5a523c55}
+.cap b{box-shadow:0 0 5px color-mix(in srgb,var(--ind) 60%,transparent),0 0 10px color-mix(in srgb,var(--ind) 28%,transparent)}
