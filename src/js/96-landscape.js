@@ -217,7 +217,7 @@ function renderSkins(){
 }
 function applyTheme(id,silent){
   const T=THEMES.find(x=>x.id===id)||THEMES[0];theme=T.id;
-  document.body.dataset.theme=T.id;
+  document.body.dataset.theme=T.id;paintWearArt();
   try{if(cur&&cur.refs&&cur.refs.nm)paintLabel();}catch(e){}
     $('#brandB').textContent=T.brand;$('#brandS').textContent=T.sub;
   const mc=document.querySelector('meta[name=theme-color]');

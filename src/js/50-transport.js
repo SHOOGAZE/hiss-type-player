@@ -38,7 +38,8 @@ function loopWrap(){
 /* the deck itself ages with the hours it plays: 0 = new, 1 = about ten hours of use */
 let dwSave=0,dwShown=-1;
 const deckWear=()=>Math.pow(Math.min(1,(D.hrs||0)/36000),.8);
-function paintDeckWear(force){const w=deckWear();if(force||Math.abs(w-dwShown)>=.004){dwShown=w;document.body.style.setProperty('--dw',w.toFixed(3));}}
+function paintDeckWear(force){const w=deckWear();if(force||Math.abs(w-dwShown)>=.004){dwShown=w;document.body.style.setProperty('--dw',w.toFixed(3));
+    const wn=w>.01;if(wn!==document.body.classList.contains('worn')){document.body.classList.toggle('worn',wn);if(wn)paintWearArt();}}}  /* a new deck has no wear layers at all: they are neither drawn nor generated until it has some hours on it */
 paintDeckWear(true);
 function ageTick(dt){
   if(!cur||!ctx)return;
