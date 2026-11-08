@@ -181,10 +181,19 @@ const SMP_VOICE={
   akane:    {rate:.96, lp:7000, pk:[1700,2],  gain:1,   dec:.11},   /* damped metal */
   kuro:     {rate:.72, lp:3300, pk:[180,4],   gain:1.12,dec:.13}    /* dense matte ABS: dull and heavy */
 };
+/* encoder detents: the same recorded click for every deck, nudged a little per skin (SORAKO stays the reference) */
+const ENC_VOICE={
+  sonic:    {rate:1,   lp:20000,pk:[5000,0],gain:1,   dec:0},     /* the reference click, untouched */
+  kami:     {rate:1.1, lp:12000,pk:[3000,1.5],gain:.95,dec:.06},  /* a touch lighter and shorter */
+  nashville:{rate:.94, lp:9000, pk:[500,2.5],gain:1.15,dec:0},    /* a little warmer, with some body */
+  kiiro:    {rate:.88, lp:6500, pk:[200,3],  gain:1.1, dec:.12},  /* softer, rubbery */
+  akane:    {rate:1,   lp:10000,pk:[2000,1.5],gain:1.05,dec:.09}, /* slightly drier */
+  kuro:     {rate:.82, lp:5000, pk:[240,3],  gain:1.12,dec:.1}    /* duller and heavier */
+};
 function playSample(kind){
   const L=SMP[kind];if(!L||!L.length)return false;
   let i=(Math.random()*L.length)|0;if(L.length>1&&i===smpLast[kind])i=(i+1)%L.length;smpLast[kind]=i;
-  const V=kind==='enc'?null:SMP_VOICE[theme],n=ctx.currentTime;
+  const V=kind==='enc'?ENC_VOICE[theme]:SMP_VOICE[theme],n=ctx.currentTime;
   const s=ctx.createBufferSource();s.buffer=L[i];s.playbackRate.value=(V?V.rate:1)*(1+rnd(-0.03,0.03));
   const g=ctx.createGain();g.gain.value=rnd(0.9,1.05)*(SMP_GAIN[kind]||1)*(V?V.gain:1);
   let out=s;

@@ -2,7 +2,7 @@
 const keyEls={};document.querySelectorAll('.key').forEach(k=>keyEls[k.dataset.k]=k);
 const hold={},prevDown={};let holdT=null;
 function renderKeys(){
-  const m=S.mode;
+  const m=S.mode;syncMedia();
   const want={play:m==='play'||m==='rec',rec:m==='rec'||armed,rew:m==='rew',ff:m==='ff',pause:m==='pause',stop:false};
   let popped=0;
   for(const k in want){

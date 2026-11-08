@@ -125,6 +125,6 @@ function updateVU(dt){
   }
 }
 /* empty spindles */
-(function(){let s='';for(const cx of [CL,CR]){s+=`<circle cx="${cx}" cy="${CY}" r="17" fill="#1a1814" stroke="#000"/><circle cx="${cx}" cy="${CY}" r="12" fill="#8d877b"/><circle cx="${cx}" cy="${CY}" r="8" fill="#2b2925"/>`;
-  for(let i=0;i<6;i++)s+=`<rect x="${cx-2}" y="${CY-8}" width="4" height="4" fill="#cfc9bb" transform="rotate(${i*60} ${cx} ${CY})"/>`;}
+(function(){let s='';for(const cx of [CL,CR]){s+=`<circle class="sr" cx="${cx}" cy="${CY}" r="17" fill="#1a1814" stroke="#000"/><circle class="sh" cx="${cx}" cy="${CY}" r="12" fill="#8d877b"/><circle class="sc" cx="${cx}" cy="${CY}" r="8" fill="#2b2925"/>`;
+  for(let i=0;i<6;i++)s+=`<rect class="st" x="${cx-2}" y="${CY-8}" width="4" height="4" fill="#cfc9bb" transform="rotate(${i*60} ${cx} ${CY})"/>`;}
   $('#spinds').innerHTML=s;})();

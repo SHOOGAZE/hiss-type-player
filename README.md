@@ -19,7 +19,7 @@ Landscape visual mode (the cassette sits in a lid set into the plastic body, in 
 Six pocket-recorder skins, each with its own colours, construction and cabinet sound:
 
 - **SORAKO TC-22**: Japan, silver, black piano keys, red REC
-- **KAMIYA CT-22**: Japan, translucent teal shell, lilac keys, orange REC
+- **KAMIYA CT-22**: Japan, matte teal shell, lilac keys, orange REC
 - **HARLAN M22**: USA, cream deck with printed key labels, wood sides
 - **KIIRO KR-10**: black rubber frame, yellow plate, yellow encoders
 - **AKANE AK-1**: red anodised metal, rounded cream keys
@@ -35,6 +35,12 @@ All skins share one body: a big speaker grille with a level LED on top, the wind
 - **Tape wear**: every cassette has its own history, and it shows: scratches, tea stains, curled label corners, fading ink, darker sound. Wear is permanent until you press NEW TAPE in the 4TRK sheet
 - **Cassette life**: each tape carries a generation stamp on its label (G1 is the original; every PING-PONG or DUB adds one) and keeps its own history of plays and hours, printed on the J-card. DUB TAPE (4TRK sheet) copies the whole cassette onto a new one, one generation down, with the same tape loss as a ping-pong, so a copy sounds worse than its source. The TAPE encoder sets how much tape character you hear, and the higher it is the faster the cassette ages.
 - **Display windows**: six display technologies (LCD, VFD, EL, LED matrix) in one depth system: recessed glass, 2 px bezel, unlit segments, uneven backlight, a faint refresh shimmer on the LED and VFD skins, and long track names slide instead of being cut.
+- **Wear**: the deck itself ages with the hours it has played (about ten hours for a full set): scratches on the plate, flaked paint at the edges, rubbed keys, grime on the knobs. Cassettes wear on their own, too, so an old tape shows scratched glass, stained paper and curled label corners.
+
+![A worn deck and cassette](screenshots/worn-kuro.png)
+
+- **Lock screen and headphones**: the current cassette shows up in Now Playing with play, pause and stop (a silent audio element keeps the media session alive on iOS; the sound itself is Web Audio).
+- **Clear errors**: a file that is not audio, too large (over 150 MB), unreadable, a full browser storage or a refused microphone each say so on the display.
 - **Deck wear**: the machine ages with the hours it has played (about 10 h to full): fine scratches, grime at the edges, worn keys, dust on the grille. DECK → MORE → SERVICE DECK resets it.
 - **LOOP**: a loop that crumbles a bit on every pass
 - **BOUNCE**: save everything you hear to WAV

@@ -59,9 +59,19 @@ function wearGfx(m){
   let h=0;for(const c of m.id)h=(h*31+c.charCodeAt(0))>>>0;
   const R=()=>{h=(h*1664525+1013904223)>>>0;return h/4294967296;};
   let s='';
-  for(let i=0;i<16;i++){            /* hairline scratches over the shell */
-    const x=8+R()*304,y=8+R()*188,l=6+R()*26,a=(R()-.5)*1.6,t=(i/16*.8).toFixed(2);
-    s+=`<path data-t="${t}" data-m=".55" d="M${x.toFixed(1)} ${y.toFixed(1)}l${(Math.cos(a)*l).toFixed(1)} ${(Math.sin(a)*l).toFixed(1)}" stroke="#fff" stroke-width=".5" stroke-linecap="round" opacity="0"/>`;
+  /* a scratch is a thin tapered lens (not a stroked line): slightly curved, widest in the middle, with a dark lower edge for depth */
+  const lens=(x,y,l,a,w,cv)=>{const dx=Math.cos(a),dy=Math.sin(a),nx=-dy,ny=dx,ex=x+dx*l,ey=y+dy*l,cx=x+dx*l/2+nx*cv,cy=y+dy*l/2+ny*cv,f=v=>v.toFixed(1);
+    return `M${f(x)} ${f(y)}Q${f(cx+nx*w)} ${f(cy+ny*w)} ${f(ex)} ${f(ey)}Q${f(cx-nx*w)} ${f(cy-ny*w)} ${f(x)} ${f(y)}Z`;};
+  const scr=(x,y,l,a,w,cv,t,m)=>{const d=lens(x,y,l,a,w,cv);
+    return `<g data-t="${t}" data-m="${m}" opacity="0"><path d="${d}" fill="#000" fill-opacity=".55" transform="translate(.45 .55)"/><path d="${d}" fill="#fff"/></g>`;};
+  const dir=(R()-.5)*1.2;           /* most marks run the same way, like the cassette was dragged across a surface */
+  for(let i=0;i<14;i++){            /* scratches over the shell */
+    const x=8+R()*304,y0=8+R()*188,y=(y0>20&&y0<90&&x>24&&x<296)?y0+72:y0,l=8+R()*R()*44,a=dir+(R()-.5)*(i<9?.35:2.2),w=.25+R()*.45,t=(i/14*.8).toFixed(2);
+    s+=scr(x,y,l,a,w,(R()-.5)*3,t,'.6');
+  }
+  for(let k=0;k<3;k++){             /* scuff clusters: a few short parallel marks */
+    const x=14+R()*270,y=14+R()*170,a=dir+(R()-.5)*.5,t=(.3+k*.2).toFixed(2);
+    for(let j=0;j<4;j++)s+=scr(x+j*1.7*Math.sin(a),y-j*1.7*Math.cos(a),5+R()*9,a+(R()-.5)*.12,.22+R()*.2,(R()-.5)*1.2,t,'.5');
   }
   for(let i=0;i<10;i++){            /* dark scuffs and specks */
     const x=10+R()*300,y=10+R()*184,r=.5+R()*1.5,t=(.15+i/10*.7).toFixed(2);
@@ -72,9 +82,10 @@ function wearGfx(m){
     s+=`<ellipse data-t="${t}" data-m=".28" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${r.toFixed(1)}" ry="${(r*.55).toFixed(1)}" fill="#8a5a1c" opacity="0"/>`;
   }
   for(let i=0;i<9;i++){             /* fine scratches on the window glass */
-    const x=60+R()*200,y=96+R()*54,l=8+R()*30,a=(R()-.5)*.9,t=(.1+i/9*.8).toFixed(2);
-    s+=`<path data-t="${t}" data-m=".5" d="M${x.toFixed(1)} ${y.toFixed(1)}l${(Math.cos(a)*l).toFixed(1)} ${(Math.sin(a)*l).toFixed(1)}" stroke="#fff" stroke-width=".4" opacity="0"/>`;
+    const x=56+R()*190,y=96+R()*52,l=10+R()*R()*50,a=dir*.6+(R()-.5)*.9,t=(.1+i/9*.8).toFixed(2);
+    s+=scr(x,y,l,a,.2+R()*.3,(R()-.5)*3,t,'.5');
   }
+  for(let i=0;i<2;i++)s+=scr(56+R()*40,98+R()*50,90+R()*80,dir*.5+(R()-.5)*.3,.3,(R()-.5)*6,(.55+i*.2).toFixed(2),'.55');  /* long scratches that cross the window */
   s+=`<path data-t=".45" data-m=".7" d="M22 76l12 12H22z" fill="#000" opacity="0"/><path data-t=".6" data-m=".6" d="M298 12l-14 0 14 14z" fill="#e9dfc6" opacity="0"/>`; /* curled label corners */
   return `<g class="wear" pointer-events="none">${s}</g>`;
 }
@@ -185,6 +196,7 @@ async function addFiles(files){
   initAudio();let first=null,n=0;
   for(const f of files){
     try{
+      if(f.size>150e6){say(_t('FILE TOO BIG (MAX 150 MB): ')+(f.name||_t('file')).slice(0,18),3200);continue;}
       say(_t('READING FILE…'),99999);
       const ab=await f.arrayBuffer();
       let dur=0;
@@ -193,7 +205,7 @@ async function addFiles(files){
         shell:pick(SHELLS),paper:pick(PAPERS),stripe:pick(STRIPES),pen:pick(PENS),rot:+rnd(-1.6,1.6).toFixed(2),dur,created:Date.now()+n};
       await dbPut('data',{id:m.id,buf:ab,type:f.type});await dbPut('meta',m);
       lib.push(m);if(!first)first=m;n++;
-    }catch(e){say(_t('COULD NOT READ FILE'),2500);}
+    }catch(e){say(e&&e.name==='QuotaExceededError'?_t('STORAGE FULL — DELETE A CASSETTE'):_t('COULD NOT READ FILE'),3000);}
   }
   renderTray();
   if(first){ if(lidP>0.5)await insert(first.id); else say(_t('CASSETTES ADDED: ')+n,2200); }

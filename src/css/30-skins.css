@@ -321,3 +321,10 @@ body[data-theme] .duo{gap:2px;padding:5px 4px 9px}
 
 /* lid corners = well corners */
 body[data-theme="sonic"]{--wr:6px}body[data-theme="kami"]{--wr:30px}body[data-theme="nashville"]{--wr:10px}body[data-theme="kiiro"]{--wr:12px}body[data-theme="akane"]{--wr:10px}body[data-theme="kuro"]{--wr:8px}
+
+/* empty spindles: black plastic like the real thing, only the teeth pick up a hint of the deck's metal */
+#spinds .sr{fill:var(--sp-r)}#spinds .sh{fill:var(--sp-h)}#spinds .sc{fill:var(--sp-c)}#spinds .st{fill:var(--sp-t)}
+body[data-theme]{--sp-r:#111112;--sp-h:#252629;--sp-c:#0a0a0b;--sp-t:#6d7077}
+body[data-theme="sonic"]{--sp-t:#9fa3aa}
+body[data-theme="nashville"]{--sp-t:#8c7a4e}
+body[data-theme="kuro"]{--sp-t:#5c5f65}
