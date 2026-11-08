@@ -6,7 +6,7 @@
 :is(body[data-theme="kami"],body[data-theme="nashville"],body[data-theme="kiiro"],body[data-theme="akane"],body[data-theme="kuro"]) #lcd::after{
   background:linear-gradient(172deg,#ffffff26 0,#ffffff0d 38%,#0000 39%),linear-gradient(0deg,#ffffff0a,#0000 28%);box-shadow:inset 0 0 0 1px #ffffff10}
 /* panel structure per technology */
-body[data-theme="kami"] #lcd::before{background:radial-gradient(ellipse 100% 140% at 30% 0,#ffffffb0,#0000 70%),repeating-linear-gradient(0deg,#0000 0 2px,#8a7a4a16 2px 3px)}   /* cream backlit LCD, matches the cream keys */
+body[data-theme="kami"] #lcd::before{background:repeating-linear-gradient(0deg,#0000 0 2px,#1d3a2c10 2px 3px)}   /* grey-green LCD, fine row structure */
 body[data-theme="nashville"] #lcd::before{background:repeating-linear-gradient(90deg,#00000030 0 1px,#0000 1px 3px),radial-gradient(ellipse 90% 110% at 50% 40%,#52ffb61c,#0000 70%)}       /* VFD: the anode mesh and a green haze */
 body[data-theme="kiiro"] #lcd::before{background:radial-gradient(ellipse 100% 140% at 50% 0,#e9fff1a0,#0000 70%),repeating-linear-gradient(0deg,#0000 0 2px,#00583a1c 2px 3px)}   /* electroluminescent mint LCD (sport-watch style) */
 body[data-theme="akane"] #lcd::before{background:radial-gradient(circle,#0000 .6px,#00000060 .85px) 0 0/3px 3px,radial-gradient(ellipse 100% 140% at 25% 0,#ffa03a30,#0000 70%)}   /* LED dot matrix */
@@ -14,3 +14,39 @@ body[data-theme="kuro"] #lcd::before{background:radial-gradient(ellipse 100% 150
 
 /* the pixel structure sits behind the digits, the glass in front of them */
 :is(body[data-theme="kami"],body[data-theme="nashville"],body[data-theme="kiiro"],body[data-theme="akane"],body[data-theme="kuro"]) #lcd::before{z-index:-1}
+
+/* ONE depth system for all six windows: the same recess, 2px bezel, light lower lip and glass glare angle.
+   Only the material differs: --lz-in (inner shadow tint), --lz-bz (bezel), --lz-lip, --lz-gl (glare strength). */
+body{--lz-in:#000a;--lz-bz:#222;--lz-lip:#ffffff44;--lz-gl:#ffffff30}
+body[data-theme="sonic"]{--lz-in:#00000070;--lz-bz:#b9bcc1;--lz-lip:#ffffff;--lz-gl:#ffffff30}
+body[data-theme="kami"]{--lz-in:#1a2a1ecc;--lz-bz:#14302a;--lz-lip:#ffffff55;--lz-gl:#ffffff40}
+body[data-theme="nashville"]{--lz-in:#000d;--lz-bz:#4a4740;--lz-lip:#ffffff70;--lz-gl:#ffffff22}
+body[data-theme="kiiro"]{--lz-in:#0b3a2299;--lz-bz:#2b2c2e;--lz-lip:#ffffff66;--lz-gl:#ffffff40}
+body[data-theme="akane"]{--lz-in:#000a;--lz-bz:#3a0a07;--lz-lip:#ffb7ae55;--lz-gl:#ffffff22}
+body[data-theme="kuro"]{--lz-in:#7a3a00cc;--lz-bz:#1a1b1d;--lz-lip:#ffffff30;--lz-gl:#ffffff40}
+body[data-theme] #lcd{border:0;box-shadow:inset 0 3px 6px var(--lz-in),inset 0 0 0 1px #0000003a,0 0 0 2px var(--lz-bz),0 1px 0 3px var(--lz-lip)}
+:is(body[data-theme="sonic"],body[data-theme="kami"],body[data-theme="nashville"],body[data-theme="kiiro"],body[data-theme="akane"],body[data-theme="kuro"]) #lcd::after{
+  background:linear-gradient(115deg,var(--lz-gl) 0,#ffffff0d 35%,#0000 36%);box-shadow:inset 0 0 0 1px #ffffff10}
+body[data-theme="sonic"] #lcd{position:relative;overflow:hidden}
+body[data-theme="sonic"] #lcd::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit}
+
+/* unlit segments: faint seven-segment "88:88 / 88:88" behind the live digits, like the off segments of a real display */
+body[data-theme] #lcd{isolation:isolate}
+body[data-theme] #lTime{position:relative}
+body[data-theme] #lTime::before{--cw:calc(1ch + .02em);content:"";position:absolute;right:0;top:0;bottom:0;width:calc(var(--cw)*13);z-index:-1;pointer-events:none;background:var(--lcd-ink);opacity:.2;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 16' preserveAspectRatio='none'%3E%3Cpath d='M2.2 3.6h5.6l-.9 1h-3.8zM2.2 8.6h5.6l-.7.9h-4.2l-.7-.9zM2.2 13.6h5.6l-.9-1h-3.8zM1.7 4.2l.9.9v3l-.9.9zM8.3 4.2l-.9.9v3l.9.9zM1.7 9.1l.9.9v2.4l-.9.9zM8.3 9.1l-.9.9v2.4l.9.9z'/%3E%3C/svg%3E") 0 0/var(--cw) 100% repeat-x,linear-gradient(90deg,#000 0 calc(var(--cw)*2),#0000 0 calc(var(--cw)*3),#000 0 calc(var(--cw)*5),#0000 0 calc(var(--cw)*8),#000 0 calc(var(--cw)*10),#0000 0 calc(var(--cw)*11),#000 0);
+  -webkit-mask-composite:source-in;mask-composite:intersect}
+body[data-theme="nashville"] #lTime::before{opacity:.3;background:#2a8a63}
+body[data-theme="akane"] #lTime::before{opacity:.32;background:#a8581a}
+body[data-theme="kuro"] #lTime::before{opacity:.24}
+
+/* uneven backlight: the panel is a little darker towards its edges */
+body[data-theme] #lcd{background-image:radial-gradient(ellipse 85% 130% at 50% 38%,#0000 52%,#00000030 100%)}
+body[data-theme="nashville"] #lcd,body[data-theme="akane"] #lcd{background-image:radial-gradient(ellipse 85% 130% at 50% 38%,#0000 50%,#00000055 100%)}
+/* LED / VFD refresh: a barely visible shimmer */
+@keyframes lzShimmer{0%,100%{opacity:1}41%{opacity:1}44%{opacity:.86}47%{opacity:.98}71%{opacity:.93}74%{opacity:1}}
+body[data-theme="nashville"] #lcd::before,body[data-theme="akane"] #lcd::before{animation:lzShimmer 5.3s steps(1,end) infinite}
+/* long track names slide instead of being cut with an ellipsis */
+@keyframes lzMq{0%,18%{text-indent:0}82%,100%{text-indent:calc(var(--mq) * -1)}}
+#lName.mq{text-overflow:clip;animation:lzMq var(--mqd,8s) linear infinite alternate}
+@media (prefers-reduced-motion:reduce){body[data-theme] #lcd::before{animation:none!important}#lName.mq{animation:none;text-overflow:ellipsis}}

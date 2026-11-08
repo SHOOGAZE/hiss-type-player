@@ -36,7 +36,7 @@ function frame(t){
   const nm=(performance.now()<msgUntil||msgText)&&performance.now()<msgUntil?msgText:(cur?curName():_t('TAP SLOT TO LOAD AUDIO'));
   if(mt!==cache.m){cache.m=mt;lMode.textContent=mt;}
   if(tt!==cache.t){cache.t=tt;lTime.textContent=tt;}
-  if(nm!==cache.n){cache.n=nm;lName.textContent=nm;}
+  if(nm!==cache.n){cache.n=nm;lName.textContent=nm;lName.classList.remove('mq');const ov=lName.scrollWidth-lName.clientWidth;if(ov>3){lName.style.setProperty('--mq',ov+'px');lName.style.setProperty('--mqd',(ov/16+3).toFixed(1)+'s');lName.classList.add('mq');}}
 }
 
 /* ---------- boot ---------- */

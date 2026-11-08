@@ -47,6 +47,7 @@ function paintLabel(){
   cur.refs.nm.setAttribute('font-family',hd?HAND_FF:printFF());cur.refs.nm.setAttribute('font-weight',hd?400:(PWT[theme]||600));cur.refs.nm.setAttribute('letter-spacing',hd?0:(PS[theme]||2));
   cur.refs.nm.setAttribute('transform','rotate('+(hd?m.rot:0)+' 160 50)');
   if(cur.refs.du)cur.refs.du.textContent=cur.dur?fmt(cur.dur):'--:--';
+  const gn=cur.el.querySelector('.gn');if(gn)gn.textContent=genTxt(m);
 }
 nameIn.addEventListener('input',()=>{
   if(!cur)return;const v=nameIn.value.slice(0,30);
@@ -67,6 +68,25 @@ async function loadIntoTrack(file){
     say('T'+(i+1)+_t(' LOADED'),1800);click('latch');renderMixer();renderTray();
   }catch(e){say(_t('COULD NOT READ FILE'),2500);}
 }
+/* generation loss: roll off the top, add hiss, wow and soft saturation; stronger for older tape (ag). Shared by ping-pong and DUB */
+async function degrade(L,R,len,ag){
+    const sr=ctx.sampleRate,fc=clamp(11500*Math.pow(0.55,ag),3500,12000)*TC().lp,al=1-Math.exp(-2*Math.PI*Math.min(fc,18000)/sr);
+    const hs=0.0012*(1+ag*2)*TC().hiss,sat=1.15+ag*0.4+TC().sat*0.25,ns=Math.tanh(sat);
+    const out=ctx.createBuffer(2,len,sr),oL=out.getChannelData(0),oR=out.getChannelData(1);
+    let yl=0,yr=0,pk=0,hp1=0,hp2=0;const W=0.0004*sr*TC().wow*(1+ag),f1=0.6+Math.random()*0.5,f2=7.5+Math.random();
+    for(let k=0;k<len;k++){
+      const d=W*(Math.sin(2*Math.PI*f1*k/sr)+0.15*Math.sin(2*Math.PI*f2*k/sr)),q=k+d,i0=Math.floor(q),fr=q-i0;
+      const xl=i0>=0&&i0+1<len?L[i0]*(1-fr)+L[i0+1]*fr:0,xr=i0>=0&&i0+1<len?R[i0]*(1-fr)+R[i0+1]*fr:0;
+      const n1=(Math.random()*2-1),n2=(Math.random()*2-1);
+      hp1+=(n1-hp1)*0.6;hp2+=(n2-hp2)*0.6;
+      yl+=al*(Math.tanh(sat*xl)/ns-yl);yr+=al*(Math.tanh(sat*xr)/ns-yr);
+      const vl=yl+(n1-hp1)*hs,vr=yr+(n2-hp2)*hs;oL[k]=vl;oR[k]=vr;
+      const a=Math.abs(vl),b2=Math.abs(vr);if(a>pk)pk=a;if(b2>pk)pk=b2;
+      if((k&0x3fff)===0&&k)await new Promise(r=>setTimeout(r,0));
+    }
+    if(pk>0.95){const g=0.95/pk;for(let k=0;k<len;k++){oL[k]*=g;oR[k]*=g;}}
+    return out;
+}
 /* ping-pong: sum every other track onto the armed one, with generation loss */
 async function pingpong(){
   if(!cur||busy)return;if(S.mode!=='stop')stopTransport();
@@ -83,30 +103,41 @@ async function pingpong(){
       const a0=b.getChannelData(0),a1=b.getChannelData(Math.min(1,b.numberOfChannels-1));
       for(let k=0;k<b.length;k++){L[k]+=a0[k]*gl;R[k]+=a1[k]*gr;}
     }
-    const ag=age(),fc=clamp(11500*Math.pow(0.55,ag),3500,12000)*TC().lp,al=1-Math.exp(-2*Math.PI*Math.min(fc,18000)/sr);
-    const hs=0.0012*(1+ag*2)*TC().hiss,sat=1.15+ag*0.4+TC().sat*0.25,ns=Math.tanh(sat);
-    const out=ctx.createBuffer(2,len,sr),oL=out.getChannelData(0),oR=out.getChannelData(1);
-    let yl=0,yr=0,pk=0,hp1=0,hp2=0;const W=0.0004*sr*TC().wow*(1+ag),f1=0.6+Math.random()*0.5,f2=7.5+Math.random();
-    for(let k=0;k<len;k++){
-      const d=W*(Math.sin(2*Math.PI*f1*k/sr)+0.15*Math.sin(2*Math.PI*f2*k/sr)),q=k+d,i0=Math.floor(q),fr=q-i0;
-      const xl=i0>=0&&i0+1<len?L[i0]*(1-fr)+L[i0+1]*fr:0,xr=i0>=0&&i0+1<len?R[i0]*(1-fr)+R[i0+1]*fr:0;
-      const n1=(Math.random()*2-1),n2=(Math.random()*2-1);
-      hp1+=(n1-hp1)*0.6;hp2+=(n2-hp2)*0.6;
-      yl+=al*(Math.tanh(sat*xl)/ns-yl);yr+=al*(Math.tanh(sat*xr)/ns-yr);
-      const vl=yl+(n1-hp1)*hs,vr=yr+(n2-hp2)*hs;oL[k]=vl;oR[k]=vr;
-      const a=Math.abs(vl),b2=Math.abs(vr);if(a>pk)pk=a;if(b2>pk)pk=b2;
-      if((k&0x3fff)===0&&k)await new Promise(r=>setTimeout(r,0));
-    }
-    if(pk>0.95){const g=0.95/pk;for(let k=0;k<len;k++){oL[k]*=g;oR[k]*=g;}}
+    const out=await degrade(L,R,len,age());
     cur.T[dst]={buf:out,rev:null};setDur();paintLabel();
     for(const i of srcs)cur.meta.mix[i].m=true;
-    cur.meta.wear=Math.min(1.3,(cur.meta.wear||0)+0.07);paintAge(true);
+    cur.meta.wear=Math.min(1.3,(cur.meta.wear||0)+0.07);cur.meta.gen=(cur.meta.gen||1)+1;paintLabel();paintAge(true);
     await saveTrack(cur,dst);await dbPut('meta',cur.meta);
     click('big');say('PING-PONG → T'+(dst+1)+_t(' DONE'),2600);
   }catch(e){say(_t('PING-PONG FAILED'),2500);}
   busy=false;
 }
 $('#mxPP').addEventListener('click',pingpong);
+/* DUB: copy the whole cassette onto a new one, one generation down: every track goes through the same tape loss as a ping-pong */
+async function dubTape(){
+  if(!cur||busy)return;if(S.mode!=='stop')stopTransport();
+  const src=cur,sm=src.meta;busy=true;say(_t('DUBBING…'),99999);mixEl.classList.remove('on');
+  await new Promise(r=>setTimeout(r,60));
+  try{
+    const ag=clamp(age()+0.12,0,1.3),id=uid();
+    const m={id,name:sm.name,nameB:sm.nameB,shell:sm.shell,paper:sm.paper,stripe:sm.stripe,pen:sm.pen,rot:sm.rot,dur:sm.dur,durB:sm.durB,created:Date.now(),
+      gen:(sm.gen||1)+1,wear:Math.min(1.3,(sm.wear||0)+0.1),plays:0,secs:0,arm:sm.arm||0,mix:(sm.mix||[]).map(x=>({g:x.g,m:x.m,p:x.p}))};
+    for(let sd=0;sd<2;sd++){
+      const T=sd===src.side?src.T:await loadSide(sm,sd);
+      for(let n=0;n<NT;n++){
+        const b=T[n]&&T[n].buf;if(!b)continue;
+        const L=b.getChannelData(0),R=b.getChannelData(Math.min(1,b.numberOfChannels-1));
+        const out=await degrade(L,R,b.length,ag);
+        await dbPut('data',{id:trKey(id,sd,n),buf:toWav(out),type:'audio/wav'});
+      }
+    }
+    await dbPut('meta',m);lib.push(m);renderTray();
+    click('big');say(_t('DUB DONE · G')+m.gen,2600);
+  }catch(e){say(_t('DUB FAILED'),2500);}
+  busy=false;
+}
+$('#mxDub').addEventListener('click',dubTape);
+
 /* flip the cassette: side B has its own four tracks */
 async function flip(){
   if(!cur||busy)return;busy=true;
@@ -158,6 +189,7 @@ async function jcard(){
   }
   x.fillStyle=m.pen;x.globalAlpha=.55;x.font='26px '+mono;
   x.fillText(_t('TAPE WEAR ')+Math.round(clamp(age(),0,1.3)*100)+'%'+(loopGen?_t(' · LOOP ')+loopGen:''),60,1010);
+  {const sc=Math.round(m.secs||0),h=Math.floor(sc/3600),mi=Math.floor(sc%3600/60);x.fillText('G'+(m.gen||1)+' · '+_t('PLAYED ')+(m.plays||0)+'× · '+(h?h+_t(' H '):'')+mi+_t(' MIN'),60,960);}
   x.fillText(new Date(m.created||Date.now()).toLocaleDateString('ru-RU'),60,1060);x.globalAlpha=1;
   x.fillStyle=accent;x.beginPath();x.arc(W-120,1040,34,0,7);x.fill();x.fillStyle=m.paper;x.beginPath();x.arc(W-120,1040,12,0,7);x.fill();
   x.fillStyle=m.paper;x.font='700 28px '+mono;x.fillText('shoogaze.github.io/hiss',60,H-35);

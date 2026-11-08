@@ -6,7 +6,7 @@
   --grain:.22;--grain-blend:overlay;
   --ui:ui-monospace,"SF Mono",Menlo,monospace;
   --ink:#d9cdb4;--dim:#a79d88;--accent:#ffb84a;--accent-glow:0 0 6px #ff9a1f66;
-  --lcd-bg:#1a1408;--lcd-ink:#ffb84a;--lcd-glow:0 0 6px #ff9a1f88;--lcd-sh:inset 0 1px 4px #000,0 1px 0 #ffffff14;
+  --lcd-bg:#1a1408;--lcd-ink:#ffb84a;--lcd-glow:0 0 6px #ff9a1f88;
   --well-a:#0d0c0a;--well-b:#1c1a16;--well-ring:#2b2823;
   --frame:#35322c;--glass:rgba(24,28,32,.26);
   --key-a:#4d4a43;--key-b:#2c2a25;--key-edge:#0b0a08;--key-ink:#d9cdb4;--key-r:6px;--key-d:6px;--key-hi:#ffffff30;--key-lab:#b3a994;--key-t:.05s;
@@ -28,7 +28,7 @@ body[data-theme="sonic"]{
   --grain:.10;--grain-blend:multiply;
   --ui:"Helvetica Neue",Helvetica,Arial,sans-serif;
   --ink:#2b2d30;--dim:#53575e;--accent:#ff7a1a;--accent-glow:none;
-  --lcd-bg:#a5b393;--lcd-ink:#1c2a14;--lcd-glow:none;--lcd-sh:inset 0 2px 5px #0006,0 1px 0 #fff8;
+  --lcd-bg:#a5b393;--lcd-ink:#1c2a14;--lcd-glow:none;
   --well-a:#1a1b1d;--well-b:#2a2b2e;--well-ring:#8f9297;
   --frame:#c6c9cd;--glass:rgba(170,185,200,.16);
   --key-a:#f4f5f6;--key-b:#cdd0d4;--key-edge:#8d9096;--key-ink:#33363b;--key-r:5px;--key-d:5px;--key-hi:#fffd;--key-lab:#4a4e55;--key-t:.04s;
@@ -46,7 +46,7 @@ body[data-theme="kami"]{
   --grain:.07;--grain-blend:multiply;
   --ui:"Hiragino Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
   --ink:#3a3833;--dim:#6f6b60;--accent:#2f9f86;--accent-glow:none;
-  --lcd-bg:#e9efe0;--lcd-ink:#2b5a49;--lcd-glow:none;--lcd-sh:inset 0 1px 3px #0003;
+  --lcd-bg:#e9efe0;--lcd-ink:#2b5a49;--lcd-glow:none;
   --well-a:#2a2926;--well-b:#383631;--well-ring:#d9d5c9;
   --frame:#f1efe7;--glass:rgba(240,245,240,.12);
   --key-a:#fdfcf8;--key-b:#e6e3d9;--key-edge:#c9c5b8;--key-ink:#4b4840;--key-r:24px;--key-d:5px;--key-hi:#fff;--key-lab:#6f6b60;--key-t:.09s;
@@ -66,7 +66,7 @@ body[data-theme="nashville"]{
   --grain:.22;--grain-blend:overlay;
   --ui:"Futura","Avenir Next",Helvetica,Arial,sans-serif;
   --ink:#2a2723;--dim:#48443b;--accent:#c0392b;--accent-glow:none;
-  --lcd-bg:#04120d;--lcd-ink:#7dffc4;--lcd-glow:0 0 6px #35ffa088;--lcd-sh:inset 0 2px 5px #000,0 1px 0 #fff8;
+  --lcd-bg:#04120d;--lcd-ink:#7dffc4;--lcd-glow:0 0 6px #35ffa088;
   --well-a:#0f0d0b;--well-b:#1e1b17;--well-ring:#6e6a60;
   --frame:#b5b2a9;--glass:rgba(80,90,100,.2);
   --key-a:#efede8;--key-b:#a8a59c;--key-edge:#55524a;--key-ink:#2a2723;--key-r:4px;--key-d:8px;--key-hi:#fff;--key-lab:#4a463e;--key-t:.09s;
@@ -86,7 +86,7 @@ body[data-theme="kuro"]{
   --grain:.14;--grain-blend:overlay;
   --ui:"Helvetica Neue",Helvetica,Arial,sans-serif;
   --ink:#e6e7ea;--dim:#b3b5bc;--accent:#ff5040;--accent-glow:0 0 6px #ff504066;
-  --lcd-bg:#ff9a1f;--lcd-ink:#1c0d00;--lcd-glow:0 1px 0 #ffcf8a66;--lcd-sh:inset 0 2px 5px #7a3a00cc,0 0 0 1px #34363b;
+  --lcd-bg:#ff9a1f;--lcd-ink:#1c0d00;--lcd-glow:0 1px 0 #ffcf8a66;
   --well-a:#050506;--well-b:#101113;--well-ring:#050506;
   --frame:#0d0d0f;--glass:rgba(60,66,78,.2);
   --key-a:#3f4044;--key-b:#131416;--key-edge:#000;--key-ink:#eeeff1;--key-r:6px;--key-d:6px;--key-hi:#ffffff30;--key-lab:#c9cad0;--key-t:.05s;
@@ -121,7 +121,7 @@ body[data-theme="kiiro"]{
   --grain:.08;--grain-blend:multiply;
   --ui:"Helvetica Neue",Helvetica,Arial,sans-serif;
   --ink:#1b1a17;--dim:#4d4528;--accent:#8a5200;--accent-glow:none;
-  --lcd-bg:#a6edc2;--lcd-ink:#08331f;--lcd-glow:0 1px 0 #ffffff66;--lcd-sh:inset 0 2px 5px #00583a99,0 0 0 2px #121213;
+  --lcd-bg:#9fe0b8;--lcd-ink:#06301c;--lcd-glow:0 1px 0 #ffffff66;
   --well-a:#050505;--well-b:#161617;--well-ring:#121213;
   --frame:#121213;--glass:rgba(40,60,50,.18);
   --key-a:#323235;--key-b:#131315;--key-edge:#000;--key-ink:#f2f2f2;--key-r:7px;--key-d:5px;--key-hi:#ffffff26;--key-lab:#ededed;--key-t:.05s;
@@ -141,7 +141,7 @@ body[data-theme="akane"]{
   --grain:.14;--grain-blend:overlay;
   --ui:"Helvetica Neue",Helvetica,Arial,sans-serif;
   --ink:#fff1ec;--dim:#ffc7bd;--accent:#ffb347;--accent-glow:0 0 6px #ffb34777;
-  --lcd-bg:#2a0a08;--lcd-ink:#ffb04a;--lcd-glow:0 0 7px #ff8a2a99;--lcd-sh:inset 0 2px 6px #000a,0 0 0 1px #8a2018;
+  --lcd-bg:#2a0a08;--lcd-ink:#ffb04a;--lcd-glow:0 0 7px #ff8a2a99;
   --well-a:#140605;--well-b:#2a0e0b;--well-ring:#7a1a12;
   --frame:#8a1a12;--glass:rgba(255,200,190,.1);
   --key-a:#f6f2ea;--key-b:#d2c9bb;--key-edge:#6b1510;--key-ink:#3b2a26;--key-r:14px;--key-d:5px;--key-hi:#fff;--key-lab:#5a423c;--key-t:.06s;

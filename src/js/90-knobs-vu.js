@@ -108,7 +108,7 @@ function knob(el,o){
 const pitchK=knob($('#kPitch'),{min:-0.12,max:0.12,val:pitch,def:0,step:0.005,bi:true,
   show:v=>{$('#oPitch').textContent=(v>0?'+':'')+(v*100).toFixed(1)+'%';},onChange:v=>{setPitch(v);say('PITCH '+(v>0?'+':'')+(v*100).toFixed(1)+'%',700);}});
 const tapeK=knob($('#kTape'),{min:0,max:1,val:tapeAmt,def:0.25,step:0.025,
-  show:v=>{$('#oTape').textContent=Math.round(v*100);},onChange:v=>{tapeAmt=v;applyTape();saveSet();say('TAPE '+Math.round(v*100),700);}});
+  show:v=>{$('#oTape').textContent=Math.round(v*100);},onChange:v=>{tapeAmt=v;applyTape();saveSet();let hint=0;try{hint=!localStorage.getItem('tape4.tp1');if(hint)localStorage.setItem('tape4.tp1','1');}catch(e){}if(hint)say(_t('TAPE = TAPE CHARACTER · MORE = FASTER WEAR'),3200);else say('TAPE '+Math.round(v*100),700);}});
 $('#loopBtn').addEventListener('click',()=>{initAudio();loopOn=!loopOn;$('#loopBtn').classList.toggle('on',loopOn);click('down');setTimeout(()=>click('up'),70);const first=loopOn&&!localStorage.getItem('tape4.loopw');if(first)try{localStorage.setItem('tape4.loopw','1');}catch(e){}
   say(loopOn?(first?_t('LOOP ERODES THE AUDIO · IT CANNOT BE UNDONE'):_t('LOOP ON — THE TAPE WILL SHED')):_t('LOOP OFF'),first?3600:1800);});
 /* the speaker LED follows the output level of the two channels */

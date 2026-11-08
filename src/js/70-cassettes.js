@@ -17,7 +17,10 @@ function defaults(m){
   if(!m.mix)m.mix=[0,1,2,3].map(()=>({g:1,m:false,p:0}));
   if(typeof m.wear!=='number')m.wear=0;
   if(typeof m.arm!=='number')m.arm=0;
+  if(typeof m.gen!=='number')m.gen=1;
 }
+/* generation stamp: G1 is the original, every ping-pong or dub adds one */
+const genTxt=m=>(m.gen||1)>1?'G'+m.gen:'';
 const sideName=(m,side)=>side?(m.nameB||'SIDE B'):m.name;
 const curName=()=>sideName(cur.meta,cur.side);
 /* ---------- cassettes ---------- */
@@ -123,6 +126,7 @@ function cassSVG(m,uidk,side,lite){
   ${rules}
   <text class="nm" x="160" y="45" text-anchor="middle"${tl} font-size="${fs}" fill="${m.pen}" font-family="${hd?HAND_FF:printFF()}" font-weight="${hd?400:(PWT[theme]||600)}" letter-spacing="${hd?0:(PS[theme]||2)}" transform="rotate(${hd?m.rot:0} 160 42)">${esc(labTxt(m,name))}</text>
   <text class="tp" x="30" y="76" font-family="${mn}" font-size="6" letter-spacing="1.2" font-weight="700" fill="${m.pen}" opacity=".8">TYPE ${TY[D.type].n} · ${TY[D.type].bias} · ${TY[D.type].eq}</text>
+  <text class="gn" x="238" y="76" text-anchor="end" font-family="${mn}" font-size="7" letter-spacing="1" font-weight="700" fill="${m.pen}" opacity=".85" transform="rotate(-3 238 76)">${genTxt(m)}</text>
   <text class="nrt" x="290" y="76" text-anchor="end" font-family="${mn}" font-size="6" letter-spacing="1.2" font-weight="700" fill="${m.pen}" opacity=".8">NR ▸ ${NRN[D.nr]}</text>
   <rect x="48" y="88" width="224" height="72" rx="36" fill="#000" opacity=".3"/>
   <rect x="52" y="92" width="216" height="64" rx="32" fill="#0b0a09" stroke="#000"/>
@@ -168,7 +172,7 @@ async function insert(id){
     defaults(m);
     const T=await loadSide(m,0);
     if(!T[0].buf)throw new Error('decode');
-    m.dur=T[0].buf.duration;
+    m.dur=T[0].buf.duration;m.plays=(m.plays||0)+1;
     const c=buildCassette(m,0);slot.appendChild(c.el);
     cur={meta:m,T,side:0,dur:0,el:c.el,refs:c.refs,aL:0,aR:0,rL:26,rR:20};setDur();dbPut('meta',m).catch(()=>{});
     paintAge(true);

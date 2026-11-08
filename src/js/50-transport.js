@@ -46,6 +46,7 @@ function ageTick(dt){
     const f=(m==='ff'||m==='rew')?0.3:1;
     cur.meta.wear=Math.min(1.3,(cur.meta.wear||0)+dt/2400*(0.6+tapeAmt)*f);
     wearSave+=dt;if(wearSave>20){wearSave=0;dbPut('meta',cur.meta).catch(()=>{});}
+    if(f===1)cur.meta.secs=(cur.meta.secs||0)+dt;
     D.hrs=(D.hrs||0)+dt*f;dwSave+=dt;paintDeckWear();if(dwSave>30){dwSave=0;saveDeck();}
     paintAge();
   }

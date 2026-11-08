@@ -33,6 +33,8 @@ All skins share one body: a big speaker grille with a level LED on top, the wind
 - **PING-PONG**: bounce tracks into one, with generation loss
 - **Sides A/B**, hand-written cassette labels, **J-card** export to PNG
 - **Tape wear**: every cassette has its own history, and it shows: scratches, tea stains, curled label corners, fading ink, darker sound. Wear is permanent until you press NEW TAPE in the 4TRK sheet
+- **Cassette life**: each tape carries a generation stamp on its label (G1 is the original; every PING-PONG or DUB adds one) and keeps its own history of plays and hours, printed on the J-card. DUB TAPE (4TRK sheet) copies the whole cassette onto a new one, one generation down, with the same tape loss as a ping-pong, so a copy sounds worse than its source. The TAPE encoder sets how much tape character you hear, and the higher it is the faster the cassette ages.
+- **Display windows**: six display technologies (LCD, VFD, EL, LED matrix) in one depth system: recessed glass, 2 px bezel, unlit segments, uneven backlight, a faint refresh shimmer on the LED and VFD skins, and long track names slide instead of being cut.
 - **Deck wear**: the machine ages with the hours it has played (about 10 h to full): fine scratches, grime at the edges, worn keys, dust on the grille. DECK → MORE → SERVICE DECK resets it.
 - **LOOP**: a loop that crumbles a bit on every pass
 - **BOUNCE**: save everything you hear to WAV
