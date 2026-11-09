@@ -9,8 +9,8 @@ function updateReels(pos){
   /* hub has 6-fold symmetry: a step past ~30deg/frame reads as spinning backwards (wagon-wheel), so FF/REW is capped at 24deg/frame */
   const cs=x=>Math.max(-24,Math.min(24,x));
   cur.aL-=cs(dp*V/rL*57.2958);cur.aR-=cs(dp*V/rR*57.2958);
-  if(Math.abs(rL-cur.rL)>0.04){cur.rL=rL;cur.refs.packL.setAttribute('r',rL.toFixed(2));cur.refs.ringL.setAttribute('r',Math.max(rL-4,15).toFixed(2));}
-  if(Math.abs(rR-cur.rR)>0.04){cur.rR=rR;cur.refs.packR.setAttribute('r',rR.toFixed(2));cur.refs.ringR.setAttribute('r',Math.max(rR-4,15).toFixed(2));}
+  if(Math.abs(rL-cur.rL)>0.04){cur.rL=rL;cur.refs.packL.setAttribute('r',rL.toFixed(2));cur.refs.edgeL.setAttribute('r',(rL-.6).toFixed(2));cur.refs.ringL.setAttribute('r',Math.max(rL-4,15).toFixed(2));}
+  if(Math.abs(rR-cur.rR)>0.04){cur.rR=rR;cur.refs.packR.setAttribute('r',rR.toFixed(2));cur.refs.edgeR.setAttribute('r',(rR-.6).toFixed(2));cur.refs.ringR.setAttribute('r',Math.max(rR-4,15).toFixed(2));}
   if(dp!==0&&!(lidMoving&&(rfN++&1))){
     cur.refs.reelL.setAttribute('transform','rotate('+(cur.aL%360).toFixed(2)+' '+CL+' '+CY+')');
     cur.refs.reelR.setAttribute('transform','rotate('+(cur.aR%360).toFixed(2)+' '+CR+' '+CY+')');

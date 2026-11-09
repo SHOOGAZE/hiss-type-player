@@ -93,6 +93,7 @@ function renderMixer(){
   if(document.activeElement!==nameIn)nameIn.value=cur.side?(m.nameB||''):m.name;
   nameIn.placeholder=cur.side?_t('side B name'):_t('cassette name');
   $('#fontBtn').textContent=_t('FONT: ')+(isHand(m)?_t('HAND'):_t('PRINT'));
+  $('#mxReel').textContent=_t('REEL: ')+_t(REEL_N[reelOf(m)]);$('#mxMat').textContent=_t('SHELL: ')+_t(MAT_N[matOf(m)]);
   nameIn.style.fontFamily=isHand(m)?'':'var(--print)';
   const ag=Math.round(clamp(age()/1.0,0,1.3)*100);
   $('#mxAge').textContent=_t('TAPE WEAR ')+ag+'%'+(loopGen?_t(' · LOOP: ')+loopGen+_t(' PASSES'):'');

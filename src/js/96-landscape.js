@@ -55,6 +55,9 @@ nameIn.addEventListener('input',()=>{
   paintLabel();
 });
 nameIn.addEventListener('change',()=>{saveMeta();renderTray();});
+/* reels (teeth / smooth / clear) and shell plastic (gloss / smoked / clear): saved on the cassette, redrawn in place */
+$('#mxReel').addEventListener('click',()=>{if(!cur)return;const m=cur.meta;m.reel=REELS[(REELS.indexOf(reelOf(m))+1)%REELS.length];saveMeta();repaintCass();renderTray();renderMixer();click('down');setTimeout(()=>click('up'),60);});
+$('#mxMat').addEventListener('click',()=>{if(!cur)return;const m=cur.meta;m.mat=MATS[(MATS.indexOf(matOf(m))+1)%MATS.length];saveMeta();repaintCass();renderTray();renderMixer();click('down');setTimeout(()=>click('up'),60);});
 $('#fontBtn').addEventListener('click',()=>{if(!cur)return;cur.meta.font=isHand(cur.meta)?'print':'hand';saveMeta();paintLabel();renderTray();renderMixer();click('down');setTimeout(()=>click('up'),60);});
 /* load a file into the armed track */
 $('#mxLoad').addEventListener('click',()=>{if(!cur)return;if(S.mode!=='stop')stopTransport();initAudio();loadTarget=true;fileInp.click();});

@@ -818,6 +818,14 @@ body:not(.worn) #plate::before,body:not(.worn) #keys .key::after,body:not(.worn)
 #lid .lwr{position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:var(--wr,14px);opacity:clamp(0,calc(var(--dw)*1.6),1);background:var(--wr-g) center/cover no-repeat}
 body.lidc #lid .lwr{background-image:var(--wr-l)}
 body:not(.worn) #lid .lwr{display:none}
+#slot{--bk:0;--bkc:#ffb347;--bkc2:#fff0c4}
+body[data-theme="sonic"] #slot{--bkc:#ffc983;--bkc2:#fff3d6}
+body[data-theme="kami"] #slot{--bkc:#6fe8c8;--bkc2:#e2fff7}
+body[data-theme="nashville"] #slot{--bkc:#ffae42;--bkc2:#ffe8b4}
+body[data-theme="kiiro"] #slot{--bkc:#ffe03d;--bkc2:#fff8c4}
+body[data-theme="akane"] #slot{--bkc:#ff8656;--bkc2:#ffdfcf}
+body[data-theme="kuro"] #slot{--bkc:#ff5545;--bkc2:#ffd3cd}
+#slot.rec{--bkc:#ff3b2f;--bkc2:#ffc4bd}
 </style>
 </head>
 <body>
@@ -892,6 +900,7 @@ body:not(.worn) #lid .lwr{display:none}
   <div class="hd"><span id="mxTitle">4-TRACK</span><button id="mxX" type="button">×</button></div>
   <div id="strips"></div>
   <div class="namerow"><input id="nameIn" maxlength="30" placeholder="cassette name" autocomplete="off" autocapitalize="off" spellcheck="false"><button id="fontBtn" type="button">PRINT</button></div>
+  <div class="mxrow"><button id="mxReel" type="button">REEL: TEETH</button><button id="mxMat" type="button">SHELL: GLOSS</button></div>
   <div class="mxrow"><button id="mxLoad" type="button">＋ LOAD INTO T1</button><button id="mxPP" type="button">PING-PONG → T1</button></div>
   <div class="mxrow"><button id="mxFlip" type="button" data-i>⟲ FLIP SIDE A/B</button><button id="mxCard" type="button" data-i>J-CARD ↓</button></div>
   <div class="mxrow"><button id="mxDub" type="button">⎘ DUB TAPE · G+1</button></div>
@@ -933,7 +942,7 @@ const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const rnd=(a,b)=>a+Math.random()*(b-a);
 const pick=a=>a[(Math.random()*a.length)|0];
 let lang='en';try{lang=localStorage.getItem('tape4.lang')==='ru'?'ru':'en';}catch(e){}
-const RU={"FILE TOO BIG (MAX 150 MB): ": "ФАЙЛ СЛИШКОМ БОЛЬШОЙ (МАКС. 150 МБ): ", "STORAGE FULL — DELETE A CASSETTE": "ПАМЯТЬ ЗАПОЛНЕНА — УДАЛИТЕ КАССЕТУ", "DUBBING…": "ДУБЛИРУЮ…", "DUB DONE · G": "КОПИЯ ГОТОВА · G", "DUB FAILED": "НЕ УДАЛОСЬ СДЕЛАТЬ КОПИЮ", "⎘ DUB TAPE · G+1": "⎘ КОПИЯ КАССЕТЫ · G+1", "PLAYED ": "СЫГРАНА ", " H ": " Ч ", " MIN": " МИН", "TAPE = TAPE CHARACTER · MORE = FASTER WEAR": "TAPE = ХАРАКТЕР ПЛЁНКИ · БОЛЬШЕ = БЫСТРЕЕ ИЗНОС", "LONG": "ДОЛГО", "SHORT": "КОРОТКО", "TAPE STOP": "ТОРМОЖЕНИЕ ЛЕНТЫ", "SERVICE DECK": "СЕРВИС ДЕКИ", "DECK SERVICED": "ДЕКА ОБСЛУЖЕНА", "PITCH": "ВЫСОТА", "TONE": "ТЕМБР", "REC LEVEL": "УРОВЕНЬ ЗАПИСИ", "VOLUME": "ГРОМКОСТЬ", "BALANCE": "БАЛАНС", "SLEEP": "ТАЙМЕР СНА", "AUTO REV": "АВТОРЕВЕРС", "MEMORY": "ПАМЯТЬ", "OPEN": "ОТКРЫТА", "TAPE TYPE ": "ТИП ЛЕНТЫ ", "4-TRACK": "4 ДОРОЖКИ", "LIBRARY": "БИБЛИОТЕКА", "CLOSE LIBRARY": "ЗАКРЫТЬ БИБЛИОТЕКУ", "CASSETTES": "КАССЕТ", "COVER": "КРЫШКА", "LID": "КРЫШКА", "WINDOW": "ОКНО", "CLOSED": "ГЛУХАЯ", "▲ SWIPE UP": "▲ СВАЙП ВВЕРХ", "FONT: ": "ШРИФТ: ", "MORE · TAPE OPTIONS": "ЕЩЁ · КАССЕТА", "TURBO ": "ТУРБО ", "PING-PONG → T": "ПИНГ-ПОНГ → T", "J-CARD ↓": "J-CARD ↓", "MEMORY STOP": "СТОП ПО ПАМЯТИ", "PING-PONG…": "ПИНГ-ПОНГ…", "NEW TAPE": "НОВАЯ ЛЕНТА", "REALLY? TAP AGAIN": "ТОЧНО? НАЖМИ ЕЩЁ", "OFF": "ВЫКЛ", "LOOP ERODES THE AUDIO · IT CANNOT BE UNDONE": "ПЕТЛЯ ИСПОРТИТ ЗВУК НАВСЕГДА", "RESET": "СБРОС", "WEAR": "ИЗНОС", "NORMAL": "НОРМА", "LOAD": "ЗАГРУЗИТЬ", " · RECORDING IS ALWAYS AT 1×": " · ЗАПИСЬ ВСЕГДА НА 1×", " · LOOP ": " · ПЕТЛЯ ", " · LOOP: ": " · ПЕТЛЯ: ", " ON": " ВКЛ", " OFF": " ВЫКЛ", " DONE": " ГОТОВО", " LOADED": " ЗАГРУЖЕНА", " MIN": " МИН", " PASSES": " ПРОХ.", " S": " С", " ERASED": " СТЁРТА", " — EMPTY": " — ПУСТАЯ", "BOUNCE ● RECORDING": "BOUNCE ● ЗАПИСЬ ИДЁТ", "BOUNCE: TOO SHORT": "BOUNCE: СЛИШКОМ КОРОТКО", "J-CARD READY": "J-CARD ГОТОВА", "LOOP · PASS ": "LOOP · ПРОХОД ", "LOOP ON — THE TAPE WILL SHED": "LOOP ВКЛ — ПЛЁНКА БУДЕТ ОСЫПАТЬСЯ", "LOOP OFF": "LOOP ВЫКЛ", "NO PAUSE WHILE RECORDING": "PAUSE В ЗАПИСИ НЕТ", "REC READY — PRESS PLAY": "REC ГОТОВ — ЖМИ PLAY", "TRACK ": "ДОРОЖКА ", "WAITING FOR MIC…": "ЖДУ МИКРОФОН…", "LOADING INTO T": "ЗАГРУЗКА В T", "LOADING…": "ЗАГРУЗКА…", "CLOSE THE LID": "ЗАКРОЙ КРЫШКУ", "RECORDED": "ЗАПИСАНО", "RECORDING": "ЗАПИСЬ", "RECORDING NOT SUPPORTED": "ЗАПИСЬ НЕ ПОДДЕРЖАНА", "SAVING… WAIT": "ЗАПИСЬ… ПОДОЖДИ", "RECORDING IN PROGRESS": "ИДЁТ ЗАПИСЬ", "TAPE WEAR ": "ИЗНОС ПЛЁНКИ ", "CASSETTES ADDED: ": "КАССЕТ ДОБАВЛЕНО: ", "CASSETTE REMOVED": "КАССЕТА СНЯТА", "CASSETTE DELETED": "КАССЕТА УДАЛЕНА", "END OF TAPE": "КОНЕЦ ЛЕНТЫ", "START OF TAPE": "НАЧАЛО ЛЕНТЫ", "COULD NOT DECODE": "НЕ УДАЛОСЬ ДЕКОДИРОВАТЬ", "COULD NOT FLIP": "НЕ УДАЛОСЬ ПЕРЕВЕРНУТЬ", "COULD NOT READ FILE": "НЕ УДАЛОСЬ ПРОЧИТАТЬ ФАЙЛ", "NO MICROPHONE ACCESS": "НЕТ ДОСТУПА К МИКРОФОНУ", "NO CASSETTE": "НЕТ КАССЕТЫ", "NOTHING TO MIX — UNMUTE A TRACK": "НЕЧЕГО СВОДИТЬ — ВКЛЮЧИ ДОРОЖКИ", "HAND": "ОТ РУКИ", "OPEN THE LID — SWIPE UP": "ОТКРОЙ КРЫШКУ — СВАЙП ВВЕРХ", "PING-PONG FAILED": "ОШИБКА PING-PONG", "RECORDING FAILED": "ОШИБКА ЗАПИСИ", "FLIPPING…": "ПЕРЕВОРАЧИВАЮ…", "PRINT": "ПЕЧАТЬ", "EMPTY SIDE — RECORD OR LOAD": "ПУСТАЯ СТОРОНА — ЗАПИШИ ИЛИ ЗАГРУЗИ", "SPEED ": "СКОРОСТЬ ", "SCRUB": "СКРАБ", "PRESS STOP FIRST": "СНАЧАЛА STOP", "INSERT A CASSETTE FIRST": "СНАЧАЛА ВСТАВЬ КАССЕТУ", "SLEEP · STOP": "СОН · СТОП", "SLEEP: ~": "СОН: ОСТАЛОСЬ ~", "ERASE": "СТЕРЕТЬ", "SIDE ": "СТОРОНА ", "SLEEP TIMER ": "ТАЙМЕР СНА ", "SLEEP TIMER OFF": "ТАЙМЕР СНА ВЫКЛ", "TAP SLOT TO LOAD AUDIO": "ТАП ПО ОТСЕКУ — АУДИО", "REALLY DELETE? TAP AGAIN": "ТОЧНО УДАЛИТЬ? ТАП ЕЩЁ РАЗ", "SURE?": "ТОЧНО?", "DELETE MODE: TAP A CASSETTE": "УДАЛЕНИЕ: ТАП ПО КАССЕТЕ", "DELETE": "УДАЛИТЬ", "DELETE CASSETTE": "УДАЛИТЬ КАССЕТУ", "READING FILE…": "ЧИТАЮ ФАЙЛ…", "NOT AUDIO: ": "ЭТО НЕ АУДИО: ", "recorded · ": "записано · ", "cassette name": "название кассеты", "side B name": "название стороны B", "empty": "пусто", "file": "файл", "＋ LOAD INTO T": "＋ ЗАГРУЗИТЬ В T", "TAP — LOAD AUDIO": "ТАП — ВЫБРАТЬ АУДИО", "SKINS": "ДИЗАЙН ДЕКИ", "⟲ FLIP SIDE A/B": "⟲ ПЕРЕВЕРНУТЬ A/B", "TAPE": "ЛЕНТА", "TYPE": "ТИП", "SPEED": "СКОРОСТЬ", "SOUND": "ЗВУК", "TRANSPORT": "ТРАНСПОРТ", "GENERAL": "ОБЩЕЕ", "LANGUAGE": "ЯЗЫК", "HOW TO USE": "КАК ПОЛЬЗОВАТЬСЯ", "SKIP": "ПРОПУСТИТЬ", "START": "НАЧАТЬ", "NEXT": "ДАЛЕЕ", "Swipe the lid up": "Свайп вверх по крышке", "Swipe up on the glass lid to open the deck. Swipe down to close it again.": "Потяни стеклянную крышку вверх, чтобы открыть деку. Свайп вниз закрывает её.", "Load your music": "Загрузи свою музыку", "Tap the slot (or ＋ on the shelf) and pick audio from your device. Every file becomes a cassette.": "Тапни по отсеку (или ＋ на полке) и выбери аудио на устройстве. Каждый файл становится кассетой.", "Play it like tape": "Играй как на ленте", "REW, PLAY, FF, STOP and PAUSE work like the real thing. Spin the reels with a finger to scrub. The knobs stop at their limits.": "REW, PLAY, FF, STOP и PAUSE работают как настоящие. Крути катушки пальцем — скрэтч и перемотка. Ручки упираются в крайних положениях.", "Record on top": "Запись поверх", "Tap 4TRK, press ARM on a track, close the mixer, then press REC and PLAY. Your new sound lands on that track while the others keep playing. Out of tracks? PING-PONG mixes the rest into the armed one.": "Нажми 4TRK, на нужной дорожке — ARM, закрой микшер, затем REC и PLAY. Новый звук ляжет на эту дорожку, остальные играют вместе с ним. Дорожки кончились? PING-PONG сведёт остальные в выбранную.", "Ping-pong": "Пинг-понг", "Out of tracks? In 4TRK, PING-PONG mixes all the other tracks into the armed one and frees them up. Every pass wears the sound a little.": "Дорожки кончились? В 4TRK кнопка PING-PONG сводит все остальные дорожки в выбранную и освобождает их. Каждый проход чуть состаривает звук.", "ARM A TRACK · THEN REC + PLAY": "ARM НА ДОРОЖКЕ · ПОТОМ REC + PLAY", "Change the deck": "Смени деку", "SKIN swaps the whole deck: six machines with their own look, keys and sound. The longer you play, the more wear it shows. In DECK, LID switches between a closed lid and a see-through window.": "SKIN меняет всю деку: шесть аппаратов со своим видом, клавишами и звуком. Чем дольше играешь, тем больше следов износа. В DECK пункт LID переключает закрытую крышку и прозрачное окно.", "Shape the sound": "Настрой звук", "DECK holds tape type, speed, tone, volume, sleep timer and NR (Dolby). TAPE and PITCH bend the sound, LOOP wears the tape out.": "В DECK — тип ленты, скорость, тон, громкость, таймер сна и NR (Dolby). TAPE и PITCH гнут звук, LOOP стирает ленту.", "Rotate your phone": "Поверни телефон", "Landscape shows the cassette full screen with glass controls. Long-press a cassette on the shelf to delete it. BOUNCE saves what you hear as a WAV.": "В горизонтали кассета на весь экран, управление на стекле. Долгое нажатие по кассете на полке — удалить. BOUNCE сохраняет всё, что слышишь, в WAV."};
+const RU={"REEL: ": "КАТУШКИ: ", "TEETH": "С ЗУБЦАМИ", "SMOOTH": "ГЛАДКИЕ", "CLEAR": "ПРОЗРАЧНЫЕ", "SHELL: ": "КОРПУС: ", "GLOSS": "ГЛЯНЕЦ", "SMOKED": "ДЫМЧАТЫЙ", "FILE TOO BIG (MAX 150 MB): ": "ФАЙЛ СЛИШКОМ БОЛЬШОЙ (МАКС. 150 МБ): ", "STORAGE FULL — DELETE A CASSETTE": "ПАМЯТЬ ЗАПОЛНЕНА — УДАЛИТЕ КАССЕТУ", "DUBBING…": "ДУБЛИРУЮ…", "DUB DONE · G": "КОПИЯ ГОТОВА · G", "DUB FAILED": "НЕ УДАЛОСЬ СДЕЛАТЬ КОПИЮ", "⎘ DUB TAPE · G+1": "⎘ КОПИЯ КАССЕТЫ · G+1", "PLAYED ": "СЫГРАНА ", " H ": " Ч ", " MIN": " МИН", "TAPE = TAPE CHARACTER · MORE = FASTER WEAR": "TAPE = ХАРАКТЕР ПЛЁНКИ · БОЛЬШЕ = БЫСТРЕЕ ИЗНОС", "LONG": "ДОЛГО", "SHORT": "КОРОТКО", "TAPE STOP": "ТОРМОЖЕНИЕ ЛЕНТЫ", "SERVICE DECK": "СЕРВИС ДЕКИ", "DECK SERVICED": "ДЕКА ОБСЛУЖЕНА", "PITCH": "ВЫСОТА", "TONE": "ТЕМБР", "REC LEVEL": "УРОВЕНЬ ЗАПИСИ", "VOLUME": "ГРОМКОСТЬ", "BALANCE": "БАЛАНС", "SLEEP": "ТАЙМЕР СНА", "AUTO REV": "АВТОРЕВЕРС", "MEMORY": "ПАМЯТЬ", "OPEN": "ОТКРЫТА", "TAPE TYPE ": "ТИП ЛЕНТЫ ", "4-TRACK": "4 ДОРОЖКИ", "LIBRARY": "БИБЛИОТЕКА", "CLOSE LIBRARY": "ЗАКРЫТЬ БИБЛИОТЕКУ", "CASSETTES": "КАССЕТ", "COVER": "КРЫШКА", "LID": "КРЫШКА", "WINDOW": "ОКНО", "CLOSED": "ГЛУХАЯ", "▲ SWIPE UP": "▲ СВАЙП ВВЕРХ", "FONT: ": "ШРИФТ: ", "MORE · TAPE OPTIONS": "ЕЩЁ · КАССЕТА", "TURBO ": "ТУРБО ", "PING-PONG → T": "ПИНГ-ПОНГ → T", "J-CARD ↓": "J-CARD ↓", "MEMORY STOP": "СТОП ПО ПАМЯТИ", "PING-PONG…": "ПИНГ-ПОНГ…", "NEW TAPE": "НОВАЯ ЛЕНТА", "REALLY? TAP AGAIN": "ТОЧНО? НАЖМИ ЕЩЁ", "OFF": "ВЫКЛ", "LOOP ERODES THE AUDIO · IT CANNOT BE UNDONE": "ПЕТЛЯ ИСПОРТИТ ЗВУК НАВСЕГДА", "RESET": "СБРОС", "WEAR": "ИЗНОС", "NORMAL": "НОРМА", "LOAD": "ЗАГРУЗИТЬ", " · RECORDING IS ALWAYS AT 1×": " · ЗАПИСЬ ВСЕГДА НА 1×", " · LOOP ": " · ПЕТЛЯ ", " · LOOP: ": " · ПЕТЛЯ: ", " ON": " ВКЛ", " OFF": " ВЫКЛ", " DONE": " ГОТОВО", " LOADED": " ЗАГРУЖЕНА", " MIN": " МИН", " PASSES": " ПРОХ.", " S": " С", " ERASED": " СТЁРТА", " — EMPTY": " — ПУСТАЯ", "BOUNCE ● RECORDING": "BOUNCE ● ЗАПИСЬ ИДЁТ", "BOUNCE: TOO SHORT": "BOUNCE: СЛИШКОМ КОРОТКО", "J-CARD READY": "J-CARD ГОТОВА", "LOOP · PASS ": "LOOP · ПРОХОД ", "LOOP ON — THE TAPE WILL SHED": "LOOP ВКЛ — ПЛЁНКА БУДЕТ ОСЫПАТЬСЯ", "LOOP OFF": "LOOP ВЫКЛ", "NO PAUSE WHILE RECORDING": "PAUSE В ЗАПИСИ НЕТ", "REC READY — PRESS PLAY": "REC ГОТОВ — ЖМИ PLAY", "TRACK ": "ДОРОЖКА ", "WAITING FOR MIC…": "ЖДУ МИКРОФОН…", "LOADING INTO T": "ЗАГРУЗКА В T", "LOADING…": "ЗАГРУЗКА…", "CLOSE THE LID": "ЗАКРОЙ КРЫШКУ", "RECORDED": "ЗАПИСАНО", "RECORDING": "ЗАПИСЬ", "RECORDING NOT SUPPORTED": "ЗАПИСЬ НЕ ПОДДЕРЖАНА", "SAVING… WAIT": "ЗАПИСЬ… ПОДОЖДИ", "RECORDING IN PROGRESS": "ИДЁТ ЗАПИСЬ", "TAPE WEAR ": "ИЗНОС ПЛЁНКИ ", "CASSETTES ADDED: ": "КАССЕТ ДОБАВЛЕНО: ", "CASSETTE REMOVED": "КАССЕТА СНЯТА", "CASSETTE DELETED": "КАССЕТА УДАЛЕНА", "END OF TAPE": "КОНЕЦ ЛЕНТЫ", "START OF TAPE": "НАЧАЛО ЛЕНТЫ", "COULD NOT DECODE": "НЕ УДАЛОСЬ ДЕКОДИРОВАТЬ", "COULD NOT FLIP": "НЕ УДАЛОСЬ ПЕРЕВЕРНУТЬ", "COULD NOT READ FILE": "НЕ УДАЛОСЬ ПРОЧИТАТЬ ФАЙЛ", "NO MICROPHONE ACCESS": "НЕТ ДОСТУПА К МИКРОФОНУ", "NO CASSETTE": "НЕТ КАССЕТЫ", "NOTHING TO MIX — UNMUTE A TRACK": "НЕЧЕГО СВОДИТЬ — ВКЛЮЧИ ДОРОЖКИ", "HAND": "ОТ РУКИ", "OPEN THE LID — SWIPE UP": "ОТКРОЙ КРЫШКУ — СВАЙП ВВЕРХ", "PING-PONG FAILED": "ОШИБКА PING-PONG", "RECORDING FAILED": "ОШИБКА ЗАПИСИ", "FLIPPING…": "ПЕРЕВОРАЧИВАЮ…", "PRINT": "ПЕЧАТЬ", "EMPTY SIDE — RECORD OR LOAD": "ПУСТАЯ СТОРОНА — ЗАПИШИ ИЛИ ЗАГРУЗИ", "SPEED ": "СКОРОСТЬ ", "SCRUB": "СКРАБ", "PRESS STOP FIRST": "СНАЧАЛА STOP", "INSERT A CASSETTE FIRST": "СНАЧАЛА ВСТАВЬ КАССЕТУ", "SLEEP · STOP": "СОН · СТОП", "SLEEP: ~": "СОН: ОСТАЛОСЬ ~", "ERASE": "СТЕРЕТЬ", "SIDE ": "СТОРОНА ", "SLEEP TIMER ": "ТАЙМЕР СНА ", "SLEEP TIMER OFF": "ТАЙМЕР СНА ВЫКЛ", "TAP SLOT TO LOAD AUDIO": "ТАП ПО ОТСЕКУ — АУДИО", "REALLY DELETE? TAP AGAIN": "ТОЧНО УДАЛИТЬ? ТАП ЕЩЁ РАЗ", "SURE?": "ТОЧНО?", "DELETE MODE: TAP A CASSETTE": "УДАЛЕНИЕ: ТАП ПО КАССЕТЕ", "DELETE": "УДАЛИТЬ", "DELETE CASSETTE": "УДАЛИТЬ КАССЕТУ", "READING FILE…": "ЧИТАЮ ФАЙЛ…", "NOT AUDIO: ": "ЭТО НЕ АУДИО: ", "recorded · ": "записано · ", "cassette name": "название кассеты", "side B name": "название стороны B", "empty": "пусто", "file": "файл", "＋ LOAD INTO T": "＋ ЗАГРУЗИТЬ В T", "TAP — LOAD AUDIO": "ТАП — ВЫБРАТЬ АУДИО", "SKINS": "ДИЗАЙН ДЕКИ", "⟲ FLIP SIDE A/B": "⟲ ПЕРЕВЕРНУТЬ A/B", "TAPE": "ЛЕНТА", "TYPE": "ТИП", "SPEED": "СКОРОСТЬ", "SOUND": "ЗВУК", "TRANSPORT": "ТРАНСПОРТ", "GENERAL": "ОБЩЕЕ", "LANGUAGE": "ЯЗЫК", "HOW TO USE": "КАК ПОЛЬЗОВАТЬСЯ", "SKIP": "ПРОПУСТИТЬ", "START": "НАЧАТЬ", "NEXT": "ДАЛЕЕ", "Swipe the lid up": "Свайп вверх по крышке", "Swipe up on the glass lid to open the deck. Swipe down to close it again.": "Потяни стеклянную крышку вверх, чтобы открыть деку. Свайп вниз закрывает её.", "Load your music": "Загрузи свою музыку", "Tap the slot (or ＋ on the shelf) and pick audio from your device. Every file becomes a cassette.": "Тапни по отсеку (или ＋ на полке) и выбери аудио на устройстве. Каждый файл становится кассетой.", "Play it like tape": "Играй как на ленте", "REW, PLAY, FF, STOP and PAUSE work like the real thing. Spin the reels with a finger to scrub. The knobs stop at their limits.": "REW, PLAY, FF, STOP и PAUSE работают как настоящие. Крути катушки пальцем — скрэтч и перемотка. Ручки упираются в крайних положениях.", "Record on top": "Запись поверх", "Tap 4TRK, press ARM on a track, close the mixer, then press REC and PLAY. Your new sound lands on that track while the others keep playing. Out of tracks? PING-PONG mixes the rest into the armed one.": "Нажми 4TRK, на нужной дорожке — ARM, закрой микшер, затем REC и PLAY. Новый звук ляжет на эту дорожку, остальные играют вместе с ним. Дорожки кончились? PING-PONG сведёт остальные в выбранную.", "Ping-pong": "Пинг-понг", "Out of tracks? In 4TRK, PING-PONG mixes all the other tracks into the armed one and frees them up. Every pass wears the sound a little.": "Дорожки кончились? В 4TRK кнопка PING-PONG сводит все остальные дорожки в выбранную и освобождает их. Каждый проход чуть состаривает звук.", "ARM A TRACK · THEN REC + PLAY": "ARM НА ДОРОЖКЕ · ПОТОМ REC + PLAY", "Change the deck": "Смени деку", "SKIN swaps the whole deck: six machines with their own look, keys and sound. The longer you play, the more wear it shows. In DECK, LID switches between a closed lid and a see-through window.": "SKIN меняет всю деку: шесть аппаратов со своим видом, клавишами и звуком. Чем дольше играешь, тем больше следов износа. В DECK пункт LID переключает закрытую крышку и прозрачное окно.", "Shape the sound": "Настрой звук", "DECK holds tape type, speed, tone, volume, sleep timer and NR (Dolby). TAPE and PITCH bend the sound, LOOP wears the tape out.": "В DECK — тип ленты, скорость, тон, громкость, таймер сна и NR (Dolby). TAPE и PITCH гнут звук, LOOP стирает ленту.", "Rotate your phone": "Поверни телефон", "Landscape shows the cassette full screen with glass controls. Long-press a cassette on the shelf to delete it. BOUNCE saves what you hear as a WAV.": "В горизонтали кассета на весь экран, управление на стекле. Долгое нажатие по кассете на полке — удалить. BOUNCE сохраняет всё, что слышишь, в WAV."};
 const _t=(k,...a)=>{let r=(lang==='ru'&&RU[k])||k;a.forEach((v,i)=>{r=r.split('{'+i+'}').join(v);});return r;};
 const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -1473,6 +1482,121 @@ const d=[];for(let c=0;c<ch;c++)d.push(buf.getChannelData(c));
 let o=44;for(let i=0;i<n;i++)for(let c=0;c<ch;c++){const x=clamp(d[c][i],-1,1);v.setInt16(o,x<0?x*0x8000:x*0x7fff,true);o+=2;}
 return ab;
 }
+const REELS=['teeth','smooth','clear'],MATS=['gloss','smoke','clear'];
+const REEL_N={teeth:'TEETH',smooth:'SMOOTH',clear:'CLEAR'},MAT_N={gloss:'GLOSS',smoke:'SMOKED',clear:'CLEAR'};
+const hashId=s=>{let h=2166136261;for(const c of String(s))h=Math.imul(h^c.charCodeAt(0),16777619)>>>0;return h;};
+const cRng=seed=>{let h=(seed>>>0)||1;return()=>{h=(Math.imul(h,1664525)+1013904223)>>>0;return h/4294967296;};};
+const reelOf=m=>REELS.includes(m.reel)?m.reel:(h=>h<45?'teeth':h<75?'smooth':'clear')(hashId(m.id)%100);
+const matOf=m=>MATS.includes(m.mat)?m.mat:(h=>h<58?'gloss':h<84?'smoke':'clear')((hashId(m.id)>>>8)%100);
+const hexLum=c=>{const n=parseInt(String(c).slice(1),16)||0;return(.299*(n>>16&255)+.587*(n>>8&255)+.114*(n&255))/255;};
+const PEN_FF="'Bradley Hand','Noteworthy','Marker Felt','Segoe Print','Chalkboard SE','Comic Sans MS',cursive";
+const STAMP_FF="'Impact','Haettenschweiler','Avenir Next Condensed','DIN Condensed','Arial Narrow',sans-serif";
+const PACK_STOPS=(()=>{let s='<stop offset="0" stop-color="#241710"/>';for(let i=1;i<=13;i++)s+=`<stop offset="${(.2+.6*i/13).toFixed(3)}" stop-color="${i%2?'#44301f':'#35231a'}"/>`;
+return s+'<stop offset=".9" stop-color="#4d3523"/><stop offset=".965" stop-color="#7c5a3e"/><stop offset="1" stop-color="#1d120b"/>';})();
+const bkc=(o,v)=>`style="stop-color:var(--bkc${v||''},${v?'#fff0c4':'#ffb347'})" stop-opacity="${o}"`;
+const artDefs=u=>`<radialGradient id="pk${u}" cx=".5" cy=".5" r=".5" fx=".47" fy=".44">${PACK_STOPS}</radialGradient>
+   <radialGradient id="hb${u}" cx=".36" cy=".3" r=".9"><stop offset="0" stop-color="#fdfbf2"/><stop offset=".55" stop-color="#e6e1d4"/><stop offset="1" stop-color="#aaa493"/></radialGradient>
+   <radialGradient id="hc${u}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset=".7" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#d8ecff" stop-opacity=".4"/></radialGradient>
+   <radialGradient id="bk${u}" gradientUnits="userSpaceOnUse" cx="160" cy="124" r="136" gradientTransform="translate(160 124) scale(1 .46) translate(-160 -124)"><stop offset="0" ${bkc(.72)}/><stop offset=".5" ${bkc(.42)}/><stop offset="1" ${bkc(.12)}/></radialGradient>
+   <radialGradient id="bg${u}"><stop offset="0" ${bkc(.34,2)}/><stop offset=".6" ${bkc(.12,2)}/><stop offset="1" ${bkc(0,2)}/></radialGradient>
+   <linearGradient id="wn${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1814"/><stop offset=".5" stop-color="#0e0c0a"/><stop offset="1" stop-color="#060504"/></linearGradient>
+   <linearGradient id="eb${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".25" stop-color="#fff" stop-opacity=".05"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></linearGradient>
+   <linearGradient id="sp${u}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".2"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+   <linearGradient id="ln${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ebe7da"/><stop offset="1" stop-color="#b7b2a2"/></linearGradient>
+   <linearGradient id="tz${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22201b"/><stop offset="1" stop-color="#0b0a08"/></linearGradient>
+   <radialGradient id="rl${u}" cx=".35" cy=".3"><stop offset="0" stop-color="#cfcabd"/><stop offset=".6" stop-color="#6d695e"/><stop offset="1" stop-color="#2c2a25"/></radialGradient>
+   <clipPath id="sc${u}"><rect x="1" y="1" width="318" height="202" rx="12"/></clipPath>`;
+function reelSVG(k,cx,cy,r,type,u){
+const A=(a,s)=>`transform="rotate(${a} ${cx} ${cy})"`;
+const glow=rr=>`<circle cx="${cx}" cy="${cy}" r="${rr}" style="fill:var(--bkc2,#fff0c4);opacity:calc(var(--bk,0)*.85)"/>`;
+let hub='',teeth='';
+if(type==='smooth'){
+hub=`<circle class="hub${k}" cx="${cx}" cy="${cy}" r="14" fill="url(#hb${u})" stroke="#6c675b" stroke-width="1"/>
+     <circle cx="${cx}" cy="${cy}" r="12.2" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width=".6"/><circle cx="${cx}" cy="${cy}" r="11.5" fill="none" stroke="#000" stroke-opacity=".13" stroke-width=".6"/>
+     <circle cx="${cx}" cy="${cy}" r="8.4" fill="none" stroke="#000" stroke-opacity=".1" stroke-width=".6"/><circle cx="${cx}" cy="${cy}" r="7.7" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width=".5"/>
+     <circle cx="${cx}" cy="${cy}" r="5.6" fill="#8f897c"/>${glow(4.4)}<circle cx="${cx}" cy="${cy}" r="4.6" fill="#0b0a09" fill-opacity=".92" stroke="#4a463e" stroke-width=".7"/>
+     ${[0,120,240].map(a=>`<g ${A(a)}><circle cx="${cx}" cy="${cy-10}" r="1.5" fill="#000" fill-opacity=".28"/><circle cx="${cx}" cy="${cy-10.3}" r="1.3" fill="#fff" fill-opacity=".55"/></g>`).join('')}
+     <path d="M${cx-1.8} ${cy-12.4}L${cx+1.8} ${cy-12.4}L${cx} ${cy-14.6}Z" fill="#c4502f" fill-opacity=".9"/>`;
+}else if(type==='clear'){
+teeth=[0,60,120,180,240,300].map(a=>`<rect x="${cx-2}" y="${cy-8.8}" width="4" height="4.8" rx=".6" fill="#fff" fill-opacity=".88" stroke="#000" stroke-opacity=".35" stroke-width=".35" ${A(a)}/>`).join('');
+hub=`<circle class="hub${k}" cx="${cx}" cy="${cy}" r="14" fill="url(#hc${u})" stroke="#fff" stroke-opacity=".62" stroke-width="1.1"/>
+     <circle cx="${cx}" cy="${cy}" r="14.7" fill="none" stroke="#000" stroke-opacity=".5" stroke-width=".7"/>
+     <circle cx="${cx}" cy="${cy}" r="12.3" fill="none" stroke="#fff" stroke-opacity=".26" stroke-width=".6"/>
+     ${[30,90,150,210,270,330].map(a=>`<rect x="${cx-.95}" y="${cy-13}" width="1.9" height="4.4" fill="#fff" fill-opacity=".5" ${A(a)}/>`).join('')}
+     <circle cx="${cx}" cy="${cy}" r="9.6" fill="none" stroke="#fff" stroke-opacity=".78" stroke-width="2.3"/><circle cx="${cx}" cy="${cy}" r="8.5" fill="#050403" fill-opacity=".6"/>${glow(8.2)}${teeth}
+     <circle cx="${cx}" cy="${cy-11.6}" r="1.1" fill="#fff" fill-opacity=".9"/>`;
+}else{
+teeth=[0,60,120,180,240,300].map(a=>`<rect x="${cx-2}" y="${cy-8.8}" width="4" height="4.8" rx=".5" fill="#ebe6d9" stroke="#3a3328" stroke-opacity=".55" stroke-width=".35" ${A(a)}/>`).join('');
+hub=`<circle class="hub${k}" cx="${cx}" cy="${cy}" r="14" fill="url(#hb${u})" stroke="#6c675b" stroke-width="1"/>
+     <circle cx="${cx}" cy="${cy}" r="12.4" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width=".6"/>
+     <circle cx="${cx}" cy="${cy}" r="9.6" fill="#9b9588"/><circle cx="${cx}" cy="${cy}" r="8.8" fill="#0b0a09"/>${glow(8.4)}${teeth}
+     <circle cx="${cx}" cy="${cy-11.4}" r="1.4" fill="#6b655a"/>`;
+}
+return `<circle class="pack${k}" cx="${cx}" cy="${cy}" r="${r}" fill="url(#pk${u})" stroke="#5a3d28" stroke-width=".6"/>
+   <circle class="edge${k}" cx="${cx}" cy="${cy}" r="${r-.6}" fill="none" style="stroke:var(--bkc,#ffb347);opacity:calc(var(--bk,0)*.75)" stroke-width="1.5"/>
+   <g class="reel${k}" transform="rotate(0 ${cx} ${cy})">
+    <circle class="ring${k}" cx="${cx}" cy="${cy}" r="${r-4}" fill="none" stroke="#fff" stroke-opacity=".09" stroke-width="1.3" stroke-dasharray="2 6"/>
+    <circle cx="${cx}" cy="${cy}" r="15.6" fill="#000" fill-opacity=".34"/>${hub}</g>`;
+}
+const bklUnder=u=>`<g class="bkl" style="opacity:var(--bk,0)"><rect x="52" y="92" width="216" height="64" fill="url(#bk${u})"/></g>`;
+const bklTop=u=>`<g class="bkl" style="opacity:var(--bk,0)"><circle cx="${CL}" cy="${CY}" r="36" fill="url(#bg${u})"/><circle cx="${CR}" cy="${CY}" r="34" fill="url(#bg${u})"/></g>`;
+const NOTES={en:['mix 1998','for K. xx','DON’T ERASE!','best of','side A = slow','road trip','dub #2','rough take','summer ’94','keep!','3 am','radio rip','bedroom demo'],
+ru:['микс 98','для К. xx','НЕ СТИРАТЬ!','лучшее','дубль 2','поездка','черновик','лето ’94','оставить!','3 ночи','с радио','домашнее демо']};
+const OLDT={en:['MIX 3','TAPE 2','radio','demo','BEST OF','dub'],ru:['МИКС 3','кассета 2','радио','демо','ЛУЧШЕЕ','копия']};
+function tapeStrip(x,y,w,h,rot,R){
+const n=Math.max(3,Math.round(h/2.6)),f=v=>v.toFixed(1);
+let d=`M${f(-w/2)} ${f(-h/2)}H${f(w/2)}`;
+for(let i=1;i<=n;i++)d+=`L${f(w/2+(i%2?1.2:-1)*(.5+R()))} ${f(-h/2+h*i/n)}`;
+d+=`H${f(-w/2)}`;
+for(let i=n-1;i>=0;i--)d+=`L${f(-w/2+(i%2?-1.2:1)*(.5+R()))} ${f(-h/2+h*i/n)}`;
+d+='Z';
+return `<g transform="translate(${f(x)} ${f(y)}) rotate(${f(rot)})">
+   <path d="${d}" fill="#000" fill-opacity=".2" transform="translate(.5 .9)"/>
+   <path d="${d}" fill="#f4e7b4" fill-opacity=".36"/><path class="scy" d="${d}" fill="#b98a2e" opacity="0"/>
+   <path d="${d}" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width=".5"/>
+   <path d="M${f(-w*.12)} ${f(-h/2)}L${f(w*.02)} ${f(h/2)}H${f(w*.16)}L${f(w*.02+w*.14)} ${f(-h/2)}Z" fill="#fff" fill-opacity=".2"/>
+   <path d="M${f(-w/2+4)} ${f(-h*.15)}q3 1 5 -1M${f(w/2-9)} ${f(h*.2)}q3 -1 5 1" stroke="#7a6320" stroke-opacity=".35" stroke-width=".5" fill="none"/>
+  </g>`;
+}
+function tapeGhost(x,y,w,h,rot,R){
+let s='';for(let i=0;i<7;i++){const xx=-w/2+2+R()*(w-4);s+=`M${xx.toFixed(1)} ${(-h/2+R()*2).toFixed(1)}v${(h*(.5+R()*.5)).toFixed(1)}`;}
+return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(1)})"><rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" fill="#9c7d3c" fill-opacity=".17"/><path d="${s}" stroke="#5e4518" stroke-opacity=".16" stroke-width=".6" fill="none"/><path d="M${-w/2} ${-h/2}H${w/2}M${-w/2} ${h/2}H${w/2}" stroke="#4d3912" stroke-opacity=".22" stroke-width=".5"/></g>`;
+}
+function penStar(x,y,r,rot,col,R){let p=[];for(let i=0;i<10;i++){const a=rot+i*Math.PI/5-Math.PI/2,rr=(i%2?r*.45:r)*(.9+R()*.2);p.push((x+Math.cos(a)*rr).toFixed(1)+' '+(y+Math.sin(a)*rr).toFixed(1));}
+return `<path class="pn" d="M${p.join('L')}Z" fill="none" stroke="${col}" stroke-width=".9" stroke-linejoin="round" stroke-linecap="round" opacity=".9"/>`;}
+function penLine(x1,x2,y,col,R,w){const m=(x1+x2)/2;return `<path class="pn" d="M${x1.toFixed(1)} ${(y+R()).toFixed(1)}Q${(m-8).toFixed(1)} ${(y-1.6+R()).toFixed(1)} ${m.toFixed(1)} ${(y+.4).toFixed(1)}T${x2.toFixed(1)} ${(y-.8+R()*1.6).toFixed(1)}" fill="none" stroke="${col}" stroke-width="${w||1}" stroke-linecap="round" opacity=".88"/>`;}
+function penSig(x,y,w,col,R){const n=5+((R()*3)|0),st=w/n;let d=`M${x} ${y}`,px=x;
+for(let i=0;i<n;i++){const up=3+R()*5,loop=R()<.45;
+d+=loop?`c${(st*.1).toFixed(1)} ${(-up).toFixed(1)} ${(st*.7).toFixed(1)} ${(-up*.9).toFixed(1)} ${(st*.45).toFixed(1)} ${(up*.2).toFixed(1)}c${(-st*.15).toFixed(1)} ${(up*.4).toFixed(1)} ${(st*.35).toFixed(1)} ${(up*.35).toFixed(1)} ${(st*.55).toFixed(1)} ${(-1+R()*2).toFixed(1)}`
+:`c${(st*.25).toFixed(1)} ${(-up).toFixed(1)} ${(st*.5).toFixed(1)} ${(up*.6).toFixed(1)} ${st.toFixed(1)} ${(-1+R()*2).toFixed(1)}`;}
+d+=`M${(x+w*.05).toFixed(1)} ${(y+5.2).toFixed(1)}q${(w*.4).toFixed(1)} ${(-2.4).toFixed(1)} ${(w*.95).toFixed(1)} ${(-1+R()*2).toFixed(1)}`;
+return `<path class="pn" d="${d}" fill="none" stroke="${col}" stroke-width=".95" stroke-linecap="round" stroke-linejoin="round" opacity=".88"/>`;}
+function decoSVG(m,side,u,lite){
+const R=cRng(hashId(m.id)^(side?0x9e3779b1:0)),ru=lang==='ru';
+const pen=['#28409a','#28409a','#1b1b1b','#a3231d','#1f4d3a'][(R()*5)|0],ps=hexLum(m.shell[0])<.5?'#f2efe4':'#1c1b19';
+const pool=ru?NOTES.ru:NOTES.en,old=ru?OLDT.ru:OLDT.en,pk=a=>a[(R()*a.length)|0];
+const txt=(s,x,y,fs,rot,col,anc,cls)=>`<text class="${cls||'pn'}" x="${x}" y="${y}" text-anchor="${anc||'start'}" font-family="${PEN_FF}" font-size="${fs}" fill="${col}" textLength="${(s.length*fs*.46).toFixed(1)}" lengthAdjust="spacingAndGlyphs" transform="rotate(${rot.toFixed(1)} ${x} ${y})" opacity=".92">${esc(s)}</text>`;
+let ink='',tape='',stamp='',any=false;
+const spots={tl:[26,17,-42],tr:[294,17,40],bot:[160,81,2],lf:[23,48,90],rt:[297,50,90]};
+const ks=Object.keys(spots).map(k=>[R(),k]).sort((a,b)=>a[0]-b[0]).map(a=>a[1]);
+const nT=R()<.55?(R()<.4?2:1):(R()<.3?1:0);
+for(let i=0;i<nT;i++){const s=spots[ks[i]];tape+=tapeStrip(s[0]+(R()-.5)*4,s[1]+(R()-.5)*3,(i?25:30)+R()*10,9+R()*3,s[2]+(R()-.5)*10,R);any=true;}
+if(R()<.4){const s=spots[ks[nT]];tape=tapeGhost(s[0],s[1],26+R()*10,10,s[2]+(R()-.5)*8,R)+tape;any=true;}
+let stR=false;
+if(R()<.34){stR=R()<.5;const sx=stR?236:84,sy=61+R()*3,w=60,h=21,rot=-12+R()*22,ink0=R()<.62?'#c23a2b':'#2f4a9a';
+stamp=(lite?'':`<mask id="stm${u}" maskUnits="userSpaceOnUse" x="-45" y="-20" width="90" height="40"><rect x="-45" y="-20" width="90" height="40" fill="#fff"/><rect x="-45" y="-20" width="90" height="40" fill="url(#nzS)"/></mask>`)+
+`<g class="stp" transform="translate(${sx} ${sy.toFixed(1)}) rotate(${rot.toFixed(1)})" ${lite?'':`mask="url(#stm${u})"`} opacity=".8"><rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="3" fill="none" stroke="${ink0}" stroke-width="1.9"/><rect x="${-w/2+2.6}" y="${-h/2+2.6}" width="${w-5.2}" height="${h-5.2}" rx="1.4" fill="none" stroke="${ink0}" stroke-width=".6"/>
+       <text x="0" y="${(h*.27).toFixed(1)}" text-anchor="middle" font-family="${STAMP_FF}" font-weight="800" font-size="${(h*.66).toFixed(1)}" textLength="${w-16}" lengthAdjust="spacingAndGlyphs" fill="${ink0}">DEMO</text></g>`;any=true;}
+if(R()<.58){ink+=txt(pk(pool),34,56,9.5+R()*1.6,-1.6+R()*1.6,pen);any=true;}
+if(R()<.3){const o=pk(old),fs=8.6,w=o.length*fs*.46;ink+=txt(o,34,67,fs,-.8+R()*1.2,pen)+penLine(33,35+w,64.2,pen,R,.8)+penLine(33,35+w,65.6,pen,R,.7);any=true;}
+if(!stR&&R()<.5){ink+=R()<.5?penSig(210,62,70,pen,R):txt(pk(["3/14","’94","07.96","12/03","’99","5.2."]),288,67,10,-2+R()*3,pen,'end');any=true;}
+if(R()<.34){const nm=sideName(m,side)||'',w=Math.min(228,Math.max(50,nm.length*13));ink+=penLine(160-w/2,160+w/2,50.3,pen,R,1);any=true;}
+if(R()<.2){ink+=penStar(283,35,4.6,R()*.6,pen,R);any=true;}
+if(R()<.6){ink+=txt('#'+String(1+((R()*40)|0)).padStart(2,'0'),286,188,10.5,-10+R()*8,ps,'middle');any=true;}
+else if(R()<.3){let t='';for(let i=0;i<4;i++)t+=`M${24+i*4} 178v${(10+R()*2).toFixed(1)}`;t+='M21 189L40 180';ink+=`<path class="pn" d="${t}" stroke="${ps}" stroke-width=".9" stroke-linecap="round" fill="none" opacity=".85"/>`;any=true;}
+if(!any)ink+=txt(pk(pool),34,56,10,-1,pen);
+return `<g class="deco" pointer-events="none">${stamp}${ink}${tape}</g>`;
+}
 async function saveTrack(c,n){
 const t=c.T[n],k=trKey(c.meta.id,c.side,n);
 if(t.buf)await dbPut('data',{id:k,buf:toWav(t.buf),type:'audio/wav'}); else await dbDel('data',k);
@@ -1497,21 +1621,16 @@ const genTxt=m=>(m.gen||1)>1?'G'+m.gen:'';
 const sideName=(m,side)=>side?(m.nameB||'SIDE B'):m.name;
 const curName=()=>sideName(cur.meta,cur.side);
 const slot=$('#slot'),emptyEl=$('#empty'),trayEl=$('#tray'),fileInp=$('#file');
-function teeth(cx,cy){let s='';for(let i=0;i<6;i++)s+=`<rect x="${cx-2}" y="${cy-8.8}" width="4" height="4.6" fill="#e5e0d3" transform="rotate(${i*60} ${cx} ${cy})"/>`;return s;}
-function reelSVG(k,cx,cy,r){
-return `<g class="reel${k}" transform="rotate(0 ${cx} ${cy})">
-   <circle class="pack${k}" cx="${cx}" cy="${cy}" r="${r}" fill="url(#pk)" stroke="#5a3d28" stroke-width=".6"/>
-   <circle class="ring${k}" cx="${cx}" cy="${cy}" r="${r-4}" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="1.3" stroke-dasharray="2 6"/>
-   <circle class="hub${k}" cx="${cx}" cy="${cy}" r="14" fill="#e5e0d3" stroke="#8d877b" stroke-width="1.2"/>
-   <circle cx="${cx}" cy="${cy}" r="8.8" fill="#0b0a09"/>${teeth(cx,cy)}
-   <circle cx="${cx}" cy="${cy-11.4}" r="1.4" fill="#6b655a"/></g>`;
-}
-const COND="'Avenir Next Condensed','DIN Condensed','Helvetica Neue','Arial Narrow','Roboto Condensed',sans-serif";
-const PFF={kuro:COND,sonic:"'Helvetica Neue',Helvetica,Arial,sans-serif",kami:"'Arial Rounded MT Bold','Avenir Next Rounded','Avenir Next',sans-serif",
-kiiro:"Menlo,'Courier New',ui-monospace,monospace",akane:"'DIN Condensed','Avenir Next Condensed','Arial Narrow',sans-serif",nashville:"'American Typewriter','Courier New',Courier,serif"};
-const PW={kuro:.46,sonic:.62,kami:.62,kiiro:.62,akane:.46,nashville:.68},PS={kuro:2.4,sonic:1.6,kami:1.2,kiiro:.8,akane:2.6,nashville:1.2},PWT={kuro:600,sonic:500,kami:400,kiiro:500,akane:600,nashville:600};
+const COND="'Avenir Next Condensed','DIN Condensed','Bahnschrift','Roboto Condensed','Arial Narrow',sans-serif";
+const PFF={kuro:"'Avenir Next Condensed','DIN Alternate','Bahnschrift','Arial Narrow',sans-serif",
+sonic:"'Futura','Avenir Next','Century Gothic','Helvetica Neue',Helvetica,Arial,sans-serif",
+kami:"'Arial Rounded MT Bold','Hiragino Maru Gothic ProN','Avenir Next Rounded','Avenir Next',sans-serif",
+kiiro:"'Rockwell','Roboto Slab','Courier New',ui-monospace,serif",
+akane:"'DIN Condensed','Bahnschrift','Avenir Next Condensed','Arial Narrow',sans-serif",
+nashville:"'American Typewriter','Courier Prime','Courier New',Courier,serif"};
+const PW={kuro:.46,sonic:.62,kami:.62,kiiro:.62,akane:.46,nashville:.68},PS={kuro:2.4,sonic:1.6,kami:1.2,kiiro:.8,akane:2.6,nashville:1.2},PWT={kuro:600,sonic:500,kami:400,kiiro:600,akane:600,nashville:600};
 const printFF=()=>PFF[theme]||COND;
-const HAND_FF="'Bradley Hand','Noteworthy','Marker Felt','Segoe Print',cursive";
+const HAND_FF="'Bradley Hand','Noteworthy','Marker Felt','Segoe Print','Chalkboard SE','Comic Sans MS',cursive";
 const isHand=m=>m.font==='hand';
 function labFs(n,print){return print?clamp(Math.floor(236/(Math.max(1,n.length)*((PW[theme]||.5)+(PS[theme]||2)/22))),11,19):(n.length>22?16:n.length>15?20:25);}
 function labTxt(m,t){return isHand(m)?t:t.toUpperCase();}
@@ -1521,12 +1640,16 @@ for(let i=0;i<im.data.length;i+=4){const v=120+Math.random()*100|0;im.data[i]=im
 x.putImageData(im,0,0);
 const d=document.createElement('div');d.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
 d.innerHTML='<svg width="0" height="0"><defs><pattern id="nzG" width="96" height="96" patternUnits="userSpaceOnUse"><image href="'+c.toDataURL()+'" width="96" height="96"/></pattern></defs></svg>';
+const c2=document.createElement('canvas');c2.width=c2.height=96;const x2=c2.getContext('2d'),i2=x2.createImageData(96,96);
+for(let i=0;i<i2.data.length;i+=4){const hole=Math.random()<.2,v=hole?0:255;i2.data[i]=i2.data[i+1]=i2.data[i+2]=v;i2.data[i+3]=hole?(120+Math.random()*135)|0:0;}
+x2.putImageData(i2,0,0);
+d.innerHTML+='<svg width="0" height="0"><defs><pattern id="nzS" width="96" height="96" patternUnits="userSpaceOnUse"><image href="'+c2.toDataURL()+'" width="96" height="96"/></pattern></defs></svg>';
 document.body.appendChild(d);
 })();
-function wearGfx(m){
+function wearGfx(m,u){
 let h=0;for(const c of m.id)h=(h*31+c.charCodeAt(0))>>>0;
 const R=()=>{h=(h*1664525+1013904223)>>>0;return h/4294967296;};
-let s='';
+let s=`<defs><linearGradient id="sm${u}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5a1c" stop-opacity="0"/><stop offset=".3" stop-color="#8a5a1c" stop-opacity=".85"/><stop offset=".75" stop-color="#8a5a1c" stop-opacity=".6"/><stop offset="1" stop-color="#8a5a1c" stop-opacity="0"/></linearGradient></defs>`;
 const lens=(x,y,l,a,w,cv)=>{const dx=Math.cos(a),dy=Math.sin(a),nx=-dy,ny=dx,ex=x+dx*l,ey=y+dy*l,cx=x+dx*l/2+nx*cv,cy=y+dy*l/2+ny*cv,f=v=>v.toFixed(1);
 return `M${f(x)} ${f(y)}Q${f(cx+nx*w)} ${f(cy+ny*w)} ${f(ex)} ${f(ey)}Q${f(cx-nx*w)} ${f(cy-ny*w)} ${f(x)} ${f(y)}Z`;};
 const scr=(x,y,l,a,w,cv,t,m)=>{const d=lens(x,y,l,a,w,cv);
@@ -1540,13 +1663,14 @@ for(let k=0;k<3;k++){
 const x=14+R()*270,y=14+R()*170,a=dir+(R()-.5)*.5,t=(.3+k*.2).toFixed(2);
 for(let j=0;j<4;j++)s+=scr(x+j*1.7*Math.sin(a),y-j*1.7*Math.cos(a),5+R()*9,a+(R()-.5)*.12,.22+R()*.2,(R()-.5)*1.2,t,'.5');
 }
-for(let i=0;i<10;i++){
-const x=10+R()*300,y=10+R()*184,r=.5+R()*1.5,t=(.15+i/10*.7).toFixed(2);
-s+=`<circle data-t="${t}" data-m=".45" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="#000" opacity="0"/>`;
+for(let i=0;i<8;i++){
+const x=10+R()*300,y=10+R()*184,r=.7+R()*1.5,t=(.15+i/8*.7).toFixed(2),n=4+((R()*2)|0);let p=[];
+for(let q=0;q<n;q++){const a=q/n*6.283+R()*.8,rr=r*(.5+R()*.8);p.push((x+Math.cos(a)*rr).toFixed(1)+' '+(y+Math.sin(a)*rr*.7).toFixed(1));}
+s+=`<path data-t="${t}" data-m=".5" d="M${p.join('L')}Z" fill="#000" opacity="0"/>`;
 }
 for(let i=0;i<5;i++){
-const x=34+R()*252,y=24+R()*56,r=6+R()*14,t=(.2+i*.13).toFixed(2);
-s+=`<ellipse data-t="${t}" data-m=".28" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${r.toFixed(1)}" ry="${(r*.55).toFixed(1)}" fill="#8a5a1c" opacity="0"/>`;
+const x=34+R()*252,y=24+R()*54,w=26+R()*54,hh=2.6+R()*3.4,t=(.2+i*.13).toFixed(2),a=(R()-.5)*14;
+s+=`<rect data-t="${t}" data-m=".3" x="${(x-w/2).toFixed(1)}" y="${(y-hh/2).toFixed(1)}" width="${w.toFixed(1)}" height="${hh.toFixed(1)}" rx="1.2" fill="url(#sm${u})" transform="rotate(${a.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" opacity="0"/>`;
 }
 for(let i=0;i<9;i++){
 const x=56+R()*190,y=96+R()*52,l=10+R()*R()*50,a=dir*.6+(R()-.5)*.9,t=(.1+i/9*.8).toFixed(2);
@@ -1561,79 +1685,106 @@ if(!root)return;a=clamp(a||0,0,1.3);
 root.querySelectorAll('.wear [data-t]').forEach(e=>{const t=+e.dataset.t,m=+e.dataset.m;e.setAttribute('opacity',(clamp((a-t)/0.22,0,1)*m).toFixed(3));});
 const ink=(1-clamp(a,0,1)*0.55).toFixed(3);
 root.querySelectorAll('.nm,.tp,.nrt,.du').forEach(e=>{e.style.opacity=e.classList.contains('nm')?ink:(ink*0.85).toFixed(3);});
+root.querySelectorAll('.pn').forEach(e=>{e.style.opacity=(ink*0.9).toFixed(3);});
+root.querySelectorAll('.stp').forEach(e=>{e.style.opacity=(0.8*(1-clamp(a,0,1)*0.45)).toFixed(3);});
+root.querySelectorAll('.scy').forEach(e=>{e.setAttribute('opacity',(clamp(a,0,1)*0.55).toFixed(3));});
 const tint=root.querySelector('.tint');if(tint)tint.setAttribute('opacity',Math.min(0.55,a*0.45).toFixed(3));
 }
-const CLEARS=[['#c4e3ec','#7fa9b8'],['#ecc8d3','#b0808e'],['#cdeacd','#88b088'],['#ffe9ae','#c4a255'],['#e2e5ea','#a3a8b1']];
-function cassLook(m){let h=7;for(const c of String(m.id))h=(Math.imul(h,31)+c.charCodeAt(0))>>>0;
-const k=h%9,kind=k<2?'clear':k===2?'smoke':'solid',lb=(h>>>5)%5,label=lb===0?'plain':lb===1?'dark':'std';
-const shell=kind==='clear'?CLEARS[(h>>>9)%CLEARS.length]:kind==='smoke'?['#4b5059','#23262c']:m.shell;
-const dark=label==='dark',paper=dark?'#1f1e1c':m.paper,pen=dark?'#eee5cc':m.pen;
-return {kind,label,shell,paper,pen,hdr:label==='plain'?pen:(dark?'#f3ecd8':m.paper),rule:dark?'#fff':'#2a3a5a'};}
 function cassSVG(m,uidk,side,lite){
-side=side||0;const L=cassLook(m),nm0=sideName(m,side);
+side=side||0;const nm0=sideName(m,side);
 const name=nm0.length>30?nm0.slice(0,29)+'…':nm0;
 const hd=isHand(m),fs=labFs(name,!hd);
 const est=name.length*((PW[theme]||.5)+(PS[theme]||2)/22)*fs,tl=(!hd&&est>205)?' textLength="224" lengthAdjust="spacingAndGlyphs"':'';
 const d0=side?m.durB:m.dur,dur=d0?fmt(d0):'--:--';
-const mn='ui-monospace,Menlo,monospace';
-const bolt=(x,y)=>`<circle cx="${x}" cy="${y}" r="5.2" fill="#0c0b0a" opacity=".55"/><circle cx="${x}" cy="${y}" r="4.3" fill="url(#bl${uidk})" stroke="#000" stroke-opacity=".6" stroke-width=".6"/><path d="M${x-3} ${y} H${x+3} M${x} ${y-3} V${y+3}" stroke="#000a" stroke-width=".9" transform="rotate(${(x*7+y*3)%80} ${x} ${y})"/>`;
-let rules='';for(let y=46;y<=68;y+=11)rules+=`<line x1="34" x2="286" y1="${y}" y2="${y}" stroke="${L.rule}" stroke-opacity="${L.label==='dark'?.14:.22}"/>`;
+const mn='ui-monospace,Menlo,monospace',u=uidk,mat=matOf(m),reel=reelOf(m),tr=mat!=='gloss',ta=mat==='smoke'?.62:.3;
+const bolt=(x,y)=>`<circle cx="${x}" cy="${y}" r="5.4" fill="#0c0b0a" opacity=".6"/><circle cx="${x}" cy="${y}" r="4.3" fill="url(#bl${u})" stroke="#000" stroke-opacity=".6" stroke-width=".6"/><circle cx="${x-1}" cy="${y-1.2}" r="1.6" fill="#fff" fill-opacity=".28"/><path d="M${x-3} ${y} H${x+3} M${x} ${y-3} V${y+3}" stroke="#000a" stroke-width=".9" transform="rotate(${(x*7+y*3)%80} ${x} ${y})"/>`;
+let rules='';for(let y=46;y<=68;y+=11)rules+=`<line x1="34" x2="286" y1="${y}" y2="${y}" stroke="#2a3a5a" stroke-opacity=".22"/>`;
 const tape60=Math.max(10,Math.round(((d0||2400)/60)/5)*5);
+const inside=tr?`<rect x="1" y="1" width="318" height="202" rx="12" fill="#0d0c0a"/><rect x="5" y="80" width="310" height="88" rx="6" fill="url(#ln${u})" fill-opacity=".62"/>
+   <path d="M8 118H46M274 118H312" stroke="#000" stroke-opacity=".2"/><rect x="9" y="86" width="30" height="76" rx="3" fill="none" stroke="#000" stroke-opacity=".18"/><rect x="281" y="86" width="30" height="76" rx="3" fill="none" stroke="#000" stroke-opacity=".18"/>
+   <circle cx="13" cy="13" r="8" fill="#17140f" fill-opacity=".7"/><circle cx="307" cy="13" r="8" fill="#17140f" fill-opacity=".7"/><circle cx="13" cy="191" r="8" fill="#17140f" fill-opacity=".7"/><circle cx="307" cy="191" r="8" fill="#17140f" fill-opacity=".7"/>
+   <path d="M5 84H315" stroke="#fff" stroke-opacity=".5"/><path d="M5 168H315" stroke="#000" stroke-opacity=".3"/>`:'';
+const ribs=[0,1,2,3].map(i=>`<path d="M${17+i*3.6} 106v44M${17+i*3.6+.9} 106v44" stroke="#000" stroke-opacity=".14" stroke-width=".7"/><path d="M${303-i*3.6} 106v44M${303-i*3.6-.9} 106v44" stroke="#000" stroke-opacity=".14" stroke-width=".7"/>`).join('');
 return `<svg viewBox="0 0 320 204" xmlns="http://www.w3.org/2000/svg">
   <defs>
-   <linearGradient id="sh${uidk}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${L.shell[0]}"/><stop offset="1" stop-color="${L.shell[1]}"/></linearGradient>
-   <linearGradient id="gl${uidk}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".26"/><stop offset=".16" stop-color="#fff" stop-opacity=".06"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient>
-   <linearGradient id="lg${uidk}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".16"/><stop offset=".07" stop-color="#000" stop-opacity="0"/><stop offset=".93" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>
-   <radialGradient id="bl${uidk}" cx=".35" cy=".3"><stop offset="0" stop-color="#8c8a85"/><stop offset=".7" stop-color="#3a3935"/><stop offset="1" stop-color="#1c1b19"/></radialGradient>
-   <clipPath id="wc${uidk}"><rect x="52" y="92" width="216" height="64" rx="32"/></clipPath>
-   <radialGradient id="pk"><stop offset="0" stop-color="#2c1c12"/><stop offset=".82" stop-color="#3b271a"/><stop offset="1" stop-color="#1e130c"/></radialGradient>
+   <linearGradient id="sh${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${m.shell[0]}"/><stop offset="1" stop-color="${m.shell[1]}"/></linearGradient>
+   <linearGradient id="gl${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${tr?.34:.26}"/><stop offset=".16" stop-color="#fff" stop-opacity=".07"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient>
+   <linearGradient id="lg${u}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".16"/><stop offset=".07" stop-color="#000" stop-opacity="0"/><stop offset=".93" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>
+   <radialGradient id="bl${u}" cx=".35" cy=".3"><stop offset="0" stop-color="#8c8a85"/><stop offset=".7" stop-color="#3a3935"/><stop offset="1" stop-color="#1c1b19"/></radialGradient>
+   <clipPath id="wc${u}"><rect x="52" y="92" width="216" height="64" rx="32"/></clipPath>
+   ${artDefs(u)}
   </defs>
-  ${L.kind==='solid'?'':`<rect x="1" y="1" width="318" height="202" rx="12" fill="#0d0c0b"/>`}
-  <rect x="1" y="1" width="318" height="202" rx="12" fill="url(#sh${uidk})"${L.kind==='clear'?' fill-opacity=".62"':L.kind==='smoke'?' fill-opacity=".8"':''} stroke="#000" stroke-opacity=".65"/>
-  ${L.kind==='solid'?'':`<g opacity="${L.kind==='clear'?.34:.22}" fill="none" stroke="#fff" stroke-width="1"><rect x="14" y="84" width="292" height="78" rx="10"/><path d="M14 126H48M272 126H306"/><circle cx="86" cy="171" r="9"/><circle cx="234" cy="171" r="9"/><path d="M40 160V196M280 160V196"/></g>`}
-  <rect x="1" y="1" width="318" height="202" rx="12" fill="url(#gl${uidk})"/>
+  ${inside}
+  <rect x="1" y="1" width="318" height="202" rx="12" fill="url(#sh${u})"${tr?` fill-opacity="${ta}"`:''} stroke="#000" stroke-opacity=".65"/>
+  <rect x="1" y="1" width="318" height="202" rx="12" fill="url(#gl${u})"/>
+  ${lite?'':`<rect x="1" y="1" width="318" height="202" rx="12" fill="url(#nzG)" opacity="${tr?.1:.2}"/>`}
+  <g clip-path="url(#sc${u})"><path d="M-6 0H118L26 204H-6Z" fill="url(#sp${u})" opacity="${tr?.9:.55}"/><path d="M142 0H156L66 204H52Z" fill="url(#sp${u})" opacity="${tr?.8:.5}"/><path d="M244 0H252L162 204H154Z" fill="url(#sp${u})" opacity=".35"/></g>
+  <rect x="2" y="2" width="316" height="200" rx="11" fill="none" stroke="url(#eb${u})" stroke-width="2"/>
   <rect x="3.5" y="3.5" width="313" height="197" rx="9.5" fill="none" stroke="#fff" stroke-opacity=".2"/>
   <rect x="6" y="6" width="308" height="192" rx="8" fill="none" stroke="#000" stroke-opacity=".16"/>
   <path d="M3 94 H317" stroke="#000" stroke-opacity=".14"/><path d="M3 95.2 H317" stroke="#fff" stroke-opacity=".1"/>
   <rect x="56" y="1.5" width="18" height="4.5" rx="1" fill="#000" opacity=".5"/><rect x="246" y="1.5" width="18" height="4.5" rx="1" fill="#000" opacity=".5"/>
+  ${ribs}
+  <circle cx="36" cy="132" r="2.2" fill="#000" fill-opacity=".24"/><circle cx="36" cy="132.6" r="2.2" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width=".6"/><circle cx="284" cy="132" r="2.2" fill="#000" fill-opacity=".24"/><circle cx="284" cy="132.6" r="2.2" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width=".6"/>
   ${bolt(13,13)}${bolt(307,13)}${bolt(13,191)}${bolt(307,191)}${bolt(160,191)}
-  <rect x="22" y="13" width="276" height="68" rx="5" fill="#000" opacity=".28" transform="translate(0 1.5)"/>
-  <rect x="22" y="12" width="276" height="68" rx="5" fill="${L.paper}"/>
+  <rect x="22" y="13" width="276" height="68" rx="5" fill="#000" opacity=".3" transform="translate(0 1.5)"/>
+  <rect x="22" y="12" width="276" height="68" rx="5" fill="${m.paper}"/>
   ${lite?'':'<rect x="22" y="12" width="276" height="68" rx="5" fill="url(#nzG)" opacity=".5"/>'}
-  <rect x="22" y="12" width="276" height="68" rx="5" fill="url(#lg${uidk})"/>
-  ${L.label==='plain'?`<rect x="22" y="12" width="276" height="2.6" rx="1.3" fill="${m.stripe}"/><path d="M30 26H290" stroke="${m.stripe}" stroke-width="1.4" opacity=".85"/>`:`<path d="M22 17a5 5 0 0 1 5-5h266a5 5 0 0 1 5 5v9H22z" fill="${m.stripe}"/><path d="M22 26H298" stroke="#000" stroke-opacity=".18"/>`}
+  <rect x="22" y="12" width="276" height="68" rx="5" fill="url(#lg${u})"/>
+  <path d="M22 17a5 5 0 0 1 5-5h266a5 5 0 0 1 5 5v9H22z" fill="${m.stripe}"/>
+  <path d="M22 26H298" stroke="#000" stroke-opacity=".18"/>
   <rect class="tint" x="22" y="12" width="276" height="68" rx="5" fill="#a8741f" opacity="0"/>
   <rect x="22.5" y="12.5" width="275" height="67" rx="4.6" fill="none" stroke="#fff" stroke-opacity=".28"/>
   <path d="M24 79.4 H296" stroke="#000" stroke-opacity=".16"/>
-  <text x="30" y="22.5" font-family="${mn}" font-size="8" font-weight="700" letter-spacing="2" fill="${L.hdr}">SIDE ${side?'B':'A'}</text>
-  <text x="160" y="22.5" text-anchor="middle" font-family="${mn}" font-size="6" font-weight="700" letter-spacing="2.4" fill="${L.hdr}" opacity=".85">C-${tape60}</text>
-  <text class="du" x="290" y="22.5" text-anchor="end" font-family="${mn}" font-size="8" font-weight="700" letter-spacing="2" fill="${L.hdr}">${dur}</text>
+  <text x="30" y="22.5" font-family="${mn}" font-size="8" font-weight="700" letter-spacing="2" fill="${m.paper}">SIDE ${side?'B':'A'}</text>
+  <text x="160" y="22.5" text-anchor="middle" font-family="${mn}" font-size="6" font-weight="700" letter-spacing="2.4" fill="${m.paper}" opacity=".85">C-${tape60}</text>
+  <text class="du" x="290" y="22.5" text-anchor="end" font-family="${mn}" font-size="8" font-weight="700" letter-spacing="2" fill="${m.paper}">${dur}</text>
   ${rules}
-  <text class="nm" x="160" y="45" text-anchor="middle"${tl} font-size="${fs}" fill="${L.pen}" font-family="${hd?HAND_FF:printFF()}" font-weight="${hd?400:(PWT[theme]||600)}" letter-spacing="${hd?0:(PS[theme]||2)}" transform="rotate(${hd?m.rot:0} 160 42)">${esc(labTxt(m,name))}</text>
-  <text class="tp" x="30" y="76" font-family="${mn}" font-size="6" letter-spacing="1.2" font-weight="700" fill="${L.pen}" opacity=".8">TYPE ${TY[D.type].n} · ${TY[D.type].bias} · ${TY[D.type].eq}</text>
-  <text class="gn" x="238" y="76" text-anchor="end" font-family="${mn}" font-size="7" letter-spacing="1" font-weight="700" fill="${L.pen}" opacity=".85" transform="rotate(-3 238 76)">${genTxt(m)}</text>
-  <text class="nrt" x="290" y="76" text-anchor="end" font-family="${mn}" font-size="6" letter-spacing="1.2" font-weight="700" fill="${L.pen}" opacity=".8">NR ▸ ${NRN[D.nr]}</text>
-  <rect x="48" y="88" width="224" height="72" rx="36" fill="#000" opacity=".3"/>
-  <rect x="52" y="92" width="216" height="64" rx="32" fill="#0b0a09" stroke="#000"/>
-  <g clip-path="url(#wc${uidk})">${reelSVG('L',CL,CY,26)}${reelSVG('R',CR,CY,20)}</g>
-  <rect x="52.5" y="92.5" width="215" height="63" rx="31.5" fill="none" stroke="#fff" stroke-opacity=".16"/>
-  <path d="M60 100 Q160 88 262 100 L262 112 Q160 100 60 112Z" fill="#fff" opacity=".08"/>
-  <path d="M70 204 L84 166 H236 L250 204Z" fill="#14130f" stroke="#000"/>
-  <path d="M84 166 H236" stroke="#fff" stroke-opacity=".12"/>
+  <text class="nm" x="160" y="45" text-anchor="middle"${tl} font-size="${fs}" fill="${m.pen}" font-family="${hd?HAND_FF:printFF()}" font-weight="${hd?400:(PWT[theme]||600)}" letter-spacing="${hd?0:(PS[theme]||2)}" transform="rotate(${hd?m.rot:0} 160 42)">${esc(labTxt(m,name))}</text>
+  <text class="tp" x="30" y="76" font-family="${mn}" font-size="6" letter-spacing="1.2" font-weight="700" fill="${m.pen}" opacity=".8">TYPE ${TY[D.type].n} · ${TY[D.type].bias} · ${TY[D.type].eq}</text>
+  <text class="gn" x="238" y="76" text-anchor="end" font-family="${mn}" font-size="7" letter-spacing="1" font-weight="700" fill="${m.pen}" opacity=".85" transform="rotate(-3 238 76)">${genTxt(m)}</text>
+  <text class="nrt" x="290" y="76" text-anchor="end" font-family="${mn}" font-size="6" letter-spacing="1.2" font-weight="700" fill="${m.pen}" opacity=".8">NR ▸ ${NRN[D.nr]}</text>
+  <rect x="48" y="88" width="224" height="72" rx="36" fill="#000" opacity=".32"/>
+  <rect x="48.5" y="88.5" width="223" height="71" rx="35.5" fill="none" stroke="#fff" stroke-opacity=".1"/>
+  <rect x="52" y="92" width="216" height="64" rx="32" fill="url(#wn${u})" stroke="#000"/>
+  <g clip-path="url(#wc${u})">${bklUnder(u)}${reelSVG('L',CL,CY,26,reel,u)}${reelSVG('R',CR,CY,20,reel,u)}
+   ${bklTop(u)}
+   <path d="M60 100 Q160 88 262 100 L262 112 Q160 100 60 112Z" fill="#fff" opacity=".09"/>
+   <path d="M92 94L132 94L108 154L80 154Z" fill="#fff" opacity=".055"/><path d="M200 94L212 94L188 154L178 154Z" fill="#fff" opacity=".04"/>
+   <path d="M70 149Q160 160 250 149" stroke="#fff" stroke-opacity=".14" stroke-width="1" fill="none"/>
+   <circle cx="150" cy="140" r=".5" fill="#fff" fill-opacity=".5"/><circle cx="224" cy="104" r=".45" fill="#fff" fill-opacity=".45"/><circle cx="88" cy="132" r=".4" fill="#fff" fill-opacity=".4"/></g>
+  <rect x="52.5" y="92.5" width="215" height="63" rx="31.5" fill="none" stroke="#fff" stroke-opacity=".17"/>
+  <rect x="52" y="92" width="216" height="64" rx="32" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="2" transform="translate(0 1.4)" clip-path="url(#wc${u})"/>
+  <path d="M74 161v2.6M85 161v2M96 161v2.6M107 161v2M118 161v2.6M129 161v2M140 161v2.6M180 161v2.6M191 161v2M202 161v2.6M213 161v2M224 161v2.6M235 161v2M246 161v2.6" stroke="#000" stroke-opacity=".35" stroke-width=".8"/><path d="M74 162v2.6M85 162v2M96 162v2.6M107 162v2M118 162v2.6M129 162v2M140 162v2.6M180 162v2.6M191 162v2M202 162v2.6M213 162v2M224 162v2.6M235 162v2M246 162v2.6" stroke="#fff" stroke-opacity=".16" stroke-width=".6"/>
+  <path d="M70 204 L84 166 H236 L250 204Z" fill="url(#tz${u})" stroke="#000"/>
+  <path d="M84 166 H236" stroke="#fff" stroke-opacity=".14"/><path d="M71 202L85 167.5" stroke="#fff" stroke-opacity=".06"/>
   <path d="M${CL-22} ${CY+24} L88 169 M${CR+17} ${CY+18} L232 169" stroke="#4a3322" stroke-width="1.4" fill="none" opacity=".9"/>
+  <path d="M${CL-22} ${CY+24} L88 169 M${CR+17} ${CY+18} L232 169" stroke="#c9a27a" stroke-width=".4" fill="none" opacity=".35" transform="translate(-.4 -.4)"/>
   <rect x="96" y="188" width="128" height="3" fill="#3b2a1c"/><rect x="96" y="188" width="128" height="1" fill="#fff" opacity=".12"/>
-  <circle cx="110" cy="180" r="6" fill="#000"/><circle cx="110" cy="180" r="4.4" fill="none" stroke="#6b655a" stroke-width="1"/>
-  <circle cx="210" cy="180" r="6" fill="#000"/><circle cx="210" cy="180" r="4.4" fill="none" stroke="#6b655a" stroke-width="1"/>
+  <circle cx="110" cy="180" r="6" fill="#000"/><circle cx="110" cy="180" r="4.4" fill="url(#rl${u})" stroke="#6b655a" stroke-width=".8"/><circle cx="110" cy="180" r="1.2" fill="#000"/>
+  <circle cx="210" cy="180" r="6" fill="#000"/><circle cx="210" cy="180" r="4.4" fill="url(#rl${u})" stroke="#6b655a" stroke-width=".8"/><circle cx="210" cy="180" r="1.2" fill="#000"/>
   <rect x="146" y="173" width="28" height="13" rx="2" fill="#000"/><rect x="150" y="176" width="20" height="5" rx="1" fill="#8d877b"/><rect x="150" y="176" width="20" height="1.5" fill="#fff" opacity=".35"/>
+  <path d="M152 184q2-2.6 4 0t4 0t4 0t4 0" stroke="#b79150" stroke-width=".8" fill="none" opacity=".8"/>
   <circle cx="90" cy="196" r="2" fill="#000"/><circle cx="230" cy="196" r="2" fill="#000"/>
-  ${wearGfx(m)}
+  ${decoSVG(m,side,u,lite)}
+  ${wearGfx(m,u)}
   </svg>`;
+}
+function cassRefs(el){
+const q=s=>el.querySelector(s);
+return {reelL:q('.reelL'),reelR:q('.reelR'),packL:q('.packL'),packR:q('.packR'),ringL:q('.ringL'),ringR:q('.ringR'),edgeL:q('.edgeL'),edgeR:q('.edgeR'),hubL:q('.hubL'),hubR:q('.hubR'),nm:q('.nm'),du:q('.du'),tint:q('.tint')};
 }
 function buildCassette(m,side){
 const el=document.createElement('div');el.className='cass enter';
 el.innerHTML=cassSVG(m,m.id.slice(0,5),side);applyWear(el,m.wear);
-const q=s=>el.querySelector(s);
-return {el,refs:{reelL:q('.reelL'),reelR:q('.reelR'),packL:q('.packL'),packR:q('.packR'),ringL:q('.ringL'),ringR:q('.ringR'),hubL:q('.hubL'),hubR:q('.hubR'),nm:q('.nm'),du:q('.du'),tint:q('.tint')}};
+return {el,refs:cassRefs(el)};
+}
+function repaintCass(){
+if(!cur)return;const c=cur;
+c.el.innerHTML=cassSVG(c.meta,c.meta.id.slice(0,5),c.side);c.refs=cassRefs(c.el);
+applyWear(c.el,age());lastAge=age();c.rL=c.rR=0;
+c.refs.reelL.setAttribute('transform','rotate('+(c.aL%360).toFixed(2)+' '+CL+' '+CY+')');
+c.refs.reelR.setAttribute('transform','rotate('+(c.aR%360).toFixed(2)+' '+CR+' '+CY+')');
 }
 function ejectCur(){
 if(!cur)return; if(ctx)killSource();loopGen=0; const el=cur.el; el.classList.remove('enter');el.classList.add('leave');setTimeout(()=>el.remove(),320);
@@ -1666,8 +1817,6 @@ click('insert');say('',0);renderTray();
 }catch(e){say(_t('COULD NOT DECODE'),2800);}
 finally{busy=false;}
 }
-function fileTitle(n){let t=String(n||'').replace(/\.[A-Za-z0-9]{2,5}$/,'').replace(/^\s*\d{1,3}_+/,'').replace(/_+/g,' ').replace(/^\s*\d{1,3}\s*[-.)]\s+/,'').replace(/\s+/g,' ').trim();
-return t.slice(0,60)||'untitled';}
 async function addFiles(files){
 initAudio();let first=null,n=0;
 for(const f of files){
@@ -1677,7 +1826,7 @@ say(_t('READING FILE…'),99999);
 const ab=await f.arrayBuffer();
 let dur=0;
 try{dur=(await decodeBuf(ab.slice(0))).duration;}catch(e){say(_t('NOT AUDIO: ')+(f.name||_t('file')).slice(0,22),2800);continue;}
-const m={id:uid(),name:fileTitle(f.name),
+const m={id:uid(),name:'untitled',
 shell:pick(SHELLS),paper:pick(PAPERS),stripe:pick(STRIPES),pen:pick(PENS),rot:+rnd(-1.6,1.6).toFixed(2),dur,created:Date.now()+n};
 await dbPut('data',{id:m.id,buf:ab,type:f.type});await dbPut('meta',m);
 lib.push(m);if(!first)first=m;n++;
@@ -1733,7 +1882,7 @@ fileInp.addEventListener('change',()=>{wakeAudio();const fl=[...fileInp.files];i
 if(loadTarget&&cur){loadTarget=false;loadIntoTrack(fl[0]).finally(()=>{fileInp.value='';});return;}
 loadTarget=false;addFiles(fl).finally(()=>{fileInp.value='';});});
 const bay=$('#bay'),lid=$('#lid'),shade=$('#shade'),glare=$('.glare');
-let lidBk=false;
+let lidBk=false,bkV='',bkR=false;
 const lidPrt=document.querySelector('#lid .prt');
 let g=null,lidDrag=false,lidSwiped=0,lidOpenCls=false,uiS=1;
 function reelHit(x,y){
@@ -1810,6 +1959,9 @@ lid.style.transform='rotateX('+(lidP*lidA).toFixed(2)+'deg)';
 lidPrt.style.opacity=lidP>0.55?clamp(1-(lidP-0.55)/0.3,0,1).toFixed(2):'';
 shade.style.opacity=(0.5*Math.sin(Math.PI*clamp(lidP,0,1))).toFixed(3);
 glare.style.transform='translateX('+((lidP*140)-30).toFixed(1)+'px)';
+{const run=S.mode!=='stop'&&S.mode!=='pause',on=cur?clamp(1-lidP*2.2,0,1)*(run?1:.82):0,v=on.toFixed(2);
+if(v!==bkV){bkV=v;slot.style.setProperty('--bk',v);}
+const r=S.mode==='rec';if(r!==bkR){bkR=r;slot.classList.toggle('rec',r);}}
 if(lidP===lidT){const o=lidT===1;if(o!==lidOpenCls){lidOpenCls=o;document.body.classList.toggle('open',o);}}
 }
 function startScrub(hit,e){
@@ -2101,8 +2253,8 @@ const p=cur.dur>0?clamp(pos/cur.dur,0,1):0,dp=pos-lastPos;lastPos=pos;
 const rr=a=>Math.sqrt(RMIN*RMIN+(RMAX*RMAX-RMIN*RMIN)*a),rL=rr(1-p),rR=rr(p);
 const cs=x=>Math.max(-24,Math.min(24,x));
 cur.aL-=cs(dp*V/rL*57.2958);cur.aR-=cs(dp*V/rR*57.2958);
-if(Math.abs(rL-cur.rL)>0.04){cur.rL=rL;cur.refs.packL.setAttribute('r',rL.toFixed(2));cur.refs.ringL.setAttribute('r',Math.max(rL-4,15).toFixed(2));}
-if(Math.abs(rR-cur.rR)>0.04){cur.rR=rR;cur.refs.packR.setAttribute('r',rR.toFixed(2));cur.refs.ringR.setAttribute('r',Math.max(rR-4,15).toFixed(2));}
+if(Math.abs(rL-cur.rL)>0.04){cur.rL=rL;cur.refs.packL.setAttribute('r',rL.toFixed(2));cur.refs.edgeL.setAttribute('r',(rL-.6).toFixed(2));cur.refs.ringL.setAttribute('r',Math.max(rL-4,15).toFixed(2));}
+if(Math.abs(rR-cur.rR)>0.04){cur.rR=rR;cur.refs.packR.setAttribute('r',rR.toFixed(2));cur.refs.edgeR.setAttribute('r',(rR-.6).toFixed(2));cur.refs.ringR.setAttribute('r',Math.max(rR-4,15).toFixed(2));}
 if(dp!==0&&!(lidMoving&&(rfN++&1))){
 cur.refs.reelL.setAttribute('transform','rotate('+(cur.aL%360).toFixed(2)+' '+CL+' '+CY+')');
 cur.refs.reelR.setAttribute('transform','rotate('+(cur.aR%360).toFixed(2)+' '+CR+' '+CY+')');
@@ -2231,6 +2383,7 @@ const a=m.arm+1;$('#mxLoad').textContent=_t('＋ LOAD INTO T')+a;$('#mxPP').text
 if(document.activeElement!==nameIn)nameIn.value=cur.side?(m.nameB||''):m.name;
 nameIn.placeholder=cur.side?_t('side B name'):_t('cassette name');
 $('#fontBtn').textContent=_t('FONT: ')+(isHand(m)?_t('HAND'):_t('PRINT'));
+$('#mxReel').textContent=_t('REEL: ')+_t(REEL_N[reelOf(m)]);$('#mxMat').textContent=_t('SHELL: ')+_t(MAT_N[matOf(m)]);
 nameIn.style.fontFamily=isHand(m)?'':'var(--print)';
 const ag=Math.round(clamp(age()/1.0,0,1.3)*100);
 $('#mxAge').textContent=_t('TAPE WEAR ')+ag+'%'+(loopGen?_t(' · LOOP: ')+loopGen+_t(' PASSES'):'');
@@ -2429,6 +2582,8 @@ if(cur.side)cur.meta.nameB=v.trim()?v:'';else cur.meta.name=v.trim()?v:'untitled
 paintLabel();
 });
 nameIn.addEventListener('change',()=>{saveMeta();renderTray();});
+$('#mxReel').addEventListener('click',()=>{if(!cur)return;const m=cur.meta;m.reel=REELS[(REELS.indexOf(reelOf(m))+1)%REELS.length];saveMeta();repaintCass();renderTray();renderMixer();click('down');setTimeout(()=>click('up'),60);});
+$('#mxMat').addEventListener('click',()=>{if(!cur)return;const m=cur.meta;m.mat=MATS[(MATS.indexOf(matOf(m))+1)%MATS.length];saveMeta();repaintCass();renderTray();renderMixer();click('down');setTimeout(()=>click('up'),60);});
 $('#fontBtn').addEventListener('click',()=>{if(!cur)return;cur.meta.font=isHand(cur.meta)?'print':'hand';saveMeta();paintLabel();renderTray();renderMixer();click('down');setTimeout(()=>click('up'),60);});
 $('#mxLoad').addEventListener('click',()=>{if(!cur)return;if(S.mode!=='stop')stopTransport();initAudio();loadTarget=true;fileInp.click();});
 async function loadIntoTrack(file){
@@ -2679,7 +2834,7 @@ const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=
 setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
 }
 $('#bncBtn').addEventListener('click',()=>{click('down');setTimeout(()=>click('up'),80);bnc?bounceStop():bounceStart();});
-if(location.hash==='#dev')window.__tape4={get A(){return A},getPos,get dying(){return dying},click,applyTheme,initAudio,get ctx(){return ctx},A,get S(){return S},get cur(){return cur},go,loopWrap,pingpong,flip,jcard,get loopGen(){return loopGen},age,get lib(){return lib},renderTray,paintLabel,insert,D,setTape:v=>{tapeAmt=v;applyTape();},applyTape};
+if(location.hash==='#dev')window.__tape4={get A(){return A},getPos,get dying(){return dying},click,applyTheme,initAudio,get ctx(){return ctx},A,get S(){return S},get cur(){return cur},go,loopWrap,pingpong,flip,jcard,get loopGen(){return loopGen},age,get lib(){return lib},renderTray,paintLabel,insert,cassSVG,repaintCass,reelOf,matOf,D,setTape:v=>{tapeAmt=v;applyTape();},applyTape};
 try{applyTheme(localStorage.getItem('tape4.theme')||'sonic',true);}catch(e){applyTheme('sonic',true);}
 requestAnimationFrame(frame);
 renderKeys();

@@ -1,0 +1,9 @@
+/* ---- window backlight: --bk (0..1) is set from lidStep, the lamp colour belongs to the skin; the group lives inside the cassette's window ---- */
+#slot{--bk:0;--bkc:#ffb347;--bkc2:#fff0c4}
+body[data-theme="sonic"] #slot{--bkc:#ffc983;--bkc2:#fff3d6}
+body[data-theme="kami"] #slot{--bkc:#6fe8c8;--bkc2:#e2fff7}
+body[data-theme="nashville"] #slot{--bkc:#ffae42;--bkc2:#ffe8b4}
+body[data-theme="kiiro"] #slot{--bkc:#ffe03d;--bkc2:#fff8c4}
+body[data-theme="akane"] #slot{--bkc:#ff8656;--bkc2:#ffdfcf}
+body[data-theme="kuro"] #slot{--bkc:#ff5545;--bkc2:#ffd3cd}
+#slot.rec{--bkc:#ff3b2f;--bkc2:#ffc4bd}

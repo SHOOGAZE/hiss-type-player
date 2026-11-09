@@ -1,6 +1,6 @@
 /* ---------- lid & bay gestures ---------- */
 const bay=$('#bay'),lid=$('#lid'),shade=$('#shade'),glare=$('.glare');
-let lidBk=false;
+let lidBk=false,bkV='',bkR=false;
 const lidPrt=document.querySelector('#lid .prt');
 let g=null,lidDrag=false,lidSwiped=0,lidOpenCls=false,uiS=1;
 function reelHit(x,y){
@@ -79,6 +79,10 @@ function lidStep(dt){
   lidPrt.style.opacity=lidP>0.55?clamp(1-(lidP-0.55)/0.3,0,1).toFixed(2):'';   /* print fades out before the lid passes edge-on (its back side would show mirrored) */
   shade.style.opacity=(0.5*Math.sin(Math.PI*clamp(lidP,0,1))).toFixed(3);
   glare.style.transform='translateX('+((lidP*140)-30).toFixed(1)+'px)';
+  /* window backlight: lit while the lid is closed (a little dimmer at rest, full while the tape runs), fades out as the lid lifts; red while recording */
+  {const run=S.mode!=='stop'&&S.mode!=='pause',on=cur?clamp(1-lidP*2.2,0,1)*(run?1:.82):0,v=on.toFixed(2);
+   if(v!==bkV){bkV=v;slot.style.setProperty('--bk',v);}
+   const r=S.mode==='rec';if(r!==bkR){bkR=r;slot.classList.toggle('rec',r);}}
   /* the shelf dims/undims only once the lid has settled: flipping this mid-motion restyled every tile on the same frame */
   if(lidP===lidT){const o=lidT===1;if(o!==lidOpenCls){lidOpenCls=o;document.body.classList.toggle('open',o);}}
 }

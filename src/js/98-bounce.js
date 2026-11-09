@@ -33,7 +33,7 @@ async function bounceStop(){
   setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
 }
 $('#bncBtn').addEventListener('click',()=>{click('down');setTimeout(()=>click('up'),80);bnc?bounceStop():bounceStart();});
-if(location.hash==='#dev')window.__tape4={get A(){return A},getPos,get dying(){return dying},click,applyTheme,initAudio,get ctx(){return ctx},A,get S(){return S},get cur(){return cur},go,loopWrap,pingpong,flip,jcard,get loopGen(){return loopGen},age,get lib(){return lib},renderTray,paintLabel,insert,D,setTape:v=>{tapeAmt=v;applyTape();},applyTape};
+if(location.hash==='#dev')window.__tape4={get A(){return A},getPos,get dying(){return dying},click,applyTheme,initAudio,get ctx(){return ctx},A,get S(){return S},get cur(){return cur},go,loopWrap,pingpong,flip,jcard,get loopGen(){return loopGen},age,get lib(){return lib},renderTray,paintLabel,insert,cassSVG,repaintCass,reelOf,matOf,D,setTape:v=>{tapeAmt=v;applyTape();},applyTape};
 try{applyTheme(localStorage.getItem('tape4.theme')||'sonic',true);}catch(e){applyTheme('sonic',true);}
 
 requestAnimationFrame(frame);
