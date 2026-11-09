@@ -4,7 +4,7 @@ const TOUR_ICO={
  '＋':'<path d="M12 5v14M5 12h14"/>',
  '◎':'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6"/><path d="M12 4v2.5M12 17.5V20M4 12h2.5M17.5 12H20" opacity=".0"/>',
  '4':'<path d="M4 6h16M4 10.7h16M4 15.3h16M4 20h16" opacity=".4"/><path d="M4 6h7M4 10.7h12M4 15.3h5M4 20h10"/>',
- '⇄':'<path d="M4 8h13M13 4l4 4-4 4M20 16H7M11 12l-4 4 4 4"/>',
+ '◐':'<circle cx="8" cy="12" r="3.4"/><circle cx="16" cy="12" r="3.4" opacity=".45"/><path d="M5 19h14"/>',
  '⚙':'<path d="M5 7h5M14 7h5M5 17h9M18 17h1M5 12h1M10 12h9"/><circle cx="12" cy="7" r="2"/><circle cx="16" cy="17" r="2"/><circle cx="8" cy="12" r="2"/>',
  '⟳':'<rect x="3" y="11" width="13" height="8" rx="2"/><path d="M8 6.5a7 7 0 0 1 11 2.5"/><path d="M20 4.5V9h-4.5"/>'
 };
@@ -12,8 +12,8 @@ const TOUR=[
  ['▲','Swipe the lid up','Swipe up on the glass lid to open the deck. Swipe down to close it again.'],
  ['＋','Load your music','Tap the slot (or ＋ on the shelf) and pick audio from your device. Every file becomes a cassette.'],
  ['◎','Play it like tape','REW, PLAY, FF, STOP and PAUSE work like the real thing. Spin the reels with a finger to scrub. The knobs stop at their limits.'],
- ['4','Record on top','Tap 4TRK, press ARM on a track, close the mixer, then press REC and PLAY. Your new sound lands on that track while the others keep playing.'],
- ['⇄','Ping-pong','Out of tracks? In 4TRK, PING-PONG mixes all the other tracks into the armed one and frees them up. Every pass wears the sound a little.'],
+ ['4','Record on top','Tap 4TRK, press ARM on a track, close the mixer, then press REC and PLAY. Your new sound lands on that track while the others keep playing. Out of tracks? PING-PONG mixes the rest into the armed one.'],
+ ['◐','Change the deck','SKIN swaps the whole deck: six machines with their own look, keys and sound. The longer you play, the more wear it shows. In DECK, LID switches between a closed lid and a see-through window.'],
  ['⚙','Shape the sound','DECK holds tape type, speed, tone, volume, sleep timer and NR (Dolby). TAPE and PITCH bend the sound, LOOP wears the tape out.'],
  ['⟳','Rotate your phone','Landscape shows the cassette full screen with glass controls. Long-press a cassette on the shelf to delete it. BOUNCE saves what you hear as a WAV.']
 ];
