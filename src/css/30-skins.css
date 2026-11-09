@@ -73,8 +73,8 @@ body[data-theme] .duo .sm.on i{background:var(--led-on,#7ee0a0);box-shadow:0 0 7
 body[data-theme] #lid .frame{border-bottom-width:26px}
 body[data-theme] #lid::after{position:absolute;left:0;right:0;bottom:8px;z-index:2;pointer-events:none;text-align:center;font:700 7px var(--mono);letter-spacing:.24em;color:var(--dim);opacity:.85}
 body[data-theme="sonic"] #lid::after{content:"AUTOMATIC CASSETTE-CORDER · TC-22"}
-body[data-theme="kami"] #lid::after{content:"SOFTWALK CASSETTE PLAYER · CT-22"}
-body[data-theme="nashville"] #lid::after{content:"MODEL 22 · CASSETTE DECK"}
+body[data-theme="kami"] #lid::after{content:"SOFTWALK CASSETTE PLAYER · CT-40"}
+body[data-theme="nashville"] #lid::after{content:"MODEL 60 · CASSETTE DECK"}
 body[data-theme] #lid .grip{display:none}
 body[data-theme="kami"] #lid::after{color:#d9d5c9;opacity:.9}
 

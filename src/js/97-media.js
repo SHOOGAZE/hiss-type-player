@@ -24,5 +24,14 @@ if('mediaSession' in navigator){
   set('play',()=>{if(!cur)return;if(S.mode==='pause')pauseTape();else if(S.mode!=='play')go('play');});
   set('pause',()=>{if(S.mode==='play'||S.mode==='ff'||S.mode==='rew')pauseTape();});
   set('stop',()=>stopTransport());
+  /* the lock-screen scrub bar and the 10 s buttons: move the tape, keep playing if it was playing */
+  const seek=p=>{if(!cur||!(cur.dur>0))return;const was=S.mode==='play'||S.mode==='ff'||S.mode==='rew';
+    if(was){const q=getPos();killSource();S.off=q;S.mode='pause';}
+    S.off=clamp(p,0,cur.dur);ts=null;
+    if(was)go('play');else{renderKeys();}
+    syncMedia();};
+  set('seekbackward',d=>seek(getPos()-((d&&d.seekOffset)||10)));
+  set('seekforward',d=>seek(getPos()+((d&&d.seekOffset)||10)));
+  set('seekto',d=>{if(d&&typeof d.seekTime==='number')seek(d.seekTime);});
   setInterval(syncMedia,2000);
 }

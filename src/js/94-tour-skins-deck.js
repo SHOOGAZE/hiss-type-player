@@ -39,8 +39,8 @@ window.addEventListener('pageshow',wakeAudio);window.addEventListener('focus',wa
 /* ---------- skins ---------- */
 const THEMES=[
   {id:'sonic',     name:'SORAKO TC-22',    brand:'SORAKO',  sub:'CASSETTE-CORDER TC-22',  desc:'Japan · silver · black keys',  sw:['#c9ccd1','#2a2b2e','#e5472f']},
-  {id:'kami',      name:'KAMIYA CT-22',    brand:'KAMIYA',  sub:'SOFTWALK CT-22',         desc:'Japan · teal shell · lilac keys', sw:['#1a9a82','#d8cce0','#ff8a2a']},
-  {id:'nashville', name:'HARLAN M22',      brand:'HARLAN',  sub:'MODEL 22 DECK',          desc:'USA · cream · wood',           sw:['#dcd7c4','#efede8','#d9531e']},
+  {id:'kami',      name:'KAMIYA CT-40',    brand:'KAMIYA',  sub:'SOFTWALK CT-40',         desc:'Japan · teal shell · lilac keys', sw:['#1a9a82','#d8cce0','#ff8a2a']},
+  {id:'nashville', name:'HARLAN M60',      brand:'HARLAN',  sub:'MODEL 60 DECK',          desc:'USA · cream · wood',           sw:['#dcd7c4','#efede8','#d9531e']},
   {id:'kiiro',     name:'KIIRO KR-10',     brand:'KIIRO',   sub:'SPORT CASSETTE PLAYER',  desc:'Japan · yellow plate · rubber', sw:['#f4b90a','#2a2a2d','#ffd62e']},
   {id:'akane',     name:'AKANE AK-1',      brand:'AKANE',   sub:'STEREO CASSETTE PLAYER', desc:'Japan · red metal · cream keys', sw:['#c9261c','#f6f2ea','#ffb347']},
   {id:'kuro',      name:'KURO SR-1',       brand:'KURO',    sub:'SCHOOL RECORDER SR-1',   desc:'Japan · black · red REC',      sw:['#17181a','#2a2b2e','#e33a2a']}

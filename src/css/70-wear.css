@@ -31,3 +31,8 @@ body{--dw:0;--wr-dirt:#4a4036;--wr-edge:#ffffff88;--wr-shine:#ffffff2e}
 /* a deck with no hours on it carries no wear layers */
 body:not(.worn) #plate .wr,body:not(.worn) #plate .wr2{display:none}
 body:not(.worn) #plate::before,body:not(.worn) #keys .key::after,body:not(.worn) .knob::after,body:not(.worn) #grille::before{content:none}
+
+/* scratches on the lid: the clear glass lid and the solid lid each get their own pattern, above the lid material and under its printing */
+#lid .lwr{position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:var(--wr,14px);opacity:clamp(0,calc(var(--dw)*1.6),1);background:var(--wr-g) center/cover no-repeat}
+body.lidc #lid .lwr{background-image:var(--wr-l)}
+body:not(.worn) #lid .lwr{display:none}

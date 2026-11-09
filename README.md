@@ -26,8 +26,8 @@ Landscape visual mode (the cassette sits in a lid set into the plastic body, in 
 Six pocket-recorder skins, each with its own colours, construction and cabinet sound:
 
 - **SORAKO TC-22**: Japan, silver, black piano keys, red REC
-- **KAMIYA CT-22**: Japan, matte teal shell, lilac keys, orange REC
-- **HARLAN M22**: USA, cream deck with printed key labels, wood sides
+- **KAMIYA CT-40**: Japan, matte teal shell, lilac keys, orange REC
+- **HARLAN M60**: USA, cream deck with printed key labels, wood sides
 - **KIIRO KR-10**: black rubber frame, yellow plate, yellow encoders
 - **AKANE AK-1**: red anodised metal, rounded cream keys
 - **KURO SR-1**: black school recorder, glossy black keys, red REC cube
