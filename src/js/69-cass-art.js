@@ -1,7 +1,7 @@
 /* ---------- cassette art: shell materials, reel types, stickers and the window backlight ----------
    Everything here is deterministic per cassette (seeded by its id), so a tape always keeps its own reels, its own plastic and its own history:
    reel types: teeth / smooth / clear. shell materials: gloss (opaque) / smoke (tinted translucent) / clear (nearly transparent).
-   stickers: scotch tape, a DEMO rubber stamp and pen notes. The backlight is a group inside the window whose strength comes from the CSS variable --bk (set by lidStep). */
+   stickers: scotch tape, a DEMO rubber stamp and pen notes. */
 const REELS=['teeth','smooth','clear'],MATS=['gloss','smoke','clear'];
 const REEL_N={teeth:'TEETH',smooth:'SMOOTH',clear:'CLEAR'},MAT_N={gloss:'GLOSS',smoke:'SMOKED',clear:'CLEAR'};
 const hashId=s=>{let h=2166136261;for(const c of String(s))h=Math.imul(h^c.charCodeAt(0),16777619)>>>0;return h;};
@@ -15,13 +15,9 @@ const STAMP_FF="'Impact','Haettenschweiler','Avenir Next Condensed','DIN Condens
 /* ---- reels ---- */
 const PACK_STOPS=(()=>{let s='<stop offset="0" stop-color="#241710"/>';for(let i=1;i<=13;i++)s+=`<stop offset="${(.2+.6*i/13).toFixed(3)}" stop-color="${i%2?'#44301f':'#35231a'}"/>`;
   return s+'<stop offset=".9" stop-color="#4d3523"/><stop offset=".965" stop-color="#7c5a3e"/><stop offset="1" stop-color="#1d120b"/>';})();
-/* the lamp: a warm wash behind the window plus a glow in each hub; both are driven by --bk (0..1) and tinted by --bkc */
-const bkc=(o,v)=>`style="stop-color:var(--bkc${v||''},${v?'#fff0c4':'#ffb347'})" stop-opacity="${o}"`;
 const artDefs=u=>`<radialGradient id="pk${u}" cx=".5" cy=".5" r=".5" fx=".47" fy=".44">${PACK_STOPS}</radialGradient>
    <radialGradient id="hb${u}" cx=".36" cy=".3" r=".9"><stop offset="0" stop-color="#fdfbf2"/><stop offset=".55" stop-color="#e6e1d4"/><stop offset="1" stop-color="#aaa493"/></radialGradient>
    <radialGradient id="hc${u}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".04"/><stop offset=".7" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#d8ecff" stop-opacity=".4"/></radialGradient>
-   <radialGradient id="bk${u}" gradientUnits="userSpaceOnUse" cx="160" cy="124" r="136" gradientTransform="translate(160 124) scale(1 .46) translate(-160 -124)"><stop offset="0" ${bkc(.72)}/><stop offset=".5" ${bkc(.42)}/><stop offset="1" ${bkc(.12)}/></radialGradient>
-   <radialGradient id="bg${u}"><stop offset="0" ${bkc(.34,2)}/><stop offset=".6" ${bkc(.12,2)}/><stop offset="1" ${bkc(0,2)}/></radialGradient>
    <linearGradient id="wn${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1814"/><stop offset=".5" stop-color="#0e0c0a"/><stop offset="1" stop-color="#060504"/></linearGradient>
    <linearGradient id="eb${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".25" stop-color="#fff" stop-opacity=".05"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></linearGradient>
    <linearGradient id="sp${u}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".2"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
@@ -31,14 +27,13 @@ const artDefs=u=>`<radialGradient id="pk${u}" cx=".5" cy=".5" r=".5" fx=".47" fy
    <clipPath id="sc${u}"><rect x="1" y="1" width="318" height="202" rx="12"/></clipPath>`;
 function reelSVG(k,cx,cy,r,type,u){
   const A=(a,s)=>`transform="rotate(${a} ${cx} ${cy})"`;
-  const glow=rr=>`<circle cx="${cx}" cy="${cy}" r="${rr}" style="fill:var(--bkc2,#fff0c4);opacity:calc(var(--bk,0)*.85)"/>`;
   let hub='',teeth='';
   if(type==='smooth'){
     /* a solid, smooth hub: machined grooves, a tiny spindle hole and three dimples so the spin still reads */
     hub=`<circle class="hub${k}" cx="${cx}" cy="${cy}" r="14" fill="url(#hb${u})" stroke="#6c675b" stroke-width="1"/>
      <circle cx="${cx}" cy="${cy}" r="12.2" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width=".6"/><circle cx="${cx}" cy="${cy}" r="11.5" fill="none" stroke="#000" stroke-opacity=".13" stroke-width=".6"/>
      <circle cx="${cx}" cy="${cy}" r="8.4" fill="none" stroke="#000" stroke-opacity=".1" stroke-width=".6"/><circle cx="${cx}" cy="${cy}" r="7.7" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width=".5"/>
-     <circle cx="${cx}" cy="${cy}" r="5.6" fill="#8f897c"/>${glow(4.4)}<circle cx="${cx}" cy="${cy}" r="4.6" fill="#0b0a09" fill-opacity=".92" stroke="#4a463e" stroke-width=".7"/>
+     <circle cx="${cx}" cy="${cy}" r="5.6" fill="#8f897c"/><circle cx="${cx}" cy="${cy}" r="4.6" fill="#0b0a09" fill-opacity=".92" stroke="#4a463e" stroke-width=".7"/>
      ${[0,120,240].map(a=>`<g ${A(a)}><circle cx="${cx}" cy="${cy-10}" r="1.5" fill="#000" fill-opacity=".28"/><circle cx="${cx}" cy="${cy-10.3}" r="1.3" fill="#fff" fill-opacity=".55"/></g>`).join('')}
      <path d="M${cx-1.8} ${cy-12.4}L${cx+1.8} ${cy-12.4}L${cx} ${cy-14.6}Z" fill="#c4502f" fill-opacity=".9"/>`;
   }else if(type==='clear'){
@@ -48,25 +43,20 @@ function reelSVG(k,cx,cy,r,type,u){
      <circle cx="${cx}" cy="${cy}" r="14.7" fill="none" stroke="#000" stroke-opacity=".5" stroke-width=".7"/>
      <circle cx="${cx}" cy="${cy}" r="12.3" fill="none" stroke="#fff" stroke-opacity=".26" stroke-width=".6"/>
      ${[30,90,150,210,270,330].map(a=>`<rect x="${cx-.95}" y="${cy-13}" width="1.9" height="4.4" fill="#fff" fill-opacity=".5" ${A(a)}/>`).join('')}
-     <circle cx="${cx}" cy="${cy}" r="9.6" fill="none" stroke="#fff" stroke-opacity=".78" stroke-width="2.3"/><circle cx="${cx}" cy="${cy}" r="8.5" fill="#050403" fill-opacity=".6"/>${glow(8.2)}${teeth}
+     <circle cx="${cx}" cy="${cy}" r="9.6" fill="none" stroke="#fff" stroke-opacity=".78" stroke-width="2.3"/><circle cx="${cx}" cy="${cy}" r="8.5" fill="#050403" fill-opacity=".6"/>${teeth}
      <circle cx="${cx}" cy="${cy-11.6}" r="1.1" fill="#fff" fill-opacity=".9"/>`;
   }else{
     teeth=[0,60,120,180,240,300].map(a=>`<rect x="${cx-2}" y="${cy-8.8}" width="4" height="4.8" rx=".5" fill="#ebe6d9" stroke="#3a3328" stroke-opacity=".55" stroke-width=".35" ${A(a)}/>`).join('');
     hub=`<circle class="hub${k}" cx="${cx}" cy="${cy}" r="14" fill="url(#hb${u})" stroke="#6c675b" stroke-width="1"/>
      <circle cx="${cx}" cy="${cy}" r="12.4" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width=".6"/>
-     <circle cx="${cx}" cy="${cy}" r="9.6" fill="#9b9588"/><circle cx="${cx}" cy="${cy}" r="8.8" fill="#0b0a09"/>${glow(8.4)}${teeth}
+     <circle cx="${cx}" cy="${cy}" r="9.6" fill="#9b9588"/><circle cx="${cx}" cy="${cy}" r="8.8" fill="#0b0a09"/>${teeth}
      <circle cx="${cx}" cy="${cy-11.4}" r="1.4" fill="#6b655a"/>`;
   }
   return `<circle class="pack${k}" cx="${cx}" cy="${cy}" r="${r}" fill="url(#pk${u})" stroke="#5a3d28" stroke-width=".6"/>
-   <circle class="edge${k}" cx="${cx}" cy="${cy}" r="${r-.6}" fill="none" style="stroke:var(--bkc,#ffb347);opacity:calc(var(--bk,0)*.75)" stroke-width="1.5"/>
    <g class="reel${k}" transform="rotate(0 ${cx} ${cy})">
     <circle class="ring${k}" cx="${cx}" cy="${cy}" r="${r-4}" fill="none" stroke="#fff" stroke-opacity=".09" stroke-width="1.3" stroke-dasharray="2 6"/>
     <circle cx="${cx}" cy="${cy}" r="15.6" fill="#000" fill-opacity=".34"/>${hub}</g>`;
 }
-/* the lamp sits behind the tape: a strong wash on the window background (under the reels, so hubs and teeth stay crisp) and a mild bloom on the glass above them */
-const bklUnder=u=>`<g class="bkl" style="opacity:var(--bk,0)"><rect x="52" y="92" width="216" height="64" fill="url(#bk${u})"/></g>`;
-const bklTop=u=>`<g class="bkl" style="opacity:var(--bk,0)"><circle cx="${CL}" cy="${CY}" r="36" fill="url(#bg${u})"/><circle cx="${CR}" cy="${CY}" r="34" fill="url(#bg${u})"/></g>`;
-
 /* ---- stickers: scotch tape, DEMO stamp, pen ---- */
 const NOTES={en:['mix 1998','for K. xx','DON’T ERASE!','best of','side A = slow','road trip','dub #2','rough take','summer ’94','keep!','3 am','radio rip','bedroom demo'],
   ru:['микс 98','для К. xx','НЕ СТИРАТЬ!','лучшее','дубль 2','поездка','черновик','лето ’94','оставить!','3 ночи','с радио','домашнее демо']};

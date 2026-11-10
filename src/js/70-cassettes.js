@@ -159,8 +159,7 @@ function cassSVG(m,uidk,side,lite){
   <rect x="48" y="88" width="224" height="72" rx="36" fill="#000" opacity=".32"/>
   <rect x="48.5" y="88.5" width="223" height="71" rx="35.5" fill="none" stroke="#fff" stroke-opacity=".1"/>
   <rect x="52" y="92" width="216" height="64" rx="32" fill="url(#wn${u})" stroke="#000"/>
-  <g clip-path="url(#wc${u})">${bklUnder(u)}${reelSVG('L',CL,CY,26,reel,u)}${reelSVG('R',CR,CY,20,reel,u)}
-   ${bklTop(u)}
+  <g clip-path="url(#wc${u})">${reelSVG('L',CL,CY,26,reel,u)}${reelSVG('R',CR,CY,20,reel,u)}
    <path d="M60 100 Q160 88 262 100 L262 112 Q160 100 60 112Z" fill="#fff" opacity=".09"/>
    <path d="M92 94L132 94L108 154L80 154Z" fill="#fff" opacity=".055"/><path d="M200 94L212 94L188 154L178 154Z" fill="#fff" opacity=".04"/>
    <path d="M70 149Q160 160 250 149" stroke="#fff" stroke-opacity=".14" stroke-width="1" fill="none"/>
@@ -184,7 +183,7 @@ function cassSVG(m,uidk,side,lite){
 }
 function cassRefs(el){
   const q=s=>el.querySelector(s);
-  return {reelL:q('.reelL'),reelR:q('.reelR'),packL:q('.packL'),packR:q('.packR'),ringL:q('.ringL'),ringR:q('.ringR'),edgeL:q('.edgeL'),edgeR:q('.edgeR'),hubL:q('.hubL'),hubR:q('.hubR'),nm:q('.nm'),du:q('.du'),tint:q('.tint')};
+  return {reelL:q('.reelL'),reelR:q('.reelR'),packL:q('.packL'),packR:q('.packR'),ringL:q('.ringL'),ringR:q('.ringR'),hubL:q('.hubL'),hubR:q('.hubR'),nm:q('.nm'),du:q('.du'),tint:q('.tint')};
 }
 function buildCassette(m,side){
   const el=document.createElement('div');el.className='cass enter';
