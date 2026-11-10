@@ -52,6 +52,11 @@ function initAudio(){
   A.hum=ctx.createOscillator();A.hum.frequency.value=52;A.humG=g(0);A.hum.connect(A.humG);A.humG.connect(A.master);A.hum.start();
   A.wow=ctx.createOscillator();A.wow.frequency.value=0.9;A.wowG=g(0.001);A.fl=ctx.createOscillator();A.fl.frequency.value=8.5;A.flG=g(0.0005);A.wowSum=g(1);
   A.wow.connect(A.wowG);A.wowG.connect(A.wowSum);A.fl.connect(A.flG);A.flG.connect(A.wowSum);A.wow.start();A.fl.start();
+  /* stretched tape: now and then the speed sags by a fraction of a percent and recovers. Only on a worn tape, and rare (about every 15-50 s) */
+  if(ctx.createConstantSource){A.sag=ctx.createConstantSource();A.sag.offset.value=0;A.sag.connect(A.wowSum);A.sag.start();
+    setInterval(()=>{const a=age();if(!ctx||S.mode!=='play'||a<0.15)return;
+      if(Math.random()<Math.min(0.5,a*0.07)){const n=ctx.currentTime,d=(0.006+Math.random()*0.012)*Math.min(1,a+0.2);
+        A.sag.offset.cancelScheduledValues(n);A.sag.offset.setTargetAtTime(-d,n,0.25);A.sag.offset.setTargetAtTime(0,n+0.5,0.5);}},1000);}
   setInterval(()=>{if(!ctx)return;const n=ctx.currentTime;A.wow.frequency.setTargetAtTime(rnd(0.5,1.5),n,0.6);A.fl.frequency.setTargetAtTime(rnd(6,11),n,0.5);},1200);
   setInterval(()=>{ if(!ctx||S.mode!=='play'||(tapeAmt<0.3&&age()<0.12))return;
     if(Math.random()<Math.max(0,tapeAmt-0.25)*0.35+age()*0.28){const n=ctx.currentTime,dl=rnd(0.04,0.16);A.dropG.gain.cancelScheduledValues(n);
@@ -81,8 +86,9 @@ function applyTape(){
   if(!ctx)return; const t=tapeAmt,n=ctx.currentTime;
   const C=TC(),ag=age();A.sat.curve=makeCurve(0.3+t*7*C.sat*TY[D.type].sat+ag*1.6,0.12*t*C.sat+ag*0.05);
   A.lp.frequency.setTargetAtTime(Math.min(20000,17000*C.lp*TY[D.type].lp*Math.pow(0.17,t)*Math.pow(0.42,ag)),n,0.05);
-  A.wowG.gain.setTargetAtTime((0.0007+t*t*0.011)*C.wow*(1+ag*1.3),n,0.05);
-  A.flG.gain.setTargetAtTime((0.0003+t*0.0045)*C.wow*(1+ag),n,0.05);
+  /* worn tape wobbles on its own: a floor that grows with age, so it is audible even with TAPE near zero */
+  A.wowG.gain.setTargetAtTime((0.0007+t*t*0.011)*C.wow*(1+ag*1.3)+ag*0.0018*C.wow,n,0.05);
+  A.flG.gain.setTargetAtTime((0.0003+t*0.0045)*C.wow*(1+ag)+ag*0.0006*C.wow,n,0.05);
   updateMotor();
 }
 /* motor coast: after STOP (tape stop or wind-down) the motor spins down for a moment instead of cutting out; coastU = AudioContext time the coast ends */
