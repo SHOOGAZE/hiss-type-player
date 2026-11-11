@@ -125,7 +125,7 @@ function dkPaint(){
 const prt=$('#lid .prt'),prtB=prt.children[0],prtS=prt.children[1],prtI=prt.children[2],prtA=prt.children[3];let prtK='';
 function updatePrint(){
   if(!document.body.classList.contains('lidc'))return;
-  const T=THEMES.find(x=>x.id===theme)||THEMES[0],sd=cur&&cur.side?1:0,w=cur&&cur.meta?Math.round(clamp(cur.meta.wear||0,0,1)*100):0;
+  const T=THEMES.find(x=>x.id===theme)||THEMES[0],sd=cur&&cur.side?1:0,w=cur&&cur.meta?Math.round(clamp(age(),0,1)*100):0;   /* same number as the 4TRK sheet and the landscape view */
   const spec=cur?'TYPE '+TY[D.type].n+' · NR '+NRN[D.nr].replace('DOLBY ','')+' · '+(D.speed<1?'½':D.speed>1?'2×':'1×')+' · WEAR '+w+'%':'NO CASSETTE';
   const k=T.id+spec+sd;if(k===prtK)return;prtK=k;
   prtB.textContent=T.brand;prtS.textContent=T.sub;prtI.textContent=spec;prtA.textContent=sd?'◀ SIDE B':'SIDE A ▶';

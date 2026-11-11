@@ -61,7 +61,7 @@ function initAudio(){
   setInterval(()=>{ if(!ctx||S.mode!=='play'||(tapeAmt<0.3&&age()<0.12))return;
     if(Math.random()<Math.max(0,tapeAmt-0.25)*0.35+age()*0.28){const n=ctx.currentTime,dl=rnd(0.04,0.16);A.dropG.gain.cancelScheduledValues(n);
       A.dropG.gain.setTargetAtTime(rnd(0.02,0.25),n,0.004);A.dropG.gain.setTargetAtTime(1,n+dl,0.012);} },600);
-  setInterval(()=>{if(ctx&&cur&&S.mode==='play'&&age()>0.08&&Math.random()<age()*0.8)shed();},180);
+  setInterval(()=>{if(ctx&&cur&&S.mode==='play'&&age()>0.2&&Math.random()<(age()-0.1)*0.8)shed();},180);
   applyTape();applyDeck();
   lastState=ctx.state;
   ctx.onstatechange=()=>{ if(ctx.state==='running'&&lastState!=='running'&&isRun(S.mode)) resync(); lastState=ctx.state; };

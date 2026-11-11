@@ -25,6 +25,7 @@ function frame(t){
     if(S.mode==='play'&&loopOn&&pos>=cur.dur-0.015)loopWrap();
     else if((S.mode==='play'||S.mode==='ff')&&pos>=cur.dur-0.015)autoStop();
     else if(S.mode==='rew'&&pos<=0.015)autoStop();
+    else if(S.mode==='rec'&&cur.meta.cap&&pos>=cur.meta.cap/2){stopTransport();click('big');say(_t('END OF TAPE'),2200);}
     else if(S.mode==='rew'&&D.mem&&memFrom&&pos<=cntZero+0.05){stopTransport();click('big');say(_t('MEMORY STOP'),1800);}
   }
   scrubTick(dt,t);ageTick(dt);
@@ -32,7 +33,7 @@ function frame(t){
   recLed.classList.toggle('on',S.mode==='rec'||(armed&&Math.floor(t/400)%2===0));
   if(rec&&rec.an&&(armed||S.mode==='rec')){rec.an.getFloatTimeDomainData(rec.pb);let pk=0;for(let i=0;i<rec.pb.length;i++){const a=Math.abs(rec.pb[i]);if(a>pk)pk=a;}if(pk>0.93)rec.pkT=t;}
   recLed.classList.toggle('peak',!!(rec&&rec.pkT&&t-rec.pkT<140));
-  const mt=MODES[S.mode]||S.mode,tt=cur?fmt(pos)+' / '+fmt(cur.dur):'00:00 / 00:00';
+  const mt=MODES[S.mode]||S.mode,tt=cur?fmt(pos)+' / '+fmt(cur.meta.cap?Math.max(cur.dur,cur.meta.cap/2):cur.dur):'00:00 / 00:00';
   const nm=(performance.now()<msgUntil||msgText)&&performance.now()<msgUntil?msgText:(cur?curName():_t('TAP SLOT TO LOAD AUDIO'));
   if(mt!==cache.m){cache.m=mt;lMode.textContent=mt;}
   if(tt!==cache.t){cache.t=tt;lTime.textContent=tt;}

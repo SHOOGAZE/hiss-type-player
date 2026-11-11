@@ -46,7 +46,7 @@ function paintLabel(){
   const m=cur.meta,hd=isHand(m);cur.refs.nm.textContent=labTxt(m,t);cur.refs.nm.setAttribute('font-size',labFs(t,!hd));
   cur.refs.nm.setAttribute('font-family',hd?HAND_FF:printFF());cur.refs.nm.setAttribute('font-weight',hd?400:(PWT[theme]||600));cur.refs.nm.setAttribute('letter-spacing',hd?0:(PS[theme]||2));
   cur.refs.nm.setAttribute('transform','rotate('+(hd?m.rot:0)+' 160 50)');
-  if(cur.refs.du)cur.refs.du.textContent=cur.dur?fmt(cur.dur):'--:--';
+  if(cur.refs.du)cur.refs.du.textContent=cur.dur?fmt(cur.dur):(cur.meta.cap?fmt(cur.meta.cap/2):'--:--');
   const gn=cur.el.querySelector('.gn');if(gn)gn.textContent=genTxt(m);
 }
 nameIn.addEventListener('input',()=>{
@@ -174,7 +174,7 @@ async function jcard(){
   x.fillStyle=m.stripe;x.fillRect(0,0,W,120);x.fillRect(0,H-70,W,70);
   const mono='ui-monospace,Menlo,monospace',hand='"Bradley Hand","Noteworthy","Marker Felt","Segoe Print",cursive';
   x.fillStyle=m.paper;x.font='700 34px '+mono;x.textBaseline='middle';{const br=(THEMES.find(t=>t.id===theme)||THEMES[0]).brand;x.fillText(br+' · HISS',60,60);}
-  x.textAlign='right';x.fillText('C-'+Math.max(10,Math.round((Math.max(m.dur||0,m.durB||0)/60)*2)),W-60,60);x.textAlign='left';
+  x.textAlign='right';x.fillText('C-'+(m.cap?Math.round(m.cap/60):Math.max(10,Math.round((Math.max(m.dur||0,m.durB||0)/60)*2))),W-60,60);x.textAlign='left';
   const hd=isHand(m),tf=hd?hand:printFF(),tw=hd?'':(PWT[theme]||600)+' ';x.fillStyle=m.pen;x.font=tw+'96px '+tf;
   let t=labTxt(m,m.name),fs=96;while(x.measureText(t).width>W-120&&fs>40){fs-=6;x.font=tw+fs+'px '+tf;}
   x.save();x.translate(60,250);x.rotate(hd?(m.rot||0)*Math.PI/180:0);x.fillText(t,0,0);x.restore();

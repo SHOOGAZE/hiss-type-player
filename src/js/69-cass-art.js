@@ -92,6 +92,7 @@ function penSig(x,y,w,col,R){const n=5+((R()*3)|0),st=w/n;let d=`M${x} ${y}`,px=
   d+=`M${(x+w*.05).toFixed(1)} ${(y+5.2).toFixed(1)}q${(w*.4).toFixed(1)} ${(-2.4).toFixed(1)} ${(w*.95).toFixed(1)} ${(-1+R()*2).toFixed(1)}`;
   return `<path class="pn" d="${d}" fill="none" stroke="${col}" stroke-width=".95" stroke-linecap="round" stroke-linejoin="round" opacity=".88"/>`;}
 function decoSVG(m,side,u,lite){
+  if(m.blank&&!m.dur&&!m.durB)return '';
   const R=cRng(hashId(m.id)^(side?0x9e3779b1:0)),ru=lang==='ru';
   const pen=['#28409a','#28409a','#1b1b1b','#a3231d','#1f4d3a'][(R()*5)|0],ps=hexLum(m.shell[0])<.5?'#f2efe4':'#1c1b19';
   const pool=ru?NOTES.ru:NOTES.en,old=ru?OLDT.ru:OLDT.en,pk=a=>a[(R()*a.length)|0];

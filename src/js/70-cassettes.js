@@ -106,11 +106,11 @@ function cassSVG(m,uidk,side,lite){
   const name=nm0.length>30?nm0.slice(0,29)+'…':nm0;
   const hd=isHand(m),fs=labFs(name,!hd);
   const est=name.length*((PW[theme]||.5)+(PS[theme]||2)/22)*fs,tl=(!hd&&est>205)?' textLength="224" lengthAdjust="spacingAndGlyphs"':'';
-  const d0=side?m.durB:m.dur,dur=d0?fmt(d0):'--:--';
+  const d0=side?m.durB:m.dur,dur=d0?fmt(d0):(m.cap?fmt(m.cap/2):'--:--');
   const mn='ui-monospace,Menlo,monospace',u=uidk,mat=matOf(m),reel=reelOf(m),tr=mat!=='gloss',ta=mat==='smoke'?.62:.3;
   const bolt=(x,y)=>`<circle cx="${x}" cy="${y}" r="5.4" fill="#0c0b0a" opacity=".6"/><circle cx="${x}" cy="${y}" r="4.3" fill="url(#bl${u})" stroke="#000" stroke-opacity=".6" stroke-width=".6"/><circle cx="${x-1}" cy="${y-1.2}" r="1.6" fill="#fff" fill-opacity=".28"/><path d="M${x-3} ${y} H${x+3} M${x} ${y-3} V${y+3}" stroke="#000a" stroke-width=".9" transform="rotate(${(x*7+y*3)%80} ${x} ${y})"/>`;
   let rules='';for(let y=46;y<=68;y+=11)rules+=`<line x1="34" x2="286" y1="${y}" y2="${y}" stroke="#2a3a5a" stroke-opacity=".22"/>`;
-  const tape60=Math.max(10,Math.round(((d0||2400)/60)/5)*5);
+  const tape60=m.cap?Math.round(m.cap/60):Math.max(10,Math.round(((d0||2400)/60)/5)*5);
   /* translucent shell: what you see through the plastic is the white liner sheet, the screw bosses and the moulded ribs */
   const inside=tr?`<rect x="1" y="1" width="318" height="202" rx="12" fill="#0d0c0a"/><rect x="5" y="80" width="310" height="88" rx="6" fill="url(#ln${u})" fill-opacity=".62"/>
    <path d="M8 118H46M274 118H312" stroke="#000" stroke-opacity=".2"/><rect x="9" y="86" width="30" height="76" rx="3" fill="none" stroke="#000" stroke-opacity=".18"/><rect x="281" y="86" width="30" height="76" rx="3" fill="none" stroke="#000" stroke-opacity=".18"/>
@@ -219,8 +219,8 @@ async function insert(id){
     const d=await dbGet('data',id); if(!d)throw new Error('nodata');
     defaults(m);
     const T=await loadSide(m,0);
-    if(!T[0].buf)throw new Error('decode');
-    m.dur=T[0].buf.duration;m.plays=(m.plays||0)+1;
+    if(!T[0].buf&&!m.blank)throw new Error('decode');
+    m.dur=T[0].buf?T[0].buf.duration:(m.dur||0);m.plays=(m.plays||0)+1;
     const c=buildCassette(m,0);slot.appendChild(c.el);
     cur={meta:m,T,side:0,dur:0,el:c.el,refs:c.refs,aL:0,aR:0,rL:26,rR:20};setDur();dbPut('meta',m).catch(()=>{});
     paintAge(true);
@@ -250,6 +250,15 @@ async function addFiles(files){
   if(first){ if(lidP>0.5)await insert(first.id); else say(_t('CASSETTES ADDED: ')+n,2200); }
   else if(!n)setTimeout(()=>{if(performance.now()>msgUntil)say('',0);},0);
 }
+/* a blank cassette: no audio yet, a length (C-30 / C-60 / C-90 = minutes on both sides), ready to record on. Each side holds half of it */
+async function addBlank(min){
+  try{
+    const m={id:uid(),name:_t('BLANK TAPE'),shell:pick(SHELLS),paper:pick(PAPERS),stripe:pick(STRIPES),pen:pick(PENS),rot:+rnd(-1.6,1.6).toFixed(2),dur:0,blank:true,cap:min*60,created:Date.now()};
+    await dbPut('data',{id:m.id,buf:null,type:''});await dbPut('meta',m);
+    lib.push(m);renderTray();
+    if(lidP>0.5)await insert(m.id);else say(_t('CASSETTES ADDED: ')+1,2200);
+  }catch(e){say(e&&e.name==='QuotaExceededError'?_t('STORAGE FULL — DELETE A CASSETTE'):_t('COULD NOT READ FILE'),3000);}
+}
 async function removeTape(m){
   if(cur&&cur.meta.id===m.id){stopTransport();ejectCur();}
   lib=lib.filter(x=>x.id!==m.id);
@@ -267,6 +276,8 @@ function renderTray(){
   if(!lib.length)trayEl.classList.remove('edit');
   const add=document.createElement('div');add.className='mini add';add.innerHTML='<b>+</b><small>'+_t('LOAD')+'</small>';
   add.addEventListener('click',()=>{initAudio();loadTarget=false;fileInp.click();});trayEl.appendChild(add);
+  const bl=document.createElement('div');bl.className='mini add blank';bl.innerHTML='<small>'+_t('BLANK')+'</small><span class="bl"><i data-m="30">30</i><i data-m="60">60</i><i data-m="90">90</i></span>';
+  bl.addEventListener('click',e=>{initAudio();if(trayEl.classList.contains('edit')){setTrayEdit(false);return;}const c=e.target.closest('i');addBlank(c?+c.dataset.m:60);});trayEl.appendChild(bl);
   const rank=new Map([...lib].sort((a,b)=>a.created-b.created).map((m,i)=>[m.id,i+1]));
   [...lib].sort((a,b)=>b.created-a.created).forEach(m=>{
     const d=document.createElement('div');d.className='mini'+(cur&&cur.meta.id===m.id?' on':'');
@@ -287,7 +298,7 @@ function renderTray(){
   });
   /* always two rows: a taller shelf pushed the whole panel down. More tapes scroll inside the shelf */
   const rows=2,cells=rows*4;
-  for(let i=lib.length+1;i<cells;i++){const g=document.createElement('div');g.className='mini ghost';
+  for(let i=lib.length+2;i<cells;i++){const g=document.createElement('div');g.className='mini ghost';
     g.addEventListener('click',()=>{if(trayEl.classList.contains('edit')){setTrayEdit(false);return;}initAudio();loadTarget=false;fileInp.click();});trayEl.appendChild(g);}
   requestAnimationFrame(()=>{const t=trayEl.querySelector('.mini');if(t){const h=t.getBoundingClientRect().height/uiS;if(h>8)trayEl.style.setProperty('--trayMax',Math.round(rows*h+(rows-1)*8+12)+'px');}
     const on=trayEl.querySelector('.mini.on');if(on&&!trayEl.classList.contains('edit')){const top=on.offsetTop,bot=top+on.offsetHeight;if(top<trayEl.scrollTop)trayEl.scrollTop=top-6;else if(bot>trayEl.scrollTop+trayEl.clientHeight)trayEl.scrollTop=bot-trayEl.clientHeight+6;}});

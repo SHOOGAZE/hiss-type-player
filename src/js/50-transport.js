@@ -2,7 +2,9 @@
 const NT=4;
 /* ---- tape aging: wear lives on each cassette (persisted); loop passes erode on top ---- */
 let loopOn=false,loopGen=0,lastWrap=0,lastAge=-1,wearSave=0;
-const age=()=>cur?clamp((cur.meta.wear||0)+loopGen*0.045,0,1.3):0;
+/* meta.wear is plain playing time (1.0 = about 10 hours at the default TAPE). What you see and hear follows a curve: a young tape is practically untouched, the damage is obvious around 7-8 hours and complete at 10. LOOP crumbling is added on top, unbent */
+const wearCurve=w=>Math.pow(clamp(w,0,1.1),2.6);
+const age=()=>cur?clamp(wearCurve(cur.meta.wear||0)+loopGen*0.045,0,1.3):0;
 function paintAge(force){
   if(!cur)return;const a=age();
   if(!force&&Math.abs(a-lastAge)<0.008)return;lastAge=a;
@@ -45,7 +47,7 @@ function ageTick(dt){
   if(!cur||!ctx)return;
   const m=S.mode;if(m==='play'||m==='rec'||m==='scrub'||m==='ff'||m==='rew'){
     const f=(m==='ff'||m==='rew')?0.3:1;
-    cur.meta.wear=Math.min(1.3,(cur.meta.wear||0)+dt/1800*(0.6+tapeAmt)*f);
+    cur.meta.wear=Math.min(1.3,(cur.meta.wear||0)+dt/30000*(0.6+tapeAmt)*f);
     wearSave+=dt;if(wearSave>20){wearSave=0;dbPut('meta',cur.meta).catch(()=>{});}
     if(f===1)cur.meta.secs=(cur.meta.secs||0)+dt;
     D.hrs=(D.hrs||0)+dt*f;dwSave+=dt;paintDeckWear();if(dwSave>30){dwSave=0;saveDeck();}
@@ -56,7 +58,7 @@ const trKey=(id,side,n)=>(side===0&&n===0)?id:id+'~'+side+n;
 function revBuf(b){const r=ctx.createBuffer(b.numberOfChannels,b.length,b.sampleRate);
   for(let c=0;c<b.numberOfChannels;c++){const s=b.getChannelData(c),d=r.getChannelData(c);for(let i=0,n=s.length;i<n;i++)d[i]=s[n-1-i];}return r;}
 function trackBuf(t,rev){if(!t.buf)return null;if(!rev)return t.buf;if(!t.rev)t.rev=revBuf(t.buf);return t.rev;}
-function setDur(c){c=c||cur;if(!c)return;let d=0;for(const t of c.T)if(t.buf)d=Math.max(d,t.buf.duration);c.dur=d;if(c.side===0)c.meta.dur=d;else c.meta.durB=d;if(c===cur&&c.refs&&c.refs.du)c.refs.du.textContent=d?fmt(d):'--:--';}
+function setDur(c){c=c||cur;if(!c)return;let d=0;for(const t of c.T)if(t.buf)d=Math.max(d,t.buf.duration);c.dur=d;if(c.side===0)c.meta.dur=d;else c.meta.durB=d;if(c===cur&&c.refs&&c.refs.du)c.refs.du.textContent=d?fmt(d):(c.meta.cap?fmt(c.meta.cap/2):'--:--');}
 /* tape stop: the tape coasts to a halt instead of cutting dead; ts = {t0,T,p0,p1,r} drives the counter and reels while it decelerates */
 let ts=null,dying=[];
 function cutDying(){if(!ctx||!dying.length)return;const n=ctx.currentTime;

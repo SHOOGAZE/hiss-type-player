@@ -78,6 +78,8 @@ body:not(.open) .mini:not(.add){opacity:.6}
 #tray.edit .mini.ghost{opacity:.2}
 .mini.add{background:var(--add-bg);box-shadow:inset 0 0 0 1px #00000022;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--accent)}
 .mini.add b{font-size:20px;line-height:20px}.mini.add small{font-size:6.5px;letter-spacing:.14em;color:var(--dim)}
+.mini.blank{gap:3px}.mini.blank .bl{display:flex;gap:3px}
+.mini.blank .bl i{font:700 8.5px/1 ui-monospace,Menlo,monospace;font-style:normal;padding:3px 4px;border-radius:3px;background:color-mix(in srgb,var(--accent) 16%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 35%,transparent)}
 
 /* panel */
 #panel{margin:0;width:var(--bw);flex:1 1 auto;min-height:0;align-content:center;padding-bottom:34px;display:grid;grid-template-columns:1fr 1fr;gap:12px 8px;position:relative;z-index:1}
