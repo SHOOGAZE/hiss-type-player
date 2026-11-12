@@ -24,6 +24,8 @@ const genTxt=m=>(m.gen||1)>1?'G'+m.gen:'';
 const sideName=(m,side)=>side?(m.nameB||'SIDE B'):m.name;
 const curName=()=>sideName(cur.meta,cur.side);
 /* ---------- cassettes ---------- */
+function fileTitle(n){let t=String(n||'').replace(/\.[A-Za-z0-9]{2,5}$/,'').replace(/^\s*\d{1,3}_+/,'').replace(/_+/g,' ').replace(/^\s*\d{1,3}\s*[-.)]\s+/,'').replace(/\s+/g,' ').trim();
+  return t.slice(0,60)||'untitled';}
 const slot=$('#slot'),emptyEl=$('#empty'),trayEl=$('#tray'),fileInp=$('#file');
 const COND="'Avenir Next Condensed','DIN Condensed','Bahnschrift','Roboto Condensed','Arial Narrow',sans-serif";
 /* label print per skin: the typeface the deck's own maker would have used for its cassette labels */
@@ -239,7 +241,7 @@ async function addFiles(files){
       let dur=0;
       try{dur=(await decodeBuf(ab.slice(0))).duration;}catch(e){say(_t('NOT AUDIO: ')+(f.name||_t('file')).slice(0,22),2800);continue;}
       /* a new cassette is signed with its file name (no extension, underscores as spaces); only a nameless file stays 'untitled' */
-      const nm=(f.name||'').replace(/\.[^.]+$/,'').replace(/[_\s]+/g,' ').trim().slice(0,40)||'untitled';
+      const nm=fileTitle(f.name);
       const m={id:uid(),name:nm,
         shell:pick(SHELLS),paper:pick(PAPERS),stripe:pick(STRIPES),pen:pick(PENS),rot:+rnd(-1.6,1.6).toFixed(2),dur,created:Date.now()+n};
       await dbPut('data',{id:m.id,buf:ab,type:f.type});await dbPut('meta',m);

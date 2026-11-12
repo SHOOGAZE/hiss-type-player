@@ -2,8 +2,8 @@
 const NT=4;
 /* ---- tape aging: wear lives on each cassette (persisted); loop passes erode on top ---- */
 let loopOn=false,loopGen=0,lastWrap=0,lastAge=-1,wearSave=0;
-/* meta.wear is plain playing time (1.0 = about 10 hours at the default TAPE). What you see and hear follows a curve: a young tape is practically untouched, the damage is obvious around 7-8 hours and complete at 10. LOOP crumbling is added on top, unbent */
-const wearCurve=w=>Math.pow(clamp(w,0,1.1),2.6);
+/* meta.wear is plain playing time (1.0 = about 3 hours at the default TAPE). What you see and hear follows a curve: the first minutes are clean, scratches and dulling show after about an hour, the tape is spent at 3. LOOP crumbling is added on top, unbent */
+const wearCurve=w=>Math.pow(clamp(w,0,1.1),1.8);
 const age=()=>cur?clamp(wearCurve(cur.meta.wear||0)+loopGen*0.045,0,1.3):0;
 function paintAge(force){
   if(!cur)return;const a=age();
@@ -47,7 +47,7 @@ function ageTick(dt){
   if(!cur||!ctx)return;
   const m=S.mode;if(m==='play'||m==='rec'||m==='scrub'||m==='ff'||m==='rew'){
     const f=(m==='ff'||m==='rew')?0.3:1;
-    cur.meta.wear=Math.min(1.3,(cur.meta.wear||0)+dt/30000*(0.6+tapeAmt)*f);
+    cur.meta.wear=Math.min(1.3,(cur.meta.wear||0)+dt/9000*(0.6+tapeAmt)*f);
     wearSave+=dt;if(wearSave>20){wearSave=0;dbPut('meta',cur.meta).catch(()=>{});}
     if(f===1)cur.meta.secs=(cur.meta.secs||0)+dt;
     D.hrs=(D.hrs||0)+dt*f;dwSave+=dt;paintDeckWear();if(dwSave>30){dwSave=0;saveDeck();}

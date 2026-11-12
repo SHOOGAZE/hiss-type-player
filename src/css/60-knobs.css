@@ -80,3 +80,27 @@ body[data-theme="kiiro"] .cap .flute g{opacity:.55}
 body[data-theme="sonic"] .cap{--kr1:#7b808a;--kr2:#dfe2e7}
 body[data-theme="sonic"] .cap .kc>circle[r="56"]{opacity:.3}
 body[data-theme="nashville"] .cap .kc>circle[r="56"]{opacity:.55}
+
+/* ---- dark skins, second pass: three different caps (KIIRO smooth rubber, AKANE ivory-rimmed, KURO machined) ---- */
+/* KIIRO: one smooth soft-touch dome, no grooves at all, a thick yellow bar */
+body[data-theme="kiiro"] .cap .flute,body[data-theme="kiiro"] .cap .rings,body[data-theme="kiiro"] .cap .dish{display:none}
+body[data-theme="kiiro"] .cap{--k1:#5b5a54;--k2:#2b2a27;--k3:#0e0e0d;inset:9px}
+body[data-theme="kiiro"] .cap .dome{display:block;opacity:.15}
+body[data-theme="kiiro"] .cap b{width:7px;height:15px;margin-left:-3.5px;top:4px;border-radius:3px}
+/* AKANE: a satin black cap sunk into a thin champagne ring (hi-fi style), a slim cream pointer line */
+body[data-theme="akane"] .cap .rib,body[data-theme="akane"] .cap .rings{display:none}
+body[data-theme="akane"] .cap .dish{display:block}
+body[data-theme="akane"] .cap{--k1:#3d3a37;--k2:#201e1c;--k3:#0c0b0a;box-shadow:0 0 0 1.5px #d8c79d,0 0 0 3px #00000070,0 0 0 4px #ffffff1c,3px 6px 7px #0000005c}
+body[data-theme="akane"] .cap b{width:5px;height:5px;margin-left:-2.5px;top:7px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fffaea,#e8dcbc);box-shadow:0 0 4px #f1e6c866,0 1px 1px #0008}
+/* KURO: a flat-topped knob with a bevelled skirt (school-recorder style), smooth, a red line sunk into the plateau */
+body[data-theme="kuro"] .cap .fine,body[data-theme="kuro"] .cap .rib,body[data-theme="kuro"] .cap .rings,body[data-theme="kuro"] .cap .dish{display:none}
+body[data-theme="kuro"] .cap{--k1:#4a4b51;--k2:#2b2c30;--k3:#141517}
+body[data-theme="kuro"] .cap::after{content:"";position:absolute;inset:15%;border-radius:50%;pointer-events:none;z-index:1;
+  background:linear-gradient(160deg,#3b3c41,#222327);box-shadow:inset 0 1px 0 #ffffff30,inset 0 -1px 1px #000a,0 1px 2px #000c,0 0 0 1px #000a}
+body[data-theme="kuro"] .cap b{width:3px;height:13px;margin-left:-1.5px;top:9px;z-index:3;border-radius:1px;box-shadow:inset 0 1px 1px #0008,0 0 5px #ff504066}
+
+/* KIIRO, third pass: a black rubber skirt with a yellow top disc (the deck's own colour), pointer is a dark notch */
+body[data-theme="kiiro"] .cap .dome{display:none}
+body[data-theme="kiiro"] .cap .spin::after{content:"";position:absolute;inset:17%;border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle at 50% 42%,#ffe05a,#f2b705 60%,#c98d00);box-shadow:inset 0 1px 0 #fff9,inset 0 -2px 3px #7a4f0066,0 1px 3px #000c,0 0 0 1px #000a}
+body[data-theme="kiiro"] .cap b{z-index:3;width:5px;height:12px;margin-left:-2.5px;top:9px;background:#1a1812;box-shadow:inset 0 1px 1px #000,0 1px 0 #fff6}

@@ -56,6 +56,10 @@ nameIn.addEventListener('input',()=>{
 });
 nameIn.addEventListener('change',()=>{saveMeta();renderTray();});
 /* reels (teeth / smooth / clear) and shell plastic (gloss / smoked / clear): saved on the cassette, redrawn in place */
+/* CONDITION: NEW / USED / WORN sets how old the tape is right now (WORN sounds dirty from the first second); loop damage is cleared */
+$('#mxCond').addEventListener('click',()=>{if(!cur)return;const a=age(),to=a<.12?.3:a<.5?.7:0;
+  cur.meta.wear=Math.pow(to,1/1.8);loopGen=0;paintAge(true);renderTray();renderMixer();dbPut('meta',cur.meta).catch(()=>{});click('latch');
+  say(_t(to===0?'NEW TAPE':to<.5?'USED TAPE':'WORN TAPE'),1500);});
 $('#mxReel').addEventListener('click',()=>{if(!cur)return;const m=cur.meta;m.reel=REELS[(REELS.indexOf(reelOf(m))+1)%REELS.length];saveMeta();repaintCass();renderTray();renderMixer();click('down');setTimeout(()=>click('up'),60);});
 $('#mxMat').addEventListener('click',()=>{if(!cur)return;const m=cur.meta;m.mat=MATS[(MATS.indexOf(matOf(m))+1)%MATS.length];saveMeta();repaintCass();renderTray();renderMixer();click('down');setTimeout(()=>click('up'),60);});
 $('#fontBtn').addEventListener('click',()=>{if(!cur)return;cur.meta.font=isHand(cur.meta)?'print':'hand';saveMeta();paintLabel();renderTray();renderMixer();click('down');setTimeout(()=>click('up'),60);});

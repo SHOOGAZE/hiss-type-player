@@ -4,6 +4,7 @@ const TOUR_ICO={
  '＋':'<path d="M12 5v14M5 12h14"/>',
  '◎':'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6"/><path d="M12 4v2.5M12 17.5V20M4 12h2.5M17.5 12H20" opacity=".0"/>',
  '4':'<path d="M4 6h16M4 10.7h16M4 15.3h16M4 20h16" opacity=".4"/><path d="M4 6h7M4 10.7h12M4 15.3h5M4 20h10"/>',
+ '◔':'<circle cx="12" cy="12" r="8"/><path d="M12 12V6M12 12l4 3"/>',
  '◐':'<circle cx="8" cy="12" r="3.4"/><circle cx="16" cy="12" r="3.4" opacity=".45"/><path d="M5 19h14"/>',
  '⚙':'<path d="M5 7h5M14 7h5M5 17h9M18 17h1M5 12h1M10 12h9"/><circle cx="12" cy="7" r="2"/><circle cx="16" cy="17" r="2"/><circle cx="8" cy="12" r="2"/>',
  '⟳':'<rect x="3" y="11" width="13" height="8" rx="2"/><path d="M8 6.5a7 7 0 0 1 11 2.5"/><path d="M20 4.5V9h-4.5"/>'
@@ -14,6 +15,7 @@ const TOUR=[
  ['◎','Play it like tape','REW, PLAY, FF, STOP and PAUSE work like the real thing. Spin the reels with a finger to scrub. The knobs stop at their limits.'],
  ['4','Record on top','Tap 4TRK, press ARM on a track, close the mixer, then press REC and PLAY. Your new sound lands on that track while the others keep playing. Out of tracks? PING-PONG mixes the rest into the armed one.'],
  ['◐','Change the deck','SKIN swaps the whole deck: six machines with their own look, keys and sound. The longer you play, the more wear it shows. In DECK, LID switches between a closed lid and a see-through window.'],
+ ['◔','Tapes grow old','Every cassette ages as you play it: about an hour for the first scratches, about three for a spent tape. LOOP wears it faster. In 4TRK, CONDITION sets NEW, USED or WORN on the spot.'],
  ['⚙','Shape the sound','DECK holds tape type, speed, tone, volume, sleep timer and NR (Dolby). TAPE and PITCH bend the sound, LOOP wears the tape out.'],
  ['⟳','Rotate your phone','Landscape shows the cassette full screen with glass controls. Long-press a cassette on the shelf to delete it. BOUNCE saves what you hear as a WAV.']
 ];
@@ -93,6 +95,7 @@ function renderMixer(){
   if(document.activeElement!==nameIn)nameIn.value=cur.side?(m.nameB||''):m.name;
   nameIn.placeholder=cur.side?_t('side B name'):_t('cassette name');
   $('#fontBtn').textContent=_t('FONT: ')+(isHand(m)?_t('HAND'):_t('PRINT'));
+  {const a=age();$('#mxCond').textContent=_t('CONDITION: ')+_t(a<.12?'NEW':a<.5?'USED':'WORN');}
   $('#mxReel').textContent=_t('REEL: ')+_t(REEL_N[reelOf(m)]);$('#mxMat').textContent=_t('SHELL: ')+_t(MAT_N[matOf(m)]);
   nameIn.style.fontFamily=isHand(m)?'':'var(--print)';
   const ag=Math.round(clamp(age()/1.0,0,1.3)*100);
