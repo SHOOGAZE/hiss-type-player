@@ -47,7 +47,7 @@ All skins share one body: a big speaker grille with a level LED on top, the wind
 - **Display windows**: six display technologies (LCD, VFD, EL, LED matrix) in one depth system: recessed glass, 2 px bezel, unlit segments, uneven backlight, a faint refresh shimmer on the LED and VFD skins, and long track names slide instead of being cut.
 - **Wear**: the deck itself ages with the hours it has played (about ten hours for a full set): scratches on the plate, flaked paint at the edges, rubbed keys, grime on the knobs. Cassettes wear on their own, too, so an old tape shows scratched glass, stained paper and curled label corners.
 
-<img src="screenshots/worn-kuro.png" alt="A worn deck and cassette" width="300">
+<img src="screenshots/worn-sorako.png" alt="A worn deck and cassette" width="300">
 
 - **Lock screen and headphones**: the current cassette shows up in Now Playing with play, pause and stop (a silent audio element keeps the media session alive on iOS; the sound itself is Web Audio).
 - **Clear errors**: a file that is not audio, too large (over 150 MB), unreadable, a full browser storage or a refused microphone each say so on the display.
