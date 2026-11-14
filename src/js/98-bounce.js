@@ -43,11 +43,11 @@ renderKeys();
   try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist();}catch(e){}
   try{lib=await dbAll('meta');}catch(e){lib=[];}
   /* tablets: the deck keeps its phone proportions and is scaled up to the screen height, centred on the skin background */
-  const deckEl=document.getElementById('deck'),tabQ=matchMedia('(min-width:700px) and (min-height:700px)');
+  const deckEl=document.getElementById('deck'),tabQ=matchMedia('(min-width:700px) and (min-height:601px)');
   function fit(){
     if(!tabQ.matches||lsQ.matches){uiS=1;deckEl.style.cssText='';document.documentElement.classList.remove('tab');return;}
     const W=440;
-    uiS=Math.max(1,Math.min((innerWidth-32)/W,innerHeight/860,2.4));
+    uiS=Math.max(.6,Math.min((innerWidth-32)/W,innerHeight/900,2.4)); /* a desktop window can be shorter than a phone: scale the deck down instead of squeezing it */
     document.documentElement.classList.add('tab');
     deckEl.style.cssText=`left:50%;right:auto;top:0;bottom:auto;width:${W+24}px;height:${innerHeight/uiS}px;transform:translateX(-50%) scale(${uiS});transform-origin:50% 0`;
   }
