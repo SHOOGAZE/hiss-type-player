@@ -4,22 +4,24 @@ A cassette deck in your pocket. One HTML file, works on iPhone in Safari and off
 
 Load your own audio, swipe the lid open, spin the reels with your finger, record on 4 tracks and bounce them down with generation loss. The tape ages: the more you play it, the darker and noisier it gets. A short intro tour runs on first launch (replay it any time from DECK → HOW TO USE).
 
-![Six skins](screenshots/skins.gif)
+**Try it: [shoogaze.github.io/hiss-type-player](https://shoogaze.github.io/hiss-type-player/)** (open in Safari on iPhone, then Share → Add to Home Screen)
+
+<p align="center"><img src="screenshots/skins.gif" alt="Six skins" width="300"></p>
 
 <details>
 <summary><b>All six skins, full size</b></summary>
 
 | | |
 |---|---|
-| ![SORAKO](screenshots/01-sorako.png) | ![KAMIYA](screenshots/02-kamiya.png) |
-| ![HARLAN](screenshots/03-harlan.png) | ![KIIRO](screenshots/04-kiiro.png) |
-| ![AKANE](screenshots/05-akane.png) | ![KURO](screenshots/06-kuro.png) |
+| <img src="screenshots/01-sorako.png" alt="SORAKO" width="260"> | <img src="screenshots/02-kamiya.png" alt="KAMIYA" width="260"> |
+| <img src="screenshots/03-harlan.png" alt="HARLAN" width="260"> | <img src="screenshots/04-kiiro.png" alt="KIIRO" width="260"> |
+| <img src="screenshots/05-akane.png" alt="AKANE" width="260"> | <img src="screenshots/06-kuro.png" alt="KURO" width="260"> |
 
 </details>
 
 Landscape visual mode (the cassette sits in a lid set into the plastic body, in the skin's colour):
 
-![Landscape](screenshots/land-kiiro.png)
+<img src="screenshots/land-kiiro.png" alt="Landscape" width="640">
 
 ## Decks
 
@@ -45,7 +47,7 @@ All skins share one body: a big speaker grille with a level LED on top, the wind
 - **Display windows**: six display technologies (LCD, VFD, EL, LED matrix) in one depth system: recessed glass, 2 px bezel, unlit segments, uneven backlight, a faint refresh shimmer on the LED and VFD skins, and long track names slide instead of being cut.
 - **Wear**: the deck itself ages with the hours it has played (about ten hours for a full set): scratches on the plate, flaked paint at the edges, rubbed keys, grime on the knobs. Cassettes wear on their own, too, so an old tape shows scratched glass, stained paper and curled label corners.
 
-![A worn deck and cassette](screenshots/worn-kuro.png)
+<img src="screenshots/worn-kuro.png" alt="A worn deck and cassette" width="300">
 
 - **Lock screen and headphones**: the current cassette shows up in Now Playing with play, pause and stop (a silent audio element keeps the media session alive on iOS; the sound itself is Web Audio).
 - **Clear errors**: a file that is not audio, too large (over 150 MB), unreadable, a full browser storage or a refused microphone each say so on the display.
